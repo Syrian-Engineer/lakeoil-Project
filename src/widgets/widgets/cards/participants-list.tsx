@@ -1,10 +1,10 @@
 'use client';
 
 import { Badge, Avatar, Button, Title, Text } from 'rizzui';
-import cn from '@core/utils/class-names';
-import WidgetCard from '@core/components/cards/widget-card';
-import TrophyIcon from '@core/components/icons/trophy';
-import { members } from '@/data/members-data';
+import cn from '@/utils/class-names';
+import WidgetCard from '@/components/cards/widget-card';
+import TrophyIcon from '@/components/icons/trophy';
+import { members } from '@/app/_data/members-data';
 
 const status: any = {
   online: 'success',

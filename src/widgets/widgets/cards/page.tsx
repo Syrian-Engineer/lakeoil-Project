@@ -1,6 +1,6 @@
 import { routes } from '@/config/routes';
 import { Title } from 'rizzui/typography';
-import cn from '@core/utils/class-names';
+import cn from '@/utils/class-names';
 import PageHeader from '@/app/shared/page-header';
 import MetricCardsWithIcon from '@/app/shared/support/dashboard/stat-cards';
 import MetricCardWithBarChart from '@/app/shared/analytics-dashboard/stat-cards';

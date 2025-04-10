@@ -1,7 +1,7 @@
-import WidgetCard from '@core/components/cards/widget-card';
+import WidgetCard from '@/components/cards/widget-card';
 import { Button } from 'rizzui/button';
 import { Title, Text } from 'rizzui/typography';
-import { teams as apps } from '@/data/teams-data';
+import { teams as apps } from '@/app/_data/teams-data';
 import { PiArrowLineUpRightBold } from 'react-icons/pi';
 
 export default function RecentAppList() {

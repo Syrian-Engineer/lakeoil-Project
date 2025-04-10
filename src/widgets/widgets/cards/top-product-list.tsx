@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import WidgetCard from '@core/components/cards/widget-card';
+import WidgetCard from '@/components/cards/widget-card';
 import { Button } from 'rizzui/button';
 import { Text } from 'rizzui/typography';
-import { topProductList } from '@/data/top-products-data';
-import Rating from '@core/components/rating';
+import { topProductList } from '@/app/_data/top-products-data';
+import Rating from '@/components/rating';
 
 export default function TopProductList() {
   return (

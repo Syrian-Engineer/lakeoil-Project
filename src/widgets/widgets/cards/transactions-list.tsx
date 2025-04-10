@@ -1,8 +1,8 @@
 import { Button } from 'rizzui/button';
 import { Title, Text } from 'rizzui/typography';
-import cn from '@core/utils/class-names';
-import WidgetCard from '@core/components/cards/widget-card';
-import { transactions } from '@/data/transactions-data';
+import cn from '@/utils/class-names';
+import WidgetCard from '@/components/cards/widget-card';
+import { transactions } from '@/app/_data/transactions-data';
 
 export default function TransactionsList() {
   return (

@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState, type ComponentProps } from 'react';
-import WidgetCard from '@core/components/cards/widget-card';
+import WidgetCard from '@/components/cards/widget-card';
 import WorldMap, { type CountryContext } from 'react-svg-worldmap';
-import { useElementSize } from '@core/hooks/use-element-size';
+import { useElementSize } from '@/hooks/use-element-size';
 import { Text, Badge, Loader } from 'rizzui';
-import cn from '@core/utils/class-names';
+import cn from '@/utils/class-names';
 
 const data = [
   { country: 'cn', name: 'China', value: 5, style: 'bg-[#ffe5e5]' },

@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import WorldMap from 'react-svg-worldmap';
 import { Text, Badge, Loader } from 'rizzui';
-import cn from '@core/utils/class-names';
-import WidgetCard from '@core/components/cards/widget-card';
-import { useElementSize } from '@core/hooks/use-element-size';
+import cn from '@/utils/class-names';
+import WidgetCard from '@/components/cards/widget-card';
+import { useElementSize } from '@/hooks/use-element-size';
 
 const data = [
   { country: 'US', name: 'United States', value: 40, style: 'bg-[#028ca6]' },

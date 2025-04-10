@@ -1,8 +1,8 @@
 'use client';
 
 import { ActionIcon, Title, Text } from 'rizzui';
-import cn from '@core/utils/class-names';
-import WidgetCard from '@core/components/cards/widget-card';
+import cn from '@/utils/class-names';
+import WidgetCard from '@/components/cards/widget-card';
 import { PiSlidersHorizontalDuotone } from 'react-icons/pi';
 import {
   BarChart,
@@ -12,8 +12,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { CustomTooltip } from '@core/components/charts/custom-tooltip';
-import { chartData, widgetData } from '@/data/card-widgets-data';
+import { CustomTooltip } from '@/components/charts/custom-tooltip';
+import { chartData, widgetData } from '@/app/_data/card-widgets-data';
 
 export default function BarChartList({ className }: { className?: string }) {
   return (
