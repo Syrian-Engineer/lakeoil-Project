@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Title, Text } from 'rizzui';
 import { PiImageDuotone } from 'react-icons/pi';
-import WidgetCard from '@core/components/cards/widget-card';
+import WidgetCard from '@/components/cards/widget-card';
 
 const activities = [
   {

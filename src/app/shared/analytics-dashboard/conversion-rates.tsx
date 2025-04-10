@@ -1,7 +1,7 @@
 'use client';
 
-import WidgetCard from '@core/components/cards/widget-card';
-import ButtonGroupAction from '@core/components/charts/button-group-action';
+import WidgetCard from '@/components/cards/widget-card';
+import ButtonGroupAction from '@/components/charts/button-group-action';
 import {
   ComposedChart,
   Bar,
@@ -10,7 +10,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { CustomTooltip } from '@core/components/charts/custom-tooltip';
+import { CustomTooltip } from '@/components/charts/custom-tooltip';
 
 const data = [
   {

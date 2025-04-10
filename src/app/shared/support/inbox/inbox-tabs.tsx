@@ -5,9 +5,9 @@ import {
   dataAtom,
   messageIdAtom,
 } from '@/app/shared/support/inbox/message-list';
-import { messages } from '@/data/support-inbox';
-import { useCreateQueryString } from '@core/hooks/use-create-query-string';
-import cn from '@core/utils/class-names';
+import { messages } from '@/app/_data/support-inbox';
+import { useCreateQueryString } from '@/hooks/use-create-query-string';
+import cn from '@/utils/class-names';
 import { atom, useAtom, useSetAtom } from 'jotai';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTransition } from 'react';

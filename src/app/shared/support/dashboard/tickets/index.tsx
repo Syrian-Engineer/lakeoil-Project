@@ -1,6 +1,6 @@
 import TicketsTable from '@/app/shared/support/dashboard/tickets/table';
-import WidgetCard from '@core/components/cards/widget-card';
-import cn from '@core/utils/class-names';
+import WidgetCard from '@/components/cards/widget-card';
+import cn from '@/utils/class-names';
 
 export default function PendingShipments({
   className,

@@ -1,8 +1,8 @@
-import InstaTechIcon from '@core/components/icons/insta-tech';
-import AdobeIcon from '@core/components/icons/adobe';
-import TeslaIcon from '@core/components/icons/tesla';
-import RippleIcon from '@core/components/icons/ripple';
-import SnapchatIcon from '@core/components/icons/snapchat';
+import InstaTechIcon from '@/components/icons/insta-tech';
+import AdobeIcon from '@/components/icons/adobe';
+import TeslaIcon from '@/components/icons/tesla';
+import RippleIcon from '@/components/icons/ripple';
+import SnapchatIcon from '@/components/icons/snapchat';
 
 export const biddingData = [
   {

@@ -2,11 +2,11 @@
 
 import Image from 'next/image';
 import { FileListDataType } from '.';
-import DateCell from '@core/ui/date-cell';
+import DateCell from '@/ui/date-cell';
 import { Box, Flex, Text } from 'rizzui';
 import Favorite from '@/app/shared/file/manager/favorite';
 import { createColumnHelper } from '@tanstack/react-table';
-import { MoreActions } from '@core/components/table-utils/more-actions';
+import { MoreActions } from '@/components/table-utils/more-actions';
 
 const columnHelper = createColumnHelper<FileListDataType>();
 
@@ -88,7 +88,7 @@ export const fileListColumns = [
     }) => (
       <Flex align="center" justify="end" gap="3">
         <Favorite />
-        <MoreActions onDelete={() => meta?.handleDeleteRow?.(row.original)} />
+        {/* <MoreActions onDelete={() => meta?.handleDeleteRow?.(row.original)} /> */}
       </Flex>
     ),
   }),

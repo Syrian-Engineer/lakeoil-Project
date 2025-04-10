@@ -1,7 +1,7 @@
 'use client';
 
 import Favorite from '@/app/shared/file/manager/favorite';
-import { MoreActions } from '@core/components/table-utils/more-actions';
+// import { MoreActions } from '@/components/table-utils/more-actions';
 import { createColumnHelper } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import Image from 'next/image';
@@ -116,7 +116,7 @@ export const allFilesColumns = [
     }) => (
       <Flex align="center" justify="end">
         <Favorite />
-        <MoreActions onDelete={() => meta?.handleDeleteRow?.(row.original)} />
+        {/* <MoreActions onDelete={() => meta?.handleDeleteRow?.(row.original)} /> */}
       </Flex>
     ),
   }),

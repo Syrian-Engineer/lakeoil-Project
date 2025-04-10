@@ -1,11 +1,11 @@
 'use client';
 
-import WidgetCard from '@core/components/cards/widget-card';
-import ButtonGroupAction from '@core/components/charts/button-group-action';
-import { CustomTooltip } from '@core/components/charts/custom-tooltip';
-import { CustomYAxisTick } from '@core/components/charts/custom-yaxis-tick';
-import { useMedia } from '@core/hooks/use-media';
-import cn from '@core/utils/class-names';
+import WidgetCard from '@/components/cards/widget-card';
+import ButtonGroupAction from '@/components/charts/button-group-action';
+import { CustomTooltip } from '@/components/charts/custom-tooltip';
+import { CustomYAxisTick } from '@/components/charts/custom-yaxis-tick';
+import { useMedia } from '@/hooks/use-media';
+import cn from '@/utils/class-names';
 import {
   Area,
   Bar,

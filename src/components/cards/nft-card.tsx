@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import cn from '../../utils/class-names';
+import cn from '@/utils/class-names';
 import { CountDown } from '../../ui/count-down';
 
 type Nft = {

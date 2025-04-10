@@ -1,19 +1,19 @@
 'use client';
 
 import { Badge, Button, Flex, Input, Text } from 'rizzui';
-import StatusField from '@core/components/controlled-table/status-field';
-import DateFiled from '@core/components/controlled-table/date-field';
+import StatusField from '@/components/controlled-table/status-field';
+import DateFiled from '@/components/controlled-table/date-field';
 import {
   PiFunnel,
   PiMagnifyingGlassBold,
   PiTrashDuotone,
 } from 'react-icons/pi';
 import { type Table as ReactTableType } from '@tanstack/react-table';
-import ToggleColumns from '@core/components/table-utils/toggle-columns';
+import ToggleColumns from '@/components/table-utils/toggle-columns';
 import { useState } from 'react';
 import { useMedia } from 'react-use';
-import cn from '@core/utils/class-names';
-import { FilterDrawerView } from '@core/components/controlled-table/table-filter';
+import cn from '@/utils/class-names';
+import { FilterDrawerView } from '@/components/controlled-table/table-filter';
 
 const statuses = [
   {
@@ -109,7 +109,7 @@ function FilterElements<TData extends Record<string, any>>({
         selected={state[0]}
         startDate={state[0]!}
         endDate={state[1]!}
-        onChange={(date) => setState(date)}
+        onChange={(date:any) => setState(date)}
         selectsRange
         dateFormat="dd MMM yyyy"
         placeholderText="Select created date"

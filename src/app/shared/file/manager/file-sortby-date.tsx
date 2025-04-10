@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { PiCaretDownBold, PiCaretRightBold } from 'react-icons/pi';
 import { Popover, Button, Text } from 'rizzui';
-import cn from '@core/utils/class-names';
-import { useMedia } from '@core/hooks/use-media';
-import { DatePicker } from '@core/ui/datepicker';
+import cn from '@/utils/class-names';
+import { useMedia } from '@/hooks/use-media';
+import { DatePicker } from '@/ui/datepicker';
 
 const modifiedOptions = [
   {

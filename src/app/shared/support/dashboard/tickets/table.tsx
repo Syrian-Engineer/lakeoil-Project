@@ -1,9 +1,9 @@
 'use client';
 
-import { ticketsData } from '@/data/tickets-data';
-import { useTanStackTable } from '@core/components/table/custom/use-TanStack-Table';
-import Table from '@core/components/table';
-import TablePagination from '@core/components/table/pagination';
+import { ticketsData } from '@/app/_data/tickets-data';
+import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import Table from '@/components/table';
+import TablePagination from '@/components/table/pagination';
 import { ticketsColumns } from './columns';
 import Filters from './filters';
 
@@ -21,7 +21,7 @@ export default function TicketsTable() {
         },
       },
       meta: {
-        handleDeleteRow: (row) => {
+        handleDeleteRow: (row:any) => {
           setData((prev) => prev.filter((r) => r.id !== row.id));
         },
       },

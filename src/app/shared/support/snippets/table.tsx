@@ -1,12 +1,12 @@
 'use client';
 
-import { snippetsAndTemplates } from '@/data/snippets-and-templates';
-import Table from '@core/components/table';
-import { useTanStackTable } from '@core/components/table/custom/use-TanStack-Table';
-import TableFooter from '@core/components/table/footer';
+import { snippetsAndTemplates } from '@/app/_data/snippets-and-templates';
+import Table from '@/components/table';
+import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import TableFooter from '@/components/table/footer';
 import { snippetsAndTemplatesColumns } from './columns';
 import Filters from './filters';
-import { exportToCSV } from '@core/utils/export-to-csv';
+import { exportToCSV } from '@/utils/export-to-csv';
 
 export type SnippetsAndTemplatesDataType =
   (typeof snippetsAndTemplates)[number];
@@ -23,10 +23,10 @@ export default function SnippetsTable() {
         },
       },
       meta: {
-        handleDeleteRow: (row) => {
+        handleDeleteRow: (row:any) => {
           setData((prev) => prev.filter((r) => r.id !== row.id));
         },
-        handleMultipleDelete: (rows) => {
+        handleMultipleDelete: (rows:any) => {
           setData((prev) => prev.filter((r) => !rows.includes(r)));
         },
       },

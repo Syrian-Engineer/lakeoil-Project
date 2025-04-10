@@ -1,6 +1,6 @@
 'use client';
 
-import ToggleColumns from '@core/components/table-utils/toggle-columns';
+import ToggleColumns from '@/components/table-utils/toggle-columns';
 import { type Table as ReactTableType } from '@tanstack/react-table';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { Flex, Input } from 'rizzui';

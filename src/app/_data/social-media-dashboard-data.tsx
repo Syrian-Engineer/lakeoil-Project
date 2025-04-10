@@ -1,6 +1,6 @@
-import LinkedInSquareIcon from '@core/components/icons/linkedin-square';
-import FacebookSquareIcon from '@core/components/icons/facebook-square';
-import InstagramIcon from '@core/components/icons/instagram';
+import LinkedInSquareIcon from '@/components/icons/linkedin-square';
+import FacebookSquareIcon from '@/components/icons/facebook-square';
+import InstagramIcon from '@/components/icons/instagram';
 import { IconType } from 'react-icons';
 import {
   PiDesktopDuotone,

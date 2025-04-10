@@ -5,7 +5,6 @@ import { Fragment } from "react";
 import { usePathname } from "next/navigation";
 import { Title } from "rizzui";
 import cn from "@/utils/class-names";
-import { PiCaretDownBold } from "react-icons/pi";
 import SimpleBar from "@/components/ui/simplebar";
 import { menuItems } from "@/layouts/hydrogen/menu-items";
 

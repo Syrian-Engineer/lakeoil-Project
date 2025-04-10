@@ -1,7 +1,7 @@
 'use client';
 
-import WidgetCard from '@core/components/cards/widget-card';
-import { CustomTooltip } from '@core/components/charts/custom-tooltip';
+import WidgetCard from '@/components/cards/widget-card';
+import { CustomTooltip } from '@/components/charts/custom-tooltip';
 import { PiDownloadSimple, PiUploadSimple } from 'react-icons/pi';
 import {
   Area,

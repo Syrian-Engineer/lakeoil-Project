@@ -1,8 +1,8 @@
 'use client';
 
-import FolderIcon from '@core/components/icons/folder-solid';
-import AvatarCard from '@core/ui/avatar-card';
-import DateCell from '@core/ui/date-cell';
+import FolderIcon from '@/components/icons/folder-solid';
+import AvatarCard from '@/ui/avatar-card';
+import DateCell from '@/ui/date-cell';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Checkbox } from 'rizzui';
 import { SnippetsAndTemplatesDataType } from './table';
@@ -86,7 +86,7 @@ export const snippetsAndTemplatesColumns = [
     }) => (
       <SnippetsTableActions
         row={row.original}
-        onDelete={() => meta?.handleDeleteRow?.(row.original)}
+        // onDelete={() => meta?.handleDeleteRow?.(row.original)}
       />
     ),
   }),

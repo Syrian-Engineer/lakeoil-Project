@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { Box, Title } from 'rizzui';
 import { routes } from '@/config/routes';
-import Table from '@core/components/table';
+import Table from '@/components/table';
 import { fileListColumns } from './columns';
-import { allFilesData } from '@/data/all-files';
-import TablePagination from '@core/components/table/pagination';
-import { useTanStackTable } from '@core/components/table/custom/use-TanStack-Table';
+import { allFilesData } from '@/app/_data/all-files';
+import TablePagination from '@/components/table/pagination';
+import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
 
 export type FileListDataType = (typeof allFilesData)[number];
 
@@ -23,7 +23,7 @@ export default function FileListTable({ className }: { className?: string }) {
         },
       },
       meta: {
-        handleDeleteRow: (row) => {
+        handleDeleteRow: (row:any) => {
           setData((prev) => prev.filter((r) => r.id !== row.id));
         },
       },

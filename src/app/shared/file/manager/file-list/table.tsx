@@ -1,11 +1,11 @@
 'use client';
 
 import { Box } from 'rizzui';
-import { allFilesData } from '@/data/all-files';
-import Table from '@core/components/table';
-import { useTanStackTable } from '@core/components/table/custom/use-TanStack-Table';
-import TableFooter from '@core/components/table/footer';
-import TablePagination from '@core/components/table/pagination';
+import { allFilesData } from '@/app/_data/all-files';
+import Table from '@/components/table';
+import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import TableFooter from '@/components/table/footer';
+import TablePagination from '@/components/table/pagination';
 import { allFilesColumns } from './columns';
 import FileTableFilters from '../file-table-filters';
 
@@ -23,11 +23,11 @@ export default function FileListTable({ className }: { className?: string }) {
         },
       },
       meta: {
-        handleDeleteRow: (row) => {
+        handleDeleteRow: (row:any) => {
           setData((prev) => prev.filter((r) => r.id !== row.id));
           table.resetRowSelection();
         },
-        handleMultipleDelete: (rows) => {
+        handleMultipleDelete: (rows:any) => {
           setData((prev) => prev.filter((r) => !rows.includes(r)));
           table.resetRowSelection();
         },

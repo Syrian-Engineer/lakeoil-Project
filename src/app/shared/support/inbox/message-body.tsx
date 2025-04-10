@@ -8,12 +8,12 @@ import { FiExternalLink } from 'react-icons/fi';
 import { HiOutlineClipboardDocument } from 'react-icons/hi2';
 import { PiEye, PiDownloadSimpleBold, PiCheck } from 'react-icons/pi';
 import { Avatar, Title, Text, Tooltip } from 'rizzui';
-import { getRelativeTime } from '@core/utils/get-relative-time';
+import { getRelativeTime } from '@/utils/get-relative-time';
 import {
   dataAtom,
   messageIdAtom,
 } from '@/app/shared/support/inbox/message-list';
-import { useCopyToClipboard } from '@core/hooks/use-copy-to-clipboard';
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { DotSeparator } from '@/app/shared/support/inbox/message-details';
 import pdfIcon from '@public/pdf-icon.svg';
 
@@ -105,7 +105,7 @@ export default function MessageBody() {
 
         {!isEmpty(message?.attachments) && (
           <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-3">
-            {message?.attachments.map((attachments) => (
+            {message?.attachments.map((attachments:any) => (
               <div
                 key={attachments.id}
                 className="grid grid-cols-[40px_1fr] gap-2.5"

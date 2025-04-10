@@ -6,11 +6,11 @@ import {
   dataAtom,
   messageIdAtom,
 } from '@/app/shared/support/inbox/message-list';
-import { SupportType, supportTypes } from '@/data/support-inbox';
-import { useElementSize } from '@core/hooks/use-element-size';
-import { useMedia } from '@core/hooks/use-media';
-import { Form } from '@core/ui/form';
-import cn from '@core/utils/class-names';
+import { SupportType, supportTypes } from '@/app/_data/support-inbox';
+import { useElementSize } from '@/hooks/use-element-size';
+import { useMedia } from '@/hooks/use-media';
+import { Form } from '@/ui/form';
+import cn from '@/utils/class-names';
 import { useAtomValue } from 'jotai';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
@@ -29,7 +29,7 @@ import {
 } from 'rizzui';
 import { z } from 'zod';
 
-const QuillEditor = dynamic(() => import('@core/ui/quill-editor'), {
+const QuillEditor = dynamic(() => import('@/ui/quill-editor'), {
   ssr: false,
 });
 

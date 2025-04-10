@@ -1,8 +1,8 @@
 'use client';
 
-import TableRowActionGroup from '@core/components/table-utils/table-row-action-group';
-import AvatarCard from '@core/ui/avatar-card';
-import { getRelativeTime } from '@core/utils/get-relative-time';
+import TableRowActionGroup from '@/components/table-utils/table-row-action-group';
+import AvatarCard from '@/ui/avatar-card';
+import { getRelativeTime } from '@/utils/get-relative-time';
 import { createColumnHelper } from '@tanstack/react-table';
 import Image from 'next/image';
 import { Area, AreaChart, ResponsiveContainer } from 'recharts';
@@ -167,7 +167,7 @@ export const customersWithMostTicketColumns = [
       },
     }) => (
       <TableRowActionGroup
-        onDelete={() => meta?.handleDeleteRow?.(row.original)}
+        // onDelete={() => meta?.handleDeleteRow?.(row.original)}
       />
     ),
   }),

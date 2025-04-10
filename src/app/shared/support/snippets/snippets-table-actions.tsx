@@ -10,8 +10,8 @@ import {
   Title,
   Tooltip,
 } from 'rizzui';
-import PencilIcon from '@core/components/icons/pencil';
-import TrashIcon from '@core/components/icons/trash';
+import PencilIcon from '@/components/icons/pencil';
+import TrashIcon from '@/components/icons/trash';
 import { PiWarning } from 'react-icons/pi';
 import { useModal } from '../../modal-views/use-modal';
 import { SnippetsAndTemplatesDataType } from './table';

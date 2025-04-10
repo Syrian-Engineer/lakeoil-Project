@@ -1,9 +1,9 @@
 'use client';
 
 import { Title, Text } from 'rizzui';
-import WidgetCard from '@core/components/cards/widget-card';
-import { CustomTooltip } from '@core/components/charts/custom-tooltip';
-import { CustomYAxisTick } from '@core/components/charts/custom-yaxis-tick';
+import WidgetCard from '@/components/cards/widget-card';
+import { CustomTooltip } from '@/components/charts/custom-tooltip';
+import { CustomYAxisTick } from '@/components/charts/custom-yaxis-tick';
 import {
   Area,
   Bar,

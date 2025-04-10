@@ -5,7 +5,7 @@ import { routes } from '@/config/routes';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Button, Title } from 'rizzui';
-import cn from '@core/utils/class-names';
+import cn from '@/utils/class-names';
 import { PiArrowLineRight, PiUserCirclePlus } from 'react-icons/pi';
 import { FcGoogle } from 'react-icons/fc';
 import OrSeparation from '@/app/shared/auth-layout/or-separation';
@@ -65,7 +65,7 @@ export default function AuthWrapperFour({
         >
           <div className="flex flex-col items-center">
             <Link href={'/'} className="mb-7 inline-block max-w-[64px] lg:mb-9">
-              <Image src={siteConfig.icon} alt={siteConfig.title} />
+              {/* <Image src={siteConfig.icon} alt={siteConfig.title} /> */}
             </Link>
             <Title
               as="h2"
@@ -107,12 +107,12 @@ function AuthHeader() {
   return (
     <header className="flex items-center justify-between p-4 lg:px-16 lg:py-6 2xl:px-24">
       <Link href={'/'}>
-        <Image
-          src={siteConfig.logo}
+        {/* <Image
+          // src={siteConfig.logo}
           alt={siteConfig.title}
           className="dark:invert"
           priority
-        />
+        /> */}
       </Link>
       <div className="flex items-center space-x-2 md:space-x-4">
         <AuthNavLink href={routes.auth.signIn4}>

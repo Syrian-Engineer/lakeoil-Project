@@ -1,8 +1,8 @@
 'use client';
 
 import { Title, Text } from 'rizzui';
-import cn from '@core/utils/class-names';
-import WidgetCard from '@core/components/cards/widget-card';
+import cn from '@/utils/class-names';
+import WidgetCard from '@/components/cards/widget-card';
 import {
   AreaChart,
   Area,
@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from 'recharts';
-import { CustomTooltip } from '@core/components/charts/custom-tooltip';
+import { CustomTooltip } from '@/components/charts/custom-tooltip';
 
 const data = [
   {

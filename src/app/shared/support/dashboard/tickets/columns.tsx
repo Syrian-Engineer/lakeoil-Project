@@ -1,8 +1,8 @@
 'use client';
 
-import TableRowActionGroup from '@core/components/table-utils/table-row-action-group';
-import AvatarCard from '@core/ui/avatar-card';
-import DateCell from '@core/ui/date-cell';
+import TableRowActionGroup from '@/components/table-utils/table-row-action-group';
+import AvatarCard from '@/ui/avatar-card';
+import DateCell from '@/ui/date-cell';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Badge, Checkbox } from 'rizzui';
 import { TicketsDataType } from './table';
@@ -116,9 +116,9 @@ export const ticketsColumns = [
       },
     }) => (
       <TableRowActionGroup
-        onDelete={() =>
-          meta?.handleDeleteRow && meta?.handleDeleteRow(row.original)
-        }
+        // onDelete={() =>
+        //   // meta?.handleDeleteRow && meta?.handleDeleteRow(row.original)
+        // }
       />
     ),
   }),

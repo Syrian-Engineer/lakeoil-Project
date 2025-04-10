@@ -14,8 +14,8 @@ import type {
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { PiDotsSixVerticalBold } from "react-icons/pi";
-import cn from "../../utils/class-names";
-import { useIsMounted } from "@core/hooks/use-is-mounted";
+import cn from "@/utils/class-names";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 
 interface Props {
   as?: React.ElementType;

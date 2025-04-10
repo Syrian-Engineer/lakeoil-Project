@@ -1,9 +1,9 @@
 "use client";
 
 import { PiCaretDownBold } from "react-icons/pi";
-import Pagination, { type PaginationProps } from "@core/ui/pagination";
+import Pagination, { type PaginationProps } from "@/ui/pagination";
 import { Select } from "rizzui";
-import cn from "@core/utils/class-names";
+import cn from "@/utils/class-names";
 
 const paginationLimitOptions = [5, 10, 15, 20, 25].map((v, idx) => ({
   id: idx,

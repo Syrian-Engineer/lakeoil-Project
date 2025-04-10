@@ -3,7 +3,7 @@
 import {
   getChartColorByTrafficShare,
   getTrafficShare,
-} from '@core/components/table-utils/get-traffic-share';
+} from '@/components/table-utils/get-traffic-share';
 import { createColumnHelper } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { PiArrowSquareOut } from 'react-icons/pi';

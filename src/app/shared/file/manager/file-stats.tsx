@@ -1,16 +1,16 @@
 'use client';
 
 import { Title, Text, Button } from 'rizzui';
-import cn from '@core/utils/class-names';
-import DocIcon from '@core/components/icons/doc-solid';
-import ImageIcon from '@core/components/icons/image-solid';
-import MusicIcon from '@core/components/icons/music-solid';
-import VideoIcon from '@core/components/icons/video-solid';
-import DriveIcon from '@core/components/icons/drive-solid';
-import { useScrollableSlider } from '@core/hooks/use-scrollable-slider';
+import cn from '@/utils/class-names';
+import DocIcon from '@/components/icons/doc-solid';
+import ImageIcon from '@/components/icons/image-solid';
+import MusicIcon from '@/components/icons/music-solid';
+import VideoIcon from '@/components/icons/video-solid';
+import DriveIcon from '@/components/icons/drive-solid';
+import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
-import MetricCard from '@core/components/cards/metric-card';
-import CircleProgressBar from '@core/components/charts/circle-progressbar';
+import MetricCard from '@/components/cards/metric-card';
+import CircleProgressBar from '@/components/charts/circle-progressbar';
 
 type FileStatsType = {
   className?: string;
@@ -59,7 +59,7 @@ const filesStatData = [
   },
 ];
 // @md:grid-cols-2 @2xl:grid-cols-3 @3xl:grid-cols-4 @7xl:grid-cols-5
- default function FileStats({ className }: FileStatsType) {
+ export default function FileStats({ className }: FileStatsType) {
   const {
     sliderEl,
     sliderPrevBtn,

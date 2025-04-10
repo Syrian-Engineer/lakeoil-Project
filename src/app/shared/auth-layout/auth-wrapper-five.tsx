@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Title } from 'rizzui';
-import cn from '@core/utils/class-names';
+import cn from '@/utils/class-names';
 import {
   PiAppleLogoBold,
   PiArrowLeftBold,
@@ -12,8 +12,8 @@ import {
   PiLinkedinLogoBold,
 } from 'react-icons/pi';
 import { FcGoogle } from 'react-icons/fc';
-import TreeShape from '@core/components/shape/tree';
-import { siteConfig } from '@/config/site.config';
+import TreeShape from '@/components/shape/tree';
+// import { siteConfig } from '@/config/site.config';
 
 const socialShare = [
   {
@@ -89,7 +89,7 @@ export default function AuthWrapperFive({
                 href={'/'}
                 className="mb-6 inline-block max-w-[168px] xl:mb-8"
               >
-                <Image src={siteConfig.logo} alt={siteConfig.title} />
+                {/* <Image src={siteConfig.logo} alt={siteConfig.title} /> */}
               </Link>
               <Title
                 as="h2"

@@ -1,6 +1,6 @@
 import { ROLES } from '@/config/constants';
-import { avatarIds } from '@core/utils/get-avatar';
-import { getRandomArrayElement } from '@core/utils/get-random-array-element';
+import { avatarIds } from '@/utils/get-avatar';
+import { getRandomArrayElement } from '@/utils/get-random-array-element';
 
 export const users = [
   {

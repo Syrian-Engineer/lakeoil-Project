@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { Title, Text } from 'rizzui/typography';
-import cn from '@core/utils/class-names';
-import { members } from '@/data/members-data';
-import TrophyIcon from '@core/components/icons/trophy';
-import WidgetCard from '@core/components/cards/widget-card';
+import cn from '@/utils/class-names';
+import { members } from '@/app/_data/members-data';
+import TrophyIcon from '@/components/icons/trophy';
+import WidgetCard from '@/components/cards/widget-card';
 
 export default function Members({ className }: { className?: string }) {
   return (

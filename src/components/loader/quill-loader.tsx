@@ -1,4 +1,4 @@
-import cn from '../../utils/class-names';
+import cn from '@/utils/class-names';
 import { Skeleton } from '../../ui/skeleton';
 
 interface SelectLoaderProps {

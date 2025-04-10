@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ActionIcon } from 'rizzui';
-import cn from '@core/utils/class-names';
+import cn from '@/utils/class-names';
 import { PiGridFour, PiListBullets } from 'react-icons/pi';
 
 export default function ViewSwitcher() {

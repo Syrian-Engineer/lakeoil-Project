@@ -4,7 +4,7 @@ import logoImg from '@public/logo-short.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, Title } from 'rizzui';
-import cn from '@core/utils/class-names';
+import cn from '@/utils/class-names';
 import { PiArrowLeftBold } from 'react-icons/pi';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook } from 'react-icons/bs';

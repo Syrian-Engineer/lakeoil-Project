@@ -1,11 +1,11 @@
 'use client';
 
 import { customersWithMostTicketColumns } from './columns';
-import { customerWithTickets } from '@/data/customer-with-most-tickets';
-import WidgetCard from '@core/components/cards/widget-card';
-import { useTanStackTable } from '@core/components/table/custom/use-TanStack-Table';
-import Table from '@core/components/table';
-import cn from '@core/utils/class-names';
+import { customerWithTickets } from '@/app/_data/customer-with-most-tickets';
+import WidgetCard from '@/components/cards/widget-card';
+import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import Table from '@/components/table';
+import cn from '@/utils/class-names';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { Input } from 'rizzui';
 
@@ -28,7 +28,7 @@ export default function CustomerWithMostTickets({
         },
       },
       meta: {
-        handleDeleteRow: (row) => {
+        handleDeleteRow: (row:any) => {
           setData((prev) => prev.filter((r) => r.id !== row.id));
         },
       },

@@ -10,7 +10,6 @@ import {
   Tooltip,
   ResponsiveContainer,
   ComposedChart,
-  Line,
 } from 'recharts';
 import { useMedia } from '@/hooks/use-media';
 import { CustomYAxisTick } from '@/components/charts/custom-yaxis-tick';

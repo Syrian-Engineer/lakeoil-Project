@@ -1,8 +1,8 @@
-import { getRandomArrayElement } from '@core/utils/get-random-array-element';
+import { getRandomArrayElement } from '@/utils/get-random-array-element';
 
 const reviewStatus = ['Approved', 'Rejected', 'Pending'];
 
-import { avatarIds } from '@core/utils/get-avatar';
+import { avatarIds } from '@/utils/get-avatar';
 
 export type Review = {
   id: string;

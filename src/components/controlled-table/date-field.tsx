@@ -1,6 +1,6 @@
 'use client';
 
-import { DatePicker, DatePickerProps } from '@core/ui/datepicker';
+import { DatePicker, DatePickerProps } from '@/ui/datepicker';
 
 export default function DateFiled({
   onClear,

@@ -1,10 +1,10 @@
 import { routes } from "@/config/routes";
 // import { DUMMY_ID } from "@/config/constants";
 import {
-  PiShoppingCartDuotone,
+  // PiShoppingCartDuotone,
   // PiHeadsetDuotone,
-  PiPackageDuotone,
-  PiChartBarDuotone,
+  // PiPackageDuotone,
+  // PiChartBarDuotone,
   // PiCurrencyDollarDuotone,
   // PiSquaresFourDuotone,
   // PiGridFourDuotone,
@@ -33,11 +33,11 @@ import {
   // PiChatCenteredDotsDuotone,
   // PiCalendarPlusDuotone,
   // PiEnvelopeDuotone,
-  PiCurrencyCircleDollarDuotone,
-  PiBriefcaseDuotone,
+  // PiCurrencyCircleDollarDuotone,
+  // PiBriefcaseDuotone,
   // PiHouseLineDuotone,
   // PiAirplaneTiltDuotone,
-  PiFolder,
+  // PiFolder,
   // PiCaretCircleUpDownDuotone,
   // PiListNumbersDuotone,
   // PiCoinDuotone,

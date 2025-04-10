@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import WidgetCard from '@core/components/cards/widget-card';
-import cn from '@core/utils/class-names';
-import Table from '@core/components/table';
-import { useTanStackTable } from '@core/components/table/custom/use-TanStack-Table';
-import { websiteMetricData } from '@/data/website-metrics-data';
-import TablePagination from '@core/components/table/pagination';
+import WidgetCard from '@/components/cards/widget-card';
+import cn from '@/utils/class-names';
+import Table from '@/components/table';
+import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import { websiteMetricData } from '@/app/_data/website-metrics-data';
+import TablePagination from '@/components/table/pagination';
 import { Input } from 'rizzui';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { websiteMetricColumns } from './columns';

@@ -4,10 +4,10 @@ import React from "react";
 import dynamic from "next/dynamic";
 import isEmpty from "lodash/isEmpty";
 import { Title, Loader } from "rizzui";
-import cn from "@core/utils/class-names";
+import cn from "@/utils/class-names";
 import type { TableFilterProps } from "./table-filter";
 import type { TablePaginationProps } from "./table-pagination";
-import Table, { TableProps } from "@core/components/legacy-table";
+import Table, { TableProps } from "@/components/legacy-table";
 const TableFilter = dynamic(() => import("./table-filter"), { ssr: false });
 const TablePagination = dynamic(() => import("./table-pagination"), { ssr: false });
 

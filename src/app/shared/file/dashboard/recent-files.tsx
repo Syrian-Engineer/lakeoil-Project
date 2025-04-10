@@ -1,7 +1,7 @@
 'use client';
 
 import { Card } from '@/app/shared/file/manager/file-grid/grid';
-import FolderIcon from '@core/components/icons/folder-solid';
+import FolderIcon from '@/components/icons/folder-solid';
 import Link from 'next/link';
 import { Title } from 'rizzui';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import WidgetCard from '@core/components/cards/widget-card';
+import WidgetCard from '@/components/cards/widget-card';
 import { PiChartBarLight } from 'react-icons/pi';
 import { Title, Text } from 'rizzui';
 import {
@@ -11,7 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { CustomTooltip } from '@core/components/charts/custom-tooltip';
+import { CustomTooltip } from '@/components/charts/custom-tooltip';
 
 const data = [
   {

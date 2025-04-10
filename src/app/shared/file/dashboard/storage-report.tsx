@@ -1,10 +1,10 @@
 'use client';
 
-import WidgetCard from '@core/components/cards/widget-card';
-import { CustomTooltip } from '@core/components/charts/custom-tooltip';
-import TrendingUpIcon from '@core/components/icons/trending-up';
-import { useMedia } from '@core/hooks/use-media';
-import cn from '@core/utils/class-names';
+import WidgetCard from '@/components/cards/widget-card';
+import { CustomTooltip } from '@/components/charts/custom-tooltip';
+import TrendingUpIcon from '@/components/icons/trending-up';
+import { useMedia } from '@/hooks/use-media';
+import cn from '@/utils/class-names';
 import {
   Bar,
   BarChart,

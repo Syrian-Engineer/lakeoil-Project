@@ -5,9 +5,9 @@ import dayjs from 'dayjs';
 import { Area, AreaChart, ResponsiveContainer } from 'recharts';
 import { Text, Title } from 'rizzui';
 import { websiteMetricDataType } from '.';
-import { getChartColorByEngagementRate } from '@core/components/table-utils/get-chart-color-by-engagement-rate';
-import { getEngagementRate } from '@core/components/table-utils/get-engagement-rate';
-import { getBounceRate } from '@core/components/table-utils/get-bounce-rate';
+import { getChartColorByEngagementRate } from '@/components/table-utils/get-chart-color-by-engagement-rate';
+import { getEngagementRate } from '@/components/table-utils/get-engagement-rate';
+import { getBounceRate } from '@/components/table-utils/get-bounce-rate';
 
 const columnHelper = createColumnHelper<websiteMetricDataType>();
 

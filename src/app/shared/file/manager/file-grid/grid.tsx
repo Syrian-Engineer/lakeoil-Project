@@ -1,8 +1,8 @@
 'use client';
 
 import Favorite from '@/app/shared/file/manager/favorite';
-import { MoreActions } from '@core/components/table-utils/more-actions';
-import cn from '@core/utils/class-names';
+import { MoreActions } from '@/components/table-utils/more-actions';
+import cn from '@/utils/class-names';
 import { Title } from 'rizzui';
 
 export default function Grid({

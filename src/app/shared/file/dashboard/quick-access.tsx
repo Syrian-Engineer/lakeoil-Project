@@ -1,15 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import cn from '@core/utils/class-names';
+import cn from '@/utils/class-names';
 import { Title, Text, Button, Flex } from 'rizzui';
-import XMLIcon from '@core/components/icons/xml-solid';
-import PDFIcon from '@core/components/icons/pdf-solid';
-import DocIcon from '@core/components/icons/doc-solid';
-import ImageIcon from '@core/components/icons/image-solid';
-import FolderIcon from '@core/components/icons/folder-solid';
+import XMLIcon from '@/components/icons/xml-solid';
+import PDFIcon from '@/components/icons/pdf-solid';
+import DocIcon from '@/components/icons/doc-solid';
+import ImageIcon from '@/components/icons/image-solid';
+import FolderIcon from '@/components/icons/folder-solid';
 import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
-import { useScrollableSlider } from '@core/hooks/use-scrollable-slider';
+import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 
 const mockData = [
   {

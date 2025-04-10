@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import dynamic from "next/dynamic";
 import { PiMagnifyingGlassBold, PiFunnel, PiXBold } from "react-icons/pi";
 import { Button, ActionIcon, Input, Title, Drawer } from "rizzui";
-import cn from "@core/utils/class-names";
-import { useMedia } from "@core/hooks/use-media";
-import { ToggleColumns } from "@core/components/legacy-table";
+import cn from "@/utils/class-names";
+import { useMedia } from "@/hooks/use-media";
+import { ToggleColumns } from "@/components/legacy-table";
 
 // const Drawer = dynamic(() => import('rizzui').then((module) => module.Drawer), {
 //   ssr: false,

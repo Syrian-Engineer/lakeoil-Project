@@ -7,13 +7,13 @@ import {
   supportStatuses,
   SupportStatusType,
   supportTypes,
-} from '@/data/support-inbox';
-import { useHover } from '@core/hooks/use-hover';
-import { useMedia } from '@core/hooks/use-media';
-import { LineGroup, Skeleton } from '@core/ui/skeleton';
-import cn from '@core/utils/class-names';
-import { getRelativeTime } from '@core/utils/get-relative-time';
-import rangeMap from '@core/utils/range-map';
+} from '@/app/_data/support-inbox';
+import { useHover } from '@/hooks/use-hover';
+import { useMedia } from '@/hooks/use-media';
+import { LineGroup, Skeleton } from '@/ui/skeleton';
+import cn from '@/utils/class-names';
+import { getRelativeTime } from '@/utils/get-relative-time';
+import rangeMap from '@/utils/range-map';
 import { useAtom } from 'jotai';
 import { atomWithReset, atomWithStorage } from 'jotai/utils';
 import { useRouter } from 'next/navigation';

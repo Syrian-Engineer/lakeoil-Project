@@ -1,6 +1,6 @@
 'use client';
 
-import cn from '../../utils/class-names';
+import cn from '@/utils/class-names';
 import { IconType } from 'react-icons/lib';
 import { PiArrowDownRight, PiArrowUpRight } from 'react-icons/pi';
 

@@ -1,9 +1,9 @@
 "use client";
 
 import RcTable from "rc-table";
-import cn from "@core/utils/class-names";
+import cn from "@/utils/class-names";
 import { PiTextColumns } from "react-icons/pi";
-import { addSpacesToCamelCase } from "@core/utils/add-spaces-to-camel-case";
+import { addSpacesToCamelCase } from "@/utils/add-spaces-to-camel-case";
 import {
   Empty,
   ActionIcon,

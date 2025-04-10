@@ -1,7 +1,7 @@
 import { Title, Text } from 'rizzui/typography';
-import cn from '@core/utils/class-names';
-import WidgetCard from '@core/components/cards/widget-card';
-import CircleProgressBar from '@core/components/charts/circle-progressbar';
+import cn from '@/utils/class-names';
+import WidgetCard from '@/components/cards/widget-card';
+import CircleProgressBar from '@/components/charts/circle-progressbar';
 
 const data = [
   {

@@ -1,8 +1,8 @@
 import { createId } from '@paralleldrive/cuid2';
-import SuitcaseIcon from '@core/components/icons/suit-case';
-import CheckCircleIcon from '@core/components/icons/check-circle';
-import HourGlassRoundIcon from '@core/components/icons/hour-glass-round';
-import StackIcon from '@core/components/icons/stack';
+import SuitcaseIcon from '@/components/icons/suit-case';
+import CheckCircleIcon from '@/components/icons/check-circle';
+import HourGlassRoundIcon from '@/components/icons/hour-glass-round';
+import StackIcon from '@/components/icons/stack';
 import { IconType } from 'react-icons/lib';
 
 export const projectStatData: StatType[] = [

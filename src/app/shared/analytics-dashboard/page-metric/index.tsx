@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import ButtonGroupAction from '@core/components/charts/button-group-action';
-import { DatePicker } from '@core/ui/datepicker';
+import ButtonGroupAction from '@/components/charts/button-group-action';
+import { DatePicker } from '@/ui/datepicker';
 import { Flex, Title } from 'rizzui';
-import cn from '@core/utils/class-names';
-import { pageMetricData } from '@/data/page-metrics-data';
+import cn from '@/utils/class-names';
+import { pageMetricData } from '@/app/_data/page-metrics-data';
 import { pageMetricsColumns } from '@/app/shared/analytics-dashboard/page-metric/columns';
-import Table from '@core/components/table';
-import { useTanStackTable } from '@core/components/table/custom/use-TanStack-Table';
-import TablePagination from '@core/components/table/pagination';
+import Table from '@/components/table';
+import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import TablePagination from '@/components/table/pagination';
 
 export type PageMetricDataType = (typeof pageMetricData)[number];
 

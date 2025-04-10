@@ -4,7 +4,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
-import { Form } from '@core/ui/form';
+import { Form } from '@/ui/form';
 import {
   Button,
   ActionIcon,
@@ -21,9 +21,9 @@ import {
   folders,
   SnippetType,
   snippetsAndTemplates,
-} from '@/data/snippets-and-templates';
-import { avatarIds } from '@core/utils/get-avatar';
-import { getRandomArrayElement } from '@core/utils/get-random-array-element';
+} from '@/app/_data/snippets-and-templates';
+import { avatarIds } from '@/utils/get-avatar';
+import { getRandomArrayElement } from '@/utils/get-random-array-element';
 import {
   CreateSnippetInput,
   createSnippetSchema,
@@ -33,7 +33,7 @@ import {
   createTemplateSchema,
 } from '@/validators/create-template.schema';
 
-const QuillEditor = dynamic(() => import('@core/ui/quill-editor'), {
+const QuillEditor = dynamic(() => import('@/ui/quill-editor'), {
   ssr: false,
   loading: () => (
     <div className="grid h-[111px] place-content-center">

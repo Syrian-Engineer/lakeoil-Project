@@ -1,7 +1,7 @@
 'use client';
 
 import { Title, Text } from 'rizzui';
-import WidgetCard from '@core/components/cards/widget-card';
+import WidgetCard from '@/components/cards/widget-card';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 const data = [

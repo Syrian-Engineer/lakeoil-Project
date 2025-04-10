@@ -1,6 +1,6 @@
 "use client";
 
-import cn from "@core/utils/class-names";
+import cn from "@/utils/class-names";
 import { forwardRef } from "react";
 import { Input, InputProps } from "rizzui";
 
