@@ -5,9 +5,9 @@ import {
 } from "recharts/types/component/DefaultTooltipContent";
 import { TooltipProps } from "recharts";
 import { Text } from "rizzui";
-import cn from "../../utils/class-names";
-import { addSpacesToCamelCase } from "../../utils/add-spaces-to-camel-case";
-import { formatNumber } from "../../utils/format-number";
+import cn from "@/utils/class-names";
+import { addSpacesToCamelCase } from "@/utils/add-spaces-to-camel-case";
+import { formatNumber } from "@/utils/format-number";
 
 function isValidHexColor(colorCode: string) {
   const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;

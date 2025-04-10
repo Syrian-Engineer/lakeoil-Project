@@ -1,5 +1,5 @@
 'use client';
-import cn from '@/utils/class-names';
+import cn from "@/utils/class-names";
 import { useEffect, useRef, useState } from 'react';
 
 const classes = {

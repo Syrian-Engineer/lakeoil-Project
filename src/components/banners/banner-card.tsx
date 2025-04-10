@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Title } from "rizzui/typography";
-import cn from "../../utils/class-names";
+import cn from "@/utils/class-names";
 
 type BannerCardProps = {
   title: string;

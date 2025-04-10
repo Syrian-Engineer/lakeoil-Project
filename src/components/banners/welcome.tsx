@@ -1,7 +1,7 @@
 "use client";
 
 import { Title, Text } from "rizzui";
-import cn from "../../utils/class-names";
+import cn from "@/utils/class-names";
 
 type WelcomeBannerTypes = {
   title: React.ReactNode;

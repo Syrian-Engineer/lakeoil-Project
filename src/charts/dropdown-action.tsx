@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Select, SelectOption, SelectProps } from "rizzui";
-import cn from "../../utils/class-names";
+import cn from "@/utils/class-names";
 import { PiCalendarBlank, PiCaretDownBold } from "react-icons/pi";
 
 type Options = {
