@@ -8,7 +8,7 @@ import { Checkbox, Password, Button, Input, Text } from 'rizzui';
 import { Form } from '@/ui/form';
 import { routes } from '@/config/routes';
 import { loginSchema, LoginSchema } from '@/validators/login.schema';
-import getAuth from '../_lib/data-services';
+// import getAuth from '../_lib/data-services';
 
 
 const initialValues: LoginSchema = {
@@ -24,8 +24,8 @@ export default function SignInForm() {
   const[password,setPassword] = useState("");
 
   const onSubmit: SubmitHandler<LoginSchema> = () => {
-    const accesstoken =  getAuth({email,password})
-    console.log(accesstoken)
+    // const accesstoken =  getAuth({email,password})
+    // console.log(accesstoken)
   };
 
   return (
