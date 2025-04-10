@@ -7,7 +7,7 @@ import Table from '@/components/table';
 import { fileListColumns } from './columns';
 import { allFilesData } from '@/app/_data/all-files';
 import TablePagination from '@/components/table/pagination';
-import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import { useTanStackTable } from '@/components/custom/use-TanStack-Table';
 
 export type FileListDataType = (typeof allFilesData)[number];
 
