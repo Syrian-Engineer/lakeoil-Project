@@ -4,7 +4,7 @@ import React from 'react';
 import WidgetCard from '@/components/cards/widget-card';
 import cn from '@/utils/class-names';
 import Table from '@/components/table';
-import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import { useTanStackTable } from '@/components/custom/use-TanStack-Table';
 import { websiteMetricData } from '@/app/_data/website-metrics-data';
 import TablePagination from '@/components/table/pagination';
 import { Input } from 'rizzui';
