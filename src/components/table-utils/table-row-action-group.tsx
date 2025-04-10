@@ -1,10 +1,10 @@
 "use client";
 
-import EyeIcon from "@core/components/icons/eye";
-import PencilIcon from "@core/components/icons/pencil";
+import EyeIcon from "@/components/icons/eye";
+import PencilIcon from "@/components/icons/pencil";
 import { ActionIcon, Flex, Tooltip } from "rizzui";
 import Link from "next/link";
-import cn from "@core/utils/class-names";
+import cn from "@/utils/class-names";
 import DeletePopover from "../delete-popover";
 
 export default function TableRowActionGroup({
