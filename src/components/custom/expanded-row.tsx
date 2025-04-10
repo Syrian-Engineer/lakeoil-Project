@@ -1,6 +1,6 @@
 "use client";
 
-import { TanTableProductsDataType } from "@core/types";
+import { TanTableProductsDataType } from "@/types";
 import { Row } from "@tanstack/react-table";
 import Image from "next/image";
 import { PiXBold } from "react-icons/pi";

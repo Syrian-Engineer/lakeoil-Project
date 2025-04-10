@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import cn from "@core/utils/class-names";
+import cn from "@/utils/class-names";
 import { CSS } from "@dnd-kit/utilities";
 import { CSSProperties, Fragment } from "react";
-import { ActionIcon, Flex, Table, Text, Title } from "rizzui";
-import { getColumnOptions } from "../util";
+import { ActionIcon, Table, Text, Title } from "rizzui";
+import { getColumnOptions } from "../table/util";
 import { Cell, Header, Row, flexRender } from "@tanstack/react-table";
 import {
   useSortable,
@@ -13,10 +12,10 @@ import {
   verticalListSortingStrategy,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { PiCaretUpFill, PiCaretDownFill, PiXBold, PiDotsSixVerticalBold } from "react-icons/pi";
-import { CustomBodyCellProps, CustomBodyRowProps, CustomHeaderCellProps } from "../table-types";
-import { TanTableProductsDataType } from "@core/types";
+import { PiCaretUpFill, PiCaretDownFill,  PiDotsSixVerticalBold } from "react-icons/pi";
+import { TanTableProductsDataType } from "@/types";
 import { CustomExpandedComponent } from "./expanded-row";
+import { CustomHeaderCellProps, CustomBodyCellProps, CustomBodyRowProps } from "../table/table-types";
 
 // DnD Head wrapper component
 export function DragAbleHeadWrapper<TData extends Record<string, any>>({
@@ -31,7 +30,7 @@ export function DragAbleHeadWrapper<TData extends Record<string, any>>({
         items={columnOrder!}
         strategy={horizontalListSortingStrategy}
       >
-        {headerGroup?.headers.map((header) => {
+        {headerGroup?.headers.map((header:any) => {
           return (
             <DragAbleHead
               key={header.id}
@@ -58,7 +57,7 @@ function DragAbleHead<TData extends Record<string, any>>({
   isLeftScrollable,
   isRightScrollable,
 }: DragAbleHeadProps<TData>) {
-  const { canPin, isPinned, canResize, isLeftPinned, isRightPinned, isColumnDraggable } =
+  const { canPin, isPinned, canResize, isLeftPinned, isRightPinned } =
     getColumnOptions(header.column);
   const { attributes, isDragging, listeners, setNodeRef, transform } = useSortable({
     id: header.column.id,
@@ -82,12 +81,12 @@ function DragAbleHead<TData extends Record<string, any>>({
         isPinned && canPin && "sticky z-10",
         !isPinned && canResize && "relative",
         isDragging && "group !relative !z-50",
-        !isPinned && isColumnDraggable && "group relative",
+        // !isPinned && isColumnDraggable && "group relative",
         isPinned && isLeftScrollable && "sticky-right bg-gray-100",
         isPinned && isRightScrollable && "sticky-left bg-gray-100"
       )}
     >
-      {!isPinned && isColumnDraggable && (
+      {/* {!isPinned && isColumnDraggable && (
         <button
           type="button"
           {...attributes}
@@ -97,7 +96,7 @@ function DragAbleHead<TData extends Record<string, any>>({
         >
           <PiDotsSixVerticalBold size={20} />
         </button>
-      )}
+      )} */}
 
       {header.isPlaceholder
         ? null
@@ -224,7 +223,7 @@ export function DragAbleRowWrapper<TData extends Record<string, any>>({
       items={dataIds!}
       strategy={verticalListSortingStrategy}
     >
-      {table.getRowModel().rows.map((row) => {
+      {table.getRowModel().rows.map((row:any) => {
         return (
           <Fragment key={row.id}>
             <DragAbleRow

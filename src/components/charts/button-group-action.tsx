@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AdvancedRadio } from "rizzui";
-import cn from "../../utils/class-names";
+import cn from "@/utils/class-names";
 
 type ButtonGroupActionProps = {
   name?: string;
