@@ -3,7 +3,7 @@
 import { customersWithMostTicketColumns } from './columns';
 import { customerWithTickets } from '@/app/_data/customer-with-most-tickets';
 import WidgetCard from '@/components/cards/widget-card';
-import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import { useTanStackTable } from '@/components/custom/use-TanStack-Table';
 import Table from '@/components/table';
 import cn from '@/utils/class-names';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';

@@ -1,7 +1,7 @@
 'use client';
 
 import { ticketsData } from '@/app/_data/tickets-data';
-import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import { useTanStackTable } from '@/components/custom/use-TanStack-Table';
 import Table from '@/components/table';
 import TablePagination from '@/components/table/pagination';
 import { ticketsColumns } from './columns';
