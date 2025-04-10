@@ -1,6 +1,6 @@
 'use client';
 
-import cn from '../utils/class-names';
+import cn from '@/utils/class-names';
 import Slider, { type SliderProps } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
