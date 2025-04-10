@@ -1,11 +1,11 @@
-import TruckSolidIcon from '@core/components/icons/truck-solid';
-import BrushSolidIcon from '@core/components/icons/brush-solid';
-import CubeSolidIcon from '@core/components/icons/cube-solid';
-import FileStackIcon from '@core/components/icons/file-stack';
-import CloudTaskIcon from '@core/components/icons/cloud-task';
-import ShoppingBagSolidIcon from '@core/components/icons/shopping-bag-solid';
-import BulbSolidIcon from '@core/components/icons/bulb-solid';
-import ParcelMapIcon from '@core/components/icons/parcel-map';
+import TruckSolidIcon from '@/components/icons/truck-solid';
+import BrushSolidIcon from '@/components/icons/brush-solid';
+import CubeSolidIcon from '@/components/icons/cube-solid';
+import FileStackIcon from '@/components/icons/file-stack';
+import CloudTaskIcon from '@/components/icons/cloud-task';
+import ShoppingBagSolidIcon from '@/components/icons/shopping-bag-solid';
+import BulbSolidIcon from '@/components/icons/bulb-solid';
+import ParcelMapIcon from '@/components/icons/parcel-map';
 
 export const notificationsData = [
   {
