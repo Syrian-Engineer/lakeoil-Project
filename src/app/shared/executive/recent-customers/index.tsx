@@ -8,7 +8,7 @@ import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import WidgetCard from '@/components/cards/widget-card';
 import { recentCustomers } from '@/app/_data/recent-customers-data'; 
 import TablePagination from '@/components/table/pagination';
-import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import { useTanStackTable } from '@/components/custom/use-TanStack-Table';
 
 export type RecentCustomersDataType = (typeof recentCustomers)[number];
 
