@@ -2,7 +2,7 @@
 
 import { snippetsAndTemplates } from '@/app/_data/snippets-and-templates';
 import Table from '@/components/table';
-import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import { useTanStackTable } from '@/components/custom/use-TanStack-Table';
 import TableFooter from '@/components/table/footer';
 import { snippetsAndTemplatesColumns } from './columns';
 import Filters from './filters';
