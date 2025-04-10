@@ -8,7 +8,7 @@ import cn from '@/utils/class-names';
 import { pageMetricData } from '@/app/_data/page-metrics-data';
 import { pageMetricsColumns } from '@/app/shared/analytics-dashboard/page-metric/columns';
 import Table from '@/components/table';
-import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import { useTanStackTable } from '@/components/custom/use-TanStack-Table';
 import TablePagination from '@/components/table/pagination';
 
 export type PageMetricDataType = (typeof pageMetricData)[number];
