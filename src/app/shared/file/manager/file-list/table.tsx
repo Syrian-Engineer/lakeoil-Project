@@ -3,7 +3,7 @@
 import { Box } from 'rizzui';
 import { allFilesData } from '@/app/_data/all-files';
 import Table from '@/components/table';
-import { useTanStackTable } from '@/components/table/custom/use-TanStack-Table';
+import { useTanStackTable } from '@/components/custom/use-TanStack-Table';
 import TableFooter from '@/components/table/footer';
 import TablePagination from '@/components/table/pagination';
 import { allFilesColumns } from './columns';
