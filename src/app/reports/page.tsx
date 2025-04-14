@@ -1,7 +1,9 @@
+import ProjectDashboard from "../shared/project-dashboard";
+
 export default function Page(){
     return(
         <div>
-            Reports
+            <ProjectDashboard />
         </div>
     )
 }

@@ -1,7 +1,11 @@
+import MessageList from "./message-list";
+
 export default function Page(){
     return(
-        <div>
-            Alarms
+        <div className="w-full felx flex-col gap-12">
+           <div className="w-full">
+               <MessageList />
+           </div>
         </div>
     )
 }

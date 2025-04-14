@@ -1,4 +1,4 @@
-import docIcon from '@public/doc-icon.svg';
+import docIcon from "@public/doc-icon.svg"
 import pdfIcon from '@public/pdf-icon.svg';
 import xmlIcon from '@public/xml-icon.svg';
 import imageIcon from '@public/image-icon.svg';

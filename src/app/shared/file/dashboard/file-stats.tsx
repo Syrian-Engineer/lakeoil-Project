@@ -54,6 +54,47 @@ const filesStatData = [
     decreased: false,
     value: '+14.45',
   },
+  {
+    id: 5,
+    title: 'Total Musics',
+    metric: '63,076 GB',
+    fill: '#3872FA',
+    percentage: 54,
+    increased: true,
+    decreased: false,
+    value: '+14.45',
+  },
+  {
+    id: 6,
+    title: 'Total Musics',
+    metric: '63,076 GB',
+    fill: '#3872FA',
+    percentage: 54,
+    increased: true,
+    decreased: false,
+    value: '+14.45',
+  },
+  {
+    id: 7,
+    title: 'Total Musics',
+    metric: '63,076 GB',
+    fill: '#3872FA',
+    percentage: 54,
+    increased: true,
+    decreased: false,
+    value: '+14.45',
+  },
+  {
+    id: 8,
+    title: 'Total Musics',
+    metric: '63,076 GB',
+    fill: '#3872FA',
+    percentage: 54,
+    increased: true,
+    decreased: false,
+    value: '+14.45',
+  },
+
 ];
 
 export function FileStatGrid({ className }: { className?: string }) {

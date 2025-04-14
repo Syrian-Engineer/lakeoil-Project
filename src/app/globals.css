@@ -243,6 +243,10 @@
     fill-opacity: 0.1;
   }
 
+  .placeholder-black::placeholder {
+    color: black !important;
+  }
+
   .fill-opacity-20 {
     fill-opacity: 0.2;
   }
