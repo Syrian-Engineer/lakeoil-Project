@@ -8,7 +8,7 @@ import SingleJob from './single-job-page';
 import JobFeedRating from './job-feed-rating';
 import Breadcrumb from '@/ui/breadcrumb';
 import { Button, Text, Title } from 'rizzui';
-import { JobFeedFilterDrawer } from './job-feed-filter';
+// import { JobFeedFilterDrawer } from './job-feed-filter';
 import { type JobType, jobFeedData } from '@/app/_data/job-feed-data';
 import {
   PiMapPin,
@@ -21,7 +21,11 @@ import Link from 'next/link';
 
 let countPerPage = 4;
 
-export default function Page({ className }: { className?: string }) {
+interface Props{
+  className:string
+}
+
+export default function Page({className}:Props) {
   const [isLoading, setLoading] = useState(false);
   const [nextPage, setNextPage] = useState(countPerPage);
   let isLoadMore = nextPage < jobFeedData?.length;
