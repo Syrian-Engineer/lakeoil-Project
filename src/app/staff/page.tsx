@@ -21,11 +21,7 @@ import Link from 'next/link';
 
 let countPerPage = 4;
 
-interface Props{
-  className:string
-}
-
-export default function Page({className}:Props) {
+export default function Page() {
   const [isLoading, setLoading] = useState(false);
   const [nextPage, setNextPage] = useState(countPerPage);
   let isLoadMore = nextPage < jobFeedData?.length;
@@ -39,7 +35,7 @@ export default function Page({className}:Props) {
   }
 
   return (
-    <div className={cn(className)}>
+    <div className={""}>
       {jobFeedData.slice(0, nextPage).map((job, index) => {
         return <JobFeedCard key={index} data={job} />;
       })}
