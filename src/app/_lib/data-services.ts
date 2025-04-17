@@ -5,7 +5,7 @@ interface AuthProps {
   
 export  async function getAuth({ email, password }: AuthProps) {
     try {
-      const response = await fetch("https://api-lakeoil.onrender.com/auth/login", {
+      const response = await fetch("https://api-lakeoil.onrender.com/login", {
         method: "POST", // Specify the HTTP method as POST
         headers: {
           "Content-Type": "application/json", // Indicate that the body is JSON
@@ -22,8 +22,8 @@ export  async function getAuth({ email, password }: AuthProps) {
       const data = await response.json();
   
       // Return the access token (or handle it as needed)
-      console.log("Access Token:", data.accessToken);
-      return data.accessToken; // Assuming the server returns an `accessToken`
+      console.log("Access Token:", data);
+      return data; // Assuming the server returns an `accessToken`
     } catch (error) {
       console.error("Error during authentication:", error);
       throw error; // Rethrow the error for further handling

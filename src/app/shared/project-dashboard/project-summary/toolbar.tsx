@@ -13,6 +13,9 @@ import {
   Title,
 } from 'rizzui';
 import cn from '@/utils/class-names';
+import { VoiceInfo } from 'react-use/lib/useSpeech';
+import { useSetAtom } from 'jotai';
+import { showFilterCardAtom } from '@/atoms/ui-atoms';
 
 export const statusOptions = [
   {
@@ -41,9 +44,20 @@ interface TableToolbarProps<T extends Record<string, any>> {
 export default function ProjectSummaryToolbar<
   TData extends Record<string, any>,
 >({ table, className }: TableToolbarProps<TData>) {
+
+  const setShowFilterCard = useSetAtom(showFilterCardAtom); // ⬅️ use jotai setter
+
+  const handleFilterBtnClick = ()=>{
+    setShowFilterCard(prev=> !prev)
+  }
+
   return (
     <div className={cn('flex items-center justify-end gap-4', className)}>
-      <FilterElements table={table} />
+      <Button
+       onClick={handleFilterBtnClick}
+       >
+        Filter parameters
+      </Button>
       {table && (
         <Popover shadow="sm" placement="bottom-end">
           <Popover.Trigger>
@@ -84,80 +98,80 @@ export default function ProjectSummaryToolbar<
   );
 }
 
-function FilterElements<T extends Record<string, any>>({
-  table,
-}: TableToolbarProps<T>) {
-  const isFiltered =
-    table.getState().globalFilter || table.getState().columnFilters.length > 0;
-  return (
-    <>
-      <StatusField
-        options={statusOptions}
-        // value={table.getColumn('status')?.getFilterValue() ?? []}
-        onChange={(e) => table.getColumn('status')?.setFilterValue(e)}
-        getOptionValue={(option: { value: any }) => option.value}
-        getOptionDisplayValue={(option) =>
-          renderOptionDisplayValue(option.value as string)
-        }
-        displayValue={(selected: string) => renderOptionDisplayValue(selected)}
-        dropdownClassName="!z-20 h-auto"
-        className="w-auto"
-      />
+// function FilterElements<T extends Record<string, any>>({
+//   table,
+// }: TableToolbarProps<T>) {
+//   const isFiltered =
+//     table.getState().globalFilter || table.getState().columnFilters.length > 0;
+//   return (
+//     <>
+//       <StatusField
+//         options={statusOptions}
+//         // value={table.getColumn('status')?.getFilterValue() ?? []}
+//         onChange={(e) => table.getColumn('status')?.setFilterValue(e)}
+//         getOptionValue={(option: { value: any }) => option.value}
+//         getOptionDisplayValue={(option) =>
+//           renderOptionDisplayValue(option.value as string)
+//         }
+//         displayValue={(selected: string) => renderOptionDisplayValue(selected)}
+//         dropdownClassName="!z-20 h-auto"
+//         className="w-auto"
+//       />
 
-      {isFiltered && (
-        <Button
-          size="sm"
-          onClick={() => {
-            table.resetGlobalFilter();
-            table.resetColumnFilters();
-          }}
-          variant="flat"
-          className="h-9 bg-gray-200/70"
-        >
-          <PiTrashDuotone className="me-1.5 h-[17px] w-[17px]" /> Clear
-        </Button>
-      )}
-    </>
-  );
-}
+//       {isFiltered && (
+//         <Button
+//           size="sm"
+//           onClick={() => {
+//             table.resetGlobalFilter();
+//             table.resetColumnFilters();
+//           }}
+//           variant="flat"
+//           className="h-9 bg-gray-200/70"
+//         >
+//           <PiTrashDuotone className="me-1.5 h-[17px] w-[17px]" /> Clear
+//         </Button>
+//       )}
+//     </>
+//   );
+// }
 
-function renderOptionDisplayValue(value: string) {
-  switch (value.toString()) {
-    case 'onGoing':
-      return (
-        <div className="flex items-center">
-          <Badge color="warning" renderAsDot />
-          <Text className="ms-2 font-medium capitalize text-orange-dark">
-            On Going
-          </Text>
-        </div>
-      );
-    case 'completed':
-      return (
-        <div className="flex items-center">
-          <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium capitalize text-green-dark">
-            Completed
-          </Text>
-        </div>
-      );
-    case 'atRisk':
-      return (
-        <div className="flex items-center">
-          <Badge color="danger" renderAsDot />
-          <Text className="ms-2 font-medium capitalize text-red-dark">
-            At Risk
-          </Text>
-        </div>
-      );
-    default:
-      return (
-        <div className="flex items-center">
-          <Badge renderAsDot className="bg-gray-400" />
-          <Text className="ms-2 font-medium capitalize text-gray-600">
-            Delayed
-          </Text>
-        </div>
-      );
-  }
-}
+// function renderOptionDisplayValue(value: string) {
+//   switch (value.toString()) {
+//     case 'onGoing':
+//       return (
+//         <div className="flex items-center">
+//           <Badge color="warning" renderAsDot />
+//           <Text className="ms-2 font-medium capitalize text-orange-dark">
+//             On Going
+//           </Text>
+//         </div>
+//       );
+//     case 'completed':
+//       return (
+//         <div className="flex items-center">
+//           <Badge color="success" renderAsDot />
+//           <Text className="ms-2 font-medium capitalize text-green-dark">
+//             Completed
+//           </Text>
+//         </div>
+//       );
+//     case 'atRisk':
+//       return (
+//         <div className="flex items-center">
+//           <Badge color="danger" renderAsDot />
+//           <Text className="ms-2 font-medium capitalize text-red-dark">
+//             At Risk
+//           </Text>
+//         </div>
+//       );
+//     default:
+//       return (
+//         <div className="flex items-center">
+//           <Badge renderAsDot className="bg-gray-400" />
+//           <Text className="ms-2 font-medium capitalize text-gray-600">
+//             Delayed
+//           </Text>
+//         </div>
+//       );
+//   }
+// }

@@ -19,11 +19,7 @@ import {
 import cn from "@/utils/class-names";
 
 const options = [
-  { value: 5, label: "5" },
-  { value: 10, label: "10" },
-  { value: 15, label: "15" },
   { value: 20, label: "20" },
-  { value: 25, label: "25" },
 ];
 
 export default function TablePagination<TData extends Record<string, any>>({
@@ -51,7 +47,7 @@ export default function TablePagination<TData extends Record<string, any>>({
           variant="flat"
           options={options}
           className="w-12"
-          value={table.getState().pagination.pageSize}
+          value={20}
           onChange={(v: SelectOption) => {
             table.setPageSize(Number(v.value));
           }}

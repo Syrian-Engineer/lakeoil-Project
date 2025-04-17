@@ -7,115 +7,92 @@ import { ProjectSummaryDataType } from '.';
 
 const columnHelper = createColumnHelper<ProjectSummaryDataType>();
 
-export const allColumns = [
-  columnHelper.display({
-    id: 'id',
-    size: 10,
-    header: '#',
-    // cell: ({ row: { original } }) => original.project,
-    cell:"1"
-  }),
-  columnHelper.display({
-    id: 'Starting',
-    size: 100,
-    header: 'Starting Date	',
-    // cell: ({ row: { original } }) => original.manager,
-    cell:"2025-04-09 14:52:11	"
-  }),
-  columnHelper.display({
-    id: 'Creation',
-    size: 100,
-    header: 'Creation Date',
-    // cell: ({ row: { original } }) => original.dueData,
-    cell:"2025-02-24 13:55:00	"
-  }),
-  columnHelper.display({
-    id: 'Pump',
-    size: 100,
-    header: 'Pump',
-    // cell: ({ row: { original } }) => original.assignedTo,
-    cell:"P3 board T"
-  }),
-  columnHelper.display({
-    id: 'Amount',
-    size: 50,
-    header: 'Amount	',
-    // cell: ({ row: { original } }) => getStatusBadge(original.status),
-    cell:"26307"
-  }),
-  columnHelper.display({
-    id: 'Price',
-    size: 40,
-    header: 'Unit Price		',
-    // cell: ({ row: { original } }) => getStatusBadge(original.status),
-    cell:"3264"
-  }),
-  columnHelper.display({
-    id: 'Print ',
-    size: 30,
-    header: 'Print',
-    // cell: ({ row: { original } }) => getStatusBadge(original.status),
-    cell:"Print"
-  }),
-
-  columnHelper.display({
-    id: 'Fuel',
-    size: 60,
-    header: 'Fuel	',
-    // cell: ({ row: { original } }) => getStatusBadge(original.status),
-    cell:"Unleaded",
-    meta:{isExtra:true}
-  }),
-  columnHelper.display({
-    id: 'Electronic',
-    size: 100,
-    header: 'Electronic Total	',
-    // cell: ({ row: { original } }) => getStatusBadge(original.status),
-    cell:"51614.06",
-    meta: { isExtra: true } as { isExtra: boolean }, // ✅ fix
-  }),
-  columnHelper.display({
-    id: 'Virtual',
-    size: 100,
-    header: 'Virtual Total	',
-    // cell: ({ row: { original } }) => (
-    //   <div className="ps-4 text-[10px]">
-    //     <CircleProgressBar
-    //       size={40}
-    //       strokeWidth={4}
-    //       stroke="#f0f0f0"
-    //       percentage={original.progress}
-    //       label={`${original.progress}%`}
-    //       progressColor={getProgressColor(original.status)}
-    //     />
-    //   </div>
-    // ),
-    cell:"127.55",
-    meta: { isExtra: true },
-  }),
-  columnHelper.display({
-    id: 'Volume',
-    size: 30,
-    header: 'Volume	',
-    // cell: ({ row: { original } }) => getStatusBadge(original.status),
-    cell:"8.06",
-    meta: { isExtra: true },
-  }),
-  columnHelper.display({
-    id: 'Authorization',
-    size: 60,
-    header: 'Authorization',
-    // cell: ({ row: { original } }) => getStatusBadge(original.status),
-    cell:"Auto",
-    meta: { isExtra: true },
-  }),
-  columnHelper.display({
-    id: 'Car ',
-    size: 60,
-    header: 'Car Plate',
-    // cell: ({ row: { original } }) => getStatusBadge(original.status),
-    cell:"Auto",
-    meta: { isExtra: true },
-  }),
-];
-
+export function getColumns(){
+  return[
+    columnHelper.display({
+      id: 'id',
+      size: 10,
+      header: '#',
+      cell: ({ row }) => row.original.id,
+    }),
+    columnHelper.display({
+      id: 'Sales',
+      size: 100,
+      header: 'Sales ID',
+      cell: ({ row: { original } }) => original.sales_id,
+    }),
+    columnHelper.display({
+      id: 'Receipt',
+      size: 100,
+      header: 'Receipt ID',
+      cell: ({ row: { original } }) => original.receipt_id,
+    }),
+    columnHelper.display({
+      id: 'Station',
+      size: 100,
+      header: 'Station',
+      cell: ({ row: { original } }) => original.station_name,
+    }),
+    columnHelper.display({
+      id: 'Creation',
+      size: 50,
+      header: 'Creation Date	',
+      cell: ({ row: { original } }) => original.creation_date,
+    }),
+    columnHelper.display({
+      id: 'Pump',
+      size: 40,
+      header: 'Pump',
+      cell: ({ row: { original } }) => original.pump_name,
+    }),
+    columnHelper.display({
+      id: 'Nozzle',
+      size: 30,
+      header: 'Nozzle',
+      cell: ({ row: { original } }) => original.nozzle_name || "N/A",
+    }),
+  
+    columnHelper.display({
+      id: 'Fuel',
+      size: 60,
+      header: 'Fuel	',
+      cell: ({ row: { original } }) =>original.product_name,
+      meta:{isExtra:true}
+    }),
+    columnHelper.display({
+      id: 'Tank',
+      size: 60,
+      header: 'Tank',
+      cell: ({ row: { original } }) => original.tank_name,
+      meta: { isExtra: true } as { isExtra: boolean }, // ✅ fix
+    }),
+    columnHelper.display({
+      id: 'Volume',
+      size: 60,
+      header: 'Volume',
+      cell:({row:{original}})=>original.volume,
+      meta: { isExtra: true },
+    }),
+    columnHelper.display({
+      id: 'Amount',
+      size: 30,
+      header: 'Amount',
+      cell: ({ row: { original } }) => original.amount,
+      meta: { isExtra: true },
+    }),
+    columnHelper.display({
+      id: 'Unit',
+      size: 60,
+      header: 'Unit Price',
+      cell: ({ row: { original } }) => original.price,
+      meta: { isExtra: true },
+    }),
+    columnHelper.display({
+      id: 'Car ',
+      size: 60,
+      header: 'Car Plate',
+      cell: ({ row: { original } }) => original.car_plate,
+      meta: { isExtra: true },
+    }),
+  ]
+}
