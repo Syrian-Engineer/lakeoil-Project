@@ -38,7 +38,7 @@ export default function TablePagination<TData extends Record<string, any>>({
       justify="between"
       className={cn("@container", className)}
     >
-      <Flex align="center" className="w-auto shrink-0">
+      {/* <Flex align="center" className="w-auto shrink-0">   this is for select row per page 
         <Text className="hidden font-normal text-gray-600 @md:block">
           Rows per page
         </Text>
@@ -55,7 +55,7 @@ export default function TablePagination<TData extends Record<string, any>>({
           selectClassName="font-semibold text-xs ring-0 shadow-sm h-7"
           optionClassName="font-medium text-xs px-2 justify-center"
         />
-      </Flex>
+      </Flex> */}
       {showSelectedCount && (
         <Box className="hidden @2xl:block w-full">
           <Text>

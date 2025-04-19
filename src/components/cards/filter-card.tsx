@@ -1,14 +1,27 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Select, Title, Text } from 'rizzui';
+import { Select, Title, Text, Button } from 'rizzui';
+import { useSetAtom } from 'jotai';
+import { filterAtom } from '@/atoms/filter';
+import type { SelectOption } from 'rizzui';
+import { showFilterCardAtom } from '@/atoms/ui-atoms';
 
 export default function FilterCard() {
-  const [pumpOptions, setPumpOptions] = useState([]);
-  const [tankOptions, setTankOptions] = useState([]);
-  const [nozzleOptions, setNozzleOptions] = useState([]);
-  const [productOptions, setProductOptions] = useState([]);
+  const [pumpOptions, setPumpOptions] = useState<SelectOption[]>([]);
+  const [tankOptions, setTankOptions] = useState<SelectOption[]>([]);
+  const [nozzleOptions, setNozzleOptions] = useState<SelectOption[]>([]);
+  const [productOptions, setProductOptions] = useState<SelectOption[]>([]);
+
+  const [selectedPump, setSelectedPump] = useState<SelectOption[]>([]);
+  const [selectedTank, setSelectedTank] = useState<SelectOption[]>([]);
+  const [selectedNozzle, setSelectedNozzle] = useState<SelectOption[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<SelectOption[]>([]);
+
   const [loading, setLoading] = useState(true);
+  const setFilterAtom = useSetAtom(filterAtom); // jotai setter
+  const setShowFilterCard = useSetAtom(showFilterCardAtom);  // use jotai here 
+  
 
   useEffect(() => {
     const fetchFilters = async () => {
@@ -23,34 +36,16 @@ export default function FilterCard() {
 
         const { pumps, tanks, nozzles, products } = await res.json();
 
-        // Transform each array of objects to [{ label, value }] format
-        setPumpOptions(
-          pumps?.data?.page_records.map((item: any) => ({
+        const formatOptions = (items: any[] = []) =>
+          items.map((item: any) => ({
             label: item.name,
             value: item.name.toLowerCase().replace(/\s+/g, '_'),
-          })) || []
-        );
+          }));
 
-        setTankOptions(
-          tanks?.data?.page_records.map((item: any) => ({
-            label: item.name,
-            value: item.name.toLowerCase().replace(/\s+/g, '_'),
-          })) || []
-        );
-
-        setNozzleOptions(
-          nozzles?.data?.page_records.map((item: any) => ({
-            label: item.name,
-            value: item.name.toLowerCase().replace(/\s+/g, '_'),
-          })) || []
-        );
-
-        setProductOptions(
-          products?.data?.page_records.map((item: any) => ({
-            label: item.name,
-            value: item.name.toLowerCase().replace(/\s+/g, '_'),
-          })) || []
-        );
+        setPumpOptions(formatOptions(pumps?.data?.page_records));
+        setTankOptions(formatOptions(tanks?.data?.page_records));
+        setNozzleOptions(formatOptions(nozzles?.data?.page_records));
+        setProductOptions(formatOptions(products?.data?.page_records));
       } catch (err) {
         console.error('Failed to load filter data', err);
       } finally {
@@ -61,35 +56,122 @@ export default function FilterCard() {
     fetchFilters();
   }, []);
 
+  const handleSelectChange = (
+    options: SelectOption[] | null,
+    setter: React.Dispatch<React.SetStateAction<SelectOption[]>>
+  ) => {
+    setter(options ?? []);
+  };
+
+  const handleClearSelect = (
+    setter: React.Dispatch<React.SetStateAction<SelectOption[]>>
+  ) => {
+    setter([]);
+  };
+
+  const handleSaveFilters = () => {
+    setFilterAtom({
+      filtered_pumps: selectedPump,
+      filtered_tanks: selectedTank,
+      filtered_nozzles: selectedNozzle,
+      filtered_products: selectedProduct,
+    });
+    setShowFilterCard(prev=> !prev)
+    // console.log("Pupms",selectedPump)
+  };
+
+  const filterConfigs = [
+    {
+      label: 'Pump',
+      options: pumpOptions,
+      value: selectedPump,
+      setValue: setSelectedPump,
+    },
+    {
+      label: 'Tank',
+      options: tankOptions,
+      value: selectedTank,
+      setValue: setSelectedTank,
+    },
+    {
+      label: 'Nozzle',
+      options: nozzleOptions,
+      value: selectedNozzle,
+      setValue: setSelectedNozzle,
+    },
+    {
+      label: 'Product',
+      options: productOptions,
+      value: selectedProduct,
+      setValue: setSelectedProduct,
+    },
+  ];
+
   return (
     <div className="rounded-md border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-100/20">
-      <Title as="h1" className="text-lg font-semibold mb-4">
-        Select Filters
-      </Title>
+      <div className="flex items-center justify-between mb-4">
+        <Title as="h1" className="text-lg font-semibold">
+          Select Filters
+        </Title>
+        <div className="flex gap-2">
+          <Button
+            size="sm"
+            className='hover:scale-95 transition duration-300'
+            variant="outline"
+            onClick={() => {
+              setSelectedPump([]);
+              setSelectedTank([]);
+              setSelectedNozzle([]);
+              setSelectedProduct([]);
+            }}
+          >
+            Clear Fields
+          </Button>
+
+          {(selectedPump.length > 0 || selectedTank.length > 0 || selectedNozzle.length > 0 || selectedProduct.length > 0) && (
+            <Button
+            size="sm"
+            className="bg-primary text-white hover:bg-primary/90 hover:scale-95 transition duration-300"
+            onClick={handleSaveFilters}
+          >
+            Save Filters
+          </Button>
+          )}
+        </div>
+      </div>
 
       {loading ? (
         <Text>Loading filters...</Text>
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <Text className="mb-2 font-medium text-gray-700">Pump</Text>
-            <Select options={pumpOptions} placeholder="Select a pump" />
-          </div>
-
-          <div>
-            <Text className="mb-2 font-medium text-gray-700">Tank</Text>
-            <Select options={tankOptions} placeholder="Select a tank" />
-          </div>
-
-          <div>
-            <Text className="mb-2 font-medium text-gray-700">Nozzle</Text>
-            <Select options={nozzleOptions} placeholder="Select a nozzle" />
-          </div>
-
-          <div>
-            <Text className="mb-2 font-medium text-gray-700">Product</Text>
-            <Select options={productOptions} placeholder="Select a product" />
-          </div>
+          {filterConfigs.map((filter, index) => (
+            <div key={index} className="relative">
+              <Text className="mb-2 font-medium text-gray-700">{filter.label}</Text>
+              <Select
+                multiple
+                options={filter.options}
+                placeholder={`Select ${filter.label.toLowerCase()}(s)`}
+                value={filter.value}
+                onChange={(options) =>
+                  handleSelectChange(options as SelectOption[], filter.setValue)
+                }
+                displayValue={(selected) =>
+                  (selected as SelectOption[])
+                    .map((s) => s.label)
+                    .join(', ') || 'None selected'
+                }
+              />
+              {filter.value.length > 0 && (
+                <button
+                  className="absolute top-2/3 right-7 transform -translate-y-1/2 text-gray-500 text-xs hover:text-gray-600"
+                  onClick={() => handleClearSelect(filter.setValue)}
+                  aria-label="Clear selection"
+                >
+                  ❌
+                </button>
+              )}
+            </div>
+          ))}
         </div>
       )}
     </div>

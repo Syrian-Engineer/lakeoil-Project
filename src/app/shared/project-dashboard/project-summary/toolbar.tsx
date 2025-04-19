@@ -54,6 +54,7 @@ export default function ProjectSummaryToolbar<
   return (
     <div className={cn('flex items-center justify-end gap-4', className)}>
       <Button
+       className='hover:scale-95 transition duration-300 hover:bg-primary/90'
        onClick={handleFilterBtnClick}
        >
         Filter parameters

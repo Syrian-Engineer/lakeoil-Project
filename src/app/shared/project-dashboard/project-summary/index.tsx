@@ -10,6 +10,7 @@ import TablePagination from '@/components/table/pagination';
 import { useTanStackTable } from '@/components/custom/use-TanStack-Table';
 import { useAtom } from 'jotai';
 import { showFilterCardAtom } from '@/atoms/ui-atoms';
+import { filterAtom } from '@/atoms/filter';
 import FilterCard from '@/components/cards/filter-card';
 
 export interface ProjectSummaryDataType  {
@@ -31,12 +32,31 @@ export interface ProjectSummaryDataType  {
 export default function ProjectSummary({ className }: { className?: string }) {
   const [data, setData] = useState<ProjectSummaryDataType[]>([]);
   const [loading, setLoading] = useState(true);
+
   const [showFilterCard] = useAtom(showFilterCardAtom)  // use jotai here 
 
+  const [filters] = useAtom(filterAtom)
+  const { filtered_pumps, filtered_tanks, filtered_nozzles, filtered_products } = filters;
+  const [allfiltersEmpty,setAllFiltersEmpty] = useState(true)
+  
+  const allEmpty =
+      filtered_pumps.length === 0 &&
+      filtered_tanks.length === 0 &&
+      filtered_nozzles.length === 0 &&
+      filtered_products.length === 0;
+
   useEffect(() => {
+      setAllFiltersEmpty(allEmpty);
+  }, [allEmpty]);
+
+  //for fetching data Without query Parameteres
+  useEffect(() => {
+
+    if (!allfiltersEmpty) return; // 🛑 If any filter is active, skip this
+  
     const fetchData = async () => {
       const accessToken = sessionStorage.getItem('access_token');
-
+  
       try {
         const res = await fetch('/api/sales-reports', {
           method: 'GET',
@@ -44,7 +64,7 @@ export default function ProjectSummary({ className }: { className?: string }) {
             Authorization: `${accessToken}`,
           },
         });
-
+  
         if (res.ok) {
           const result = await res.json();
           setData(result.data.page_records || []);
@@ -57,10 +77,57 @@ export default function ProjectSummary({ className }: { className?: string }) {
         setLoading(false);
       }
     };
-
+  
     fetchData();
-  }, []);
-  console.log(data);
+  }, [allfiltersEmpty]);
+
+  //for fetching Data With Query Parameteres
+  useEffect(() => {
+    if (allfiltersEmpty) return;
+  
+    const fetchFilteredData = async () => {
+      setLoading(true);
+      const accessToken = sessionStorage.getItem('access_token');
+      const queryParams = buildQueryParams();
+  
+      try {
+        const res = await fetch(`/api/sales-reports/filtered?${queryParams}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `${accessToken}`,
+          },
+        });
+  
+        if (res.ok) {
+          const result = await res.json();
+          setData(result.data.page_records || []);
+        } else {
+          console.error('Failed to fetch filtered sales reports');
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchFilteredData();
+  }, [allfiltersEmpty, filtered_pumps, filtered_tanks, filtered_nozzles, filtered_products]);
+
+
+  const buildQueryParams = () => {
+    const query = new URLSearchParams();
+  
+    filtered_pumps.forEach((pump) => query.append('pump_names', pump.label));
+    filtered_tanks.forEach((tank) => query.append('tank_names', tank.label));
+    filtered_nozzles.forEach((nozzle) => query.append('nozzle_names', nozzle.label));
+    filtered_products.forEach((product) => query.append('product_names', product.label));
+  
+    query.append('page_number', '1'); // Example static param
+  
+    return query.toString();
+  };
+
   // ✅ These hooks are called no matter what
   const allColumns = getColumns();
   const { table } = useTanStackTable<ProjectSummaryDataType>({
@@ -70,7 +137,7 @@ export default function ProjectSummary({ className }: { className?: string }) {
       initialState: {
         pagination: {
           pageIndex: 0,
-          pageSize: 5,
+          pageSize: 20,
         },
       },
       enableColumnResizing: false,
