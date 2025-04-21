@@ -48,7 +48,7 @@ export default function ProjectSummaryToolbar<
   const setShowFilterCard = useSetAtom(showFilterCardAtom); // ⬅️ use jotai setter
 
   const handleFilterBtnClick = ()=>{
-    setShowFilterCard(prev=> !prev)
+    setShowFilterCard(true)
   }
 
   return (

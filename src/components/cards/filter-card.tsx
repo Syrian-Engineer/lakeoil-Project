@@ -19,35 +19,47 @@ export default function FilterCard() {
   const [selectedProduct, setSelectedProduct] = useState<SelectOption[]>([]);
 
   const [loading, setLoading] = useState(true);
-  const setFilterAtom = useSetAtom(filterAtom); // jotai setter
-  const setShowFilterCard = useSetAtom(showFilterCardAtom);  // use jotai here 
-  
+
+  const setFilterAtom = useSetAtom(filterAtom);
+  const setShowFilterCard = useSetAtom(showFilterCardAtom);
 
   useEffect(() => {
     const fetchFilters = async () => {
       const token = sessionStorage.getItem('access_token');
-
+      const headers = { Authorization: token ?? '' };
+    
       try {
-        const res = await fetch('/api/filter-options', {
-          headers: {
-            Authorization: token ?? '',
-          },
-        });
-
-        const { pumps, tanks, nozzles, products } = await res.json();
-
+        const [pumpsRes, tanksRes, nozzlesRes, productsRes] = await Promise.all([
+          fetch('/api/filters/pumps', { headers }),
+          fetch('/api/filters/tanks', { headers }),
+          fetch('/api/filters/nozzles', { headers }),
+          fetch('/api/filters/products', { headers }),
+        ]);
+    
+        if (!pumpsRes.ok || !tanksRes.ok || !nozzlesRes.ok || !productsRes.ok) {
+          const errDetails = await Promise.all([
+            pumpsRes.json(), tanksRes.json(), nozzlesRes.json(), productsRes.json()
+          ]);
+          console.error("One or more filter fetches failed:", errDetails);
+          return;
+        }
+    
+        const [pumps, tanks, nozzles, products] = await Promise.all([
+          pumpsRes.json(), tanksRes.json(), nozzlesRes.json(), productsRes.json()
+        ]);
+    
         const formatOptions = (items: any[] = []) =>
           items.map((item: any) => ({
             label: item.name,
-            value: item.name.toLowerCase().replace(/\s+/g, '_'),
+            value: item.name,
           }));
-
+    
         setPumpOptions(formatOptions(pumps?.data?.page_records));
         setTankOptions(formatOptions(tanks?.data?.page_records));
         setNozzleOptions(formatOptions(nozzles?.data?.page_records));
         setProductOptions(formatOptions(products?.data?.page_records));
       } catch (err) {
-        console.error('Failed to load filter data', err);
+        console.error('Error fetching filter data:', err);
       } finally {
         setLoading(false);
       }
@@ -76,8 +88,7 @@ export default function FilterCard() {
       filtered_nozzles: selectedNozzle,
       filtered_products: selectedProduct,
     });
-    setShowFilterCard(prev=> !prev)
-    // console.log("Pupms",selectedPump)
+    // setShowFilterCard((prev) => !prev);
   };
 
   const filterConfigs = [
@@ -116,7 +127,7 @@ export default function FilterCard() {
         <div className="flex gap-2">
           <Button
             size="sm"
-            className='hover:scale-95 transition duration-300'
+            className="hover:scale-95 transition duration-300"
             variant="outline"
             onClick={() => {
               setSelectedPump([]);
@@ -127,15 +138,17 @@ export default function FilterCard() {
           >
             Clear Fields
           </Button>
-
-          {(selectedPump.length > 0 || selectedTank.length > 0 || selectedNozzle.length > 0 || selectedProduct.length > 0) && (
+          {(selectedPump.length > 0 ||
+            selectedTank.length > 0 ||
+            selectedNozzle.length > 0 ||
+            selectedProduct.length > 0) && (
             <Button
-            size="sm"
-            className="bg-primary text-white hover:bg-primary/90 hover:scale-95 transition duration-300"
-            onClick={handleSaveFilters}
-          >
-            Save Filters
-          </Button>
+              size="sm"
+              className="bg-primary text-white hover:bg-primary/90 hover:scale-95 transition duration-300"
+              onClick={handleSaveFilters}
+            >
+              Save Filters
+            </Button>
           )}
         </div>
       </div>
@@ -144,8 +157,8 @@ export default function FilterCard() {
         <Text>Loading filters...</Text>
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-          {filterConfigs.map((filter, index) => (
-            <div key={index} className="relative">
+          {filterConfigs.map((filter) => (
+            <div key={filter.label} className="relative">
               <Text className="mb-2 font-medium text-gray-700">{filter.label}</Text>
               <Select
                 multiple

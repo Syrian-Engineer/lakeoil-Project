@@ -6,8 +6,6 @@ import {
   Box,
   Flex,
   Grid,
-  Select,
-  SelectOption,
   Text,
 } from "rizzui";
 import {
@@ -17,10 +15,6 @@ import {
   PiCaretDoubleRightBold,
 } from "react-icons/pi";
 import cn from "@/utils/class-names";
-
-const options = [
-  { value: 20, label: "20" },
-];
 
 export default function TablePagination<TData extends Record<string, any>>({
   table,
@@ -38,24 +32,6 @@ export default function TablePagination<TData extends Record<string, any>>({
       justify="between"
       className={cn("@container", className)}
     >
-      {/* <Flex align="center" className="w-auto shrink-0">   this is for select row per page 
-        <Text className="hidden font-normal text-gray-600 @md:block">
-          Rows per page
-        </Text>
-        <Select
-          size="sm"
-          variant="flat"
-          options={options}
-          className="w-12"
-          value={20}
-          onChange={(v: SelectOption) => {
-            table.setPageSize(Number(v.value));
-          }}
-          suffixClassName="[&>svg]:size-3"
-          selectClassName="font-semibold text-xs ring-0 shadow-sm h-7"
-          optionClassName="font-medium text-xs px-2 justify-center"
-        />
-      </Flex> */}
       {showSelectedCount && (
         <Box className="hidden @2xl:block w-full">
           <Text>

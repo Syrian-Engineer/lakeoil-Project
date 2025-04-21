@@ -6,9 +6,11 @@ export const filterAtom = atom<{
   filtered_tanks: SelectOption[];
   filtered_nozzles: SelectOption[];
   filtered_products: SelectOption[];
+  // filtered_stations:SelectOption[];
 }>({
   filtered_pumps: [],
   filtered_tanks: [],
   filtered_nozzles: [],
   filtered_products: [],
+  // filtered_stations:[]
 });

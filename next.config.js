@@ -9,7 +9,8 @@ const nextConfig = {
       'isomorphic-furyroad.s3.amazonaws.com',
       's3.amazonaws.com'
     ]
-  }
+  },
+  reactStrictMode:false
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
