@@ -67,8 +67,8 @@ export default function CardsPage() {
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
       <div className="grid grid-cols-1 gap-6 @container 3xl:gap-8">
         <SectionBlock>
-          <div className="grid grid-cols-1 gap-5 @2xl:grid-cols-2 @[90rem]:grid-cols-4 3xl:gap-8">
-            <BarChartList />  
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xlPlus:grid-cols-4 3xl:gap-8">
+        <BarChartList />  
           </div>
         </SectionBlock>
       </div>

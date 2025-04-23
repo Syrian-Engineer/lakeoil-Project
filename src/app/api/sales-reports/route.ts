@@ -8,7 +8,7 @@ export async function GET(req: Request) {
         });
       }
   
-      const response = await fetch('http://78.189.54.28:5000/sales_reports/page?', {
+      const response = await fetch('https://api-lakeoil.onrender.com/sales_reports/page?', {
         method: 'GET',
         headers: {
           Authorization: `${accessToken}`,

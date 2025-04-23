@@ -12,7 +12,7 @@ export async function GET(req: Request) {
       // Extract and forward the original query parameters
       const queryParams = url.searchParams.toString(); // this includes pump_names, product_names, etc.
   
-      const response = await fetch(`http://78.189.54.28:5000/sales_reports/page?${queryParams}`, {
+      const response = await fetch(`https://api-lakeoil.onrender.com/sales_reports/page?${queryParams}`, {
         method: 'GET',
         headers: {
           Authorization: `${accessToken}`,

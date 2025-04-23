@@ -42,7 +42,7 @@ export default function SignInForm() {
 
       const tokens = result?.data;
 
-      if (!response.ok || !tokens?.access_token) {
+      if (!response.ok) {
         console.error('Login failed:', result.error || 'Access token missing');
         return;
       }
@@ -54,9 +54,9 @@ export default function SignInForm() {
         email === SuperAdminDetails.email &&
         password === SuperAdminDetails.password
       ) {
-        setIsSuperAdmin(true);
+        localStorage.setItem("isSuperAdmin","true");
       } else {
-        setIsSuperAdmin(false);
+        localStorage.setItem("isSuperAdmin","false");
       }
 
       setTimeout(() => {

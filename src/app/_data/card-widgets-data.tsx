@@ -29,7 +29,7 @@ export const widgetCardStat = [
   },
   {
     title: 'Approval',
-    metric: 'Auto Authorize',
+    metric: 'Authorize',
     bgColor: 'bg-[#7928ca]',
     textColor: 'text-[#7928ca]',
     icon: <PiPulseDuotone className="h-6 w-6" />,

@@ -1,4 +1,4 @@
-// /app/api/filters/nozzles/route.ts
+// /app/api/filters/pumps/route.ts
 export async function GET(req: Request) {
     const accessToken = req.headers.get('Authorization');
     if (!accessToken) {
@@ -6,20 +6,20 @@ export async function GET(req: Request) {
     }
   
     try {
-      const res = await fetch('https://api-lakeoil.onrender.com/station/nozzles', {
+      const res = await fetch('https://api-lakeoil.onrender.com/station/all', {
         headers: { Authorization: accessToken },
       });
   
       if (!res.ok) {
         const error = await res.text();
-        console.error("Failed to fetch nozzles:", error);
+        console.error("Failed to fetch stations:", error);
         return new Response(JSON.stringify({ error }), { status: res.status });
       }
   
-      const nozzles = await res.json();
-      return new Response(JSON.stringify(nozzles), { status: 200 });
+      const stations = await res.json();
+      return new Response(JSON.stringify(stations), { status: 200 });
     } catch (err: any) {
-      console.error("Error in nozzles route:", err.message || err);
+      console.error("Error in station route:", err.message || err);
       return new Response(JSON.stringify({ error: 'Server error' }), { status: 500 });
     }
   }

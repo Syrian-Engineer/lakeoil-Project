@@ -6,7 +6,7 @@ export async function GET(req: Request) {
     }
   
     try {
-      const res = await fetch('http://78.189.54.28:5000/station/pumps', {
+      const res = await fetch('https://api-lakeoil.onrender.com/station/pumps', {
         headers: { Authorization: accessToken },
       });
   

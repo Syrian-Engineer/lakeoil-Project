@@ -30,13 +30,13 @@ export default function Tank({ className }: { className?: string }) {
             <div className='flex w-full justify-between'>
               {/* Pie chart and buttons */}
               <div className="flex-1 h-[250px]  flex justify-center items-center">
-                <ResponsiveContainer width={240}>
+                <ResponsiveContainer width={180}>
                   <PieChart className="[&_.recharts-layer:focus]:outline-none [&_.recharts-sector:focus]:outline-none dark:[&_.recharts-text.recharts-label]:first-of-type:fill-black">
                     <Pie
                       data={data}
                       cornerRadius={40}
-                      innerRadius={100}
-                      outerRadius={120}
+                      innerRadius={70}
+                      outerRadius={90}
                       paddingAngle={10}
                       fill="#BFDBFE"
                       stroke="rgba(0,0,0,0)"
@@ -63,10 +63,10 @@ export default function Tank({ className }: { className?: string }) {
               {/* Probe and Filling Order Info buttons */}
               <div className='flex flex-col items-center justify-center gap-20'>
                 <div className='border-2 border-green-600 rounded-full px-4 p-1'>
-                  <p className='font-bold text-lg'>Probe</p>
+                  <p className='font-bold text-sm'>Probe</p>
                 </div>
                 <div className='border-2 border-green-600 rounded-full px-4 p-1'>
-                  <p className='font-bold xxs:text-sm custom:text-lg '>Filling Order Info</p>
+                  <p className='font-bold xxs:text-sm custom:text-sm '>Filling Order Info</p>
                 </div>
               </div>
             </div>

@@ -4,14 +4,6 @@ import { ActionIcon, Title, Text } from 'rizzui';
 import cn from '@/utils/class-names';
 import WidgetCard from '@/components/cards/widget-card';
 import { PiSlidersHorizontalDuotone } from 'react-icons/pi';
-// import {
-//   BarChart,
-//   Bar,
-//   XAxis,
-//   YAxis,
-//   Tooltip,
-//   ResponsiveContainer,
-// } from 'recharts';
 import { widgetData } from '@/app/_data/card-widgets-data';
 import PumpData from '@/components/PumpData';
 
@@ -29,16 +21,17 @@ export default function BarChartList({ className }: { className?: string }) {
               <PiSlidersHorizontalDuotone className="h-auto w-5" />
             </ActionIcon>
           }
-          descriptionClassName="text-red-600 font-semibold mt-1.5"
-          className={cn(className)}
+          descriptionClassName="text-red-600 font-semibold mt-1"
+          className={cn(className, 'max-w-full')}
         >
-          <div className="mt-5 grid w-full grid-cols-1 justify-around gap-6 @sm:py-2 @7xl:gap-8">
+          <div className="mt-3 grid w-full grid-cols-1 justify-around gap-4 @sm:py-1.5 @7xl:gap-6">
+          <div className="mt-2 grid w-full grid-cols-1 justify-around gap-2 @sm:py-1 @7xl:gap-4">
             <div className="grid grid-cols-2 gap-5">
               {item.stat.map((stat) => (
                 <div key={stat.title} className="flex items-center">
                   <div
                     className={cn(
-                      'me-3.5 flex h-10 w-10 items-center justify-center rounded-md bg-opacity-10 p-[9px]',
+                      'me-2 flex h-7 w-7 items-center justify-center rounded-md bg-opacity-10 p-[4px]', // smaller icon
                       stat.bgColor,
                       stat.textColor
                     )}
@@ -46,39 +39,27 @@ export default function BarChartList({ className }: { className?: string }) {
                     {stat.icon}
                   </div>
                   <div>
-                    <Text className="mb-2 text-gray-600 font-semibold text-lg ">{stat.title}</Text>
-                    <Title as="h6" className="font-extrabold">
+                    <Text className="mb-0.5 text-gray-600 font-medium text-sm"> {/* smaller text */}
+                      {stat.title}
+                    </Text>
+                    <Title as="h6" className="font-semibold text-xs"> {/* smaller text */}
                       {stat.metric}
                     </Title>
                   </div>
                 </div>
               ))}
             </div>
+          </div>
 
-            <div className="h-[15.8rem] w-full @sm:pt-3">
-              <p className='text-lg font-bold'>Pump Totalizer Data</p>
-              <PumpData ElectronicTotalizer='33%' VirtualTotalizer='42%' Difference='25%' />
-              {/* <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={chartData}
-                  margin={{
-                    left: -30,
-                  }}
-                  barSize={24}
-                >
-                  <YAxis tickLine={false} axisLine={false} />
-                  <XAxis dataKey="day" tickLine={false} axisLine={false} />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Bar
-                    type="natural"
-                    dataKey="bounceRate"
-                    stroke={item.color}
-                    fill={item.color}
-                    strokeWidth={2}
-                    fillOpacity={0.1}
-                  />
-                </BarChart>
-              </ResponsiveContainer> */}
+
+            <div className="h-[13rem] w-full @sm:pt-2">
+              <p className="text-base font-semibold">Pump Totalizer Data</p>
+              <PumpData
+                ElectronicTotalizer="33%"
+                VirtualTotalizer="42%"
+                Difference="25%"
+              />
+              {/* Chart code can be added back here if needed */}
             </div>
           </div>
         </WidgetCard>
