@@ -1,26 +1,36 @@
+'use client'
 
-import SignInForm from '@/app/signin/sign-in-form';
-import AuthWrapperOne from '@/app/shared/auth-layout/auth-wrapper-one';
+import SignInForm from './sign-in-form';
+import AuthWrapperOne from '../shared/auth-layout/auth-wrapper-one';
 import Image from 'next/image';
 import UnderlineShape from '@/components/shape/underline';
 import { metaObject } from '@/config/site.config';
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { homeTranslations } from '@/translations/signinPage/home';
+import { translate } from '@/translations/translate';
 
-export const metadata = {
-  ...metaObject('Sign In'),
-};
+// export const metadata = {
+//   ...metaObject('Sign In'),
+// };
 
 export default function SignIn() {
+
+  const lang = useSelector((state:RootState)=>state.language.language)
+  const welcome = translate(homeTranslations,lang,"welcome");
+  const signin = translate(homeTranslations,lang,"signin");
+  const continuee = translate(homeTranslations,lang,"continue");
+
   return (
     <AuthWrapperOne
       title={
         <>
-          Welcome back! Please{' '}
+          {welcome}{' '}
           <span className="relative inline-block">
-            Sign in to
+            {signin}
             <UnderlineShape className="absolute -bottom-2 start-0 h-2.5 w-24 text-blue md:w-28 xl:-bottom-1.5 xl:w-36" />
           </span>{' '}
-          continue.
+          {continuee}
         </>
       }
       // description="By signing up, you will gain access to exclusive content, special

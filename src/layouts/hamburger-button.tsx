@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  DrawerPlacements,
-  useDrawer,
-} from "@/app/shared/drawer-views/use-drawer";
+import { DrawerPlacements,useDrawer } from "@/app/shared/drawer-views/use-drawer";
 import { ActionIcon } from "rizzui";
 import cn from "@/utils/class-names";
 import { ReactNode } from "react";

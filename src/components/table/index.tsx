@@ -143,9 +143,14 @@ export default function MainTable<TData extends Record<string, any>>({
               components.bodyRow(rowParam)
             ) : (
               <>
-                {mainRows.map((row) => (
+                {mainRows.map((row, index) => (
                   <Fragment key={row.id}>
-                    <Table.Row className={classNames?.rowClassName}>
+                    <Table.Row
+                      className={cn(
+                        classNames?.rowClassName,
+                        index % 2 === 0 ? 'bg-white' : 'bg-gray-100' // Alternating row colors
+                      )}
+                    >
                       {row.getVisibleCells().map((cell) => {
                         const bodyCellParam = {
                           cell,
@@ -170,14 +175,11 @@ export default function MainTable<TData extends Record<string, any>>({
                       })}
                     </Table.Row>
 
-                    {/* custom-expanded-component start  */}
+                    {/* custom-expanded-component start */}
                     {components?.expandedComponent && row.getIsExpanded() && (
                       <Table.Row className={classNames?.expandedRowClassName}>
                         <Table.Cell
-                          className={cn(
-                            "!p-0",
-                            classNames?.expandedCellClassName
-                          )}
+                          className={cn("!p-0", classNames?.expandedCellClassName)}
                           colSpan={row.getVisibleCells().length}
                         >
                           {components.expandedComponent(row)}

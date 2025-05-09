@@ -132,6 +132,9 @@ export const routes = {
   Tanks:{
     dashboard:"/tanks"
   },
+  Pumps:{
+    dashboard:"/pumps"
+  },
   Alarms:{
     dashboard:"/alarms"
   },

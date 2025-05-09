@@ -16,6 +16,10 @@ import cn from '@/utils/class-names';
 import { VoiceInfo } from 'react-use/lib/useSpeech';
 import { useSetAtom } from 'jotai';
 import { showFilterCardAtom } from '@/atoms/ui-atoms';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { translate } from '@/translations/translate';
+import { toolBarTransltions } from '@/translations/reportsPage/reportstoolbar';
 
 export const statusOptions = [
   {
@@ -51,13 +55,17 @@ export default function ProjectSummaryToolbar<
     setShowFilterCard(true)
   }
 
+  // for translations 
+  const lang = useSelector((state:RootState)=>state.language.language);
+  const filter = translate(toolBarTransltions,lang,'filter')
+
   return (
     <div className={cn('flex items-center justify-end gap-4', className)}>
       <Button
        className='hover:scale-95 transition duration-300 hover:bg-primary/90'
        onClick={handleFilterBtnClick}
        >
-        Filter parameters
+        {filter}
       </Button>
       {table && (
         <Popover shadow="sm" placement="bottom-end">

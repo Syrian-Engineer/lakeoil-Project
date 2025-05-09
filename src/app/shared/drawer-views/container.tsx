@@ -4,7 +4,7 @@ import { Drawer } from "rizzui";
 import { useEffect } from "react";
 import cn from "@/utils/class-names";
 import { usePathname } from "next/navigation";
-import { useDrawer } from "@/app/shared/drawer-views/use-drawer";
+import { useDrawer } from "./use-drawer";
 
 export default function GlobalDrawer() {
   const { isOpen, view, placement, closeDrawer, containerClassName } =

@@ -1,3 +1,5 @@
+// No Need For It
+
 export async function GET(req: Request) {
   try {
     const accessToken = req.headers.get('Authorization');

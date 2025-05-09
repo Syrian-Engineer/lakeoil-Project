@@ -1,6 +1,6 @@
-import StorageReport from '@/app/shared/file/dashboard/storage-report';
-import FileStats from '@/app/shared/file/dashboard/file-stats';
-import StorageSummary from '@/app/shared/file/dashboard/storage-summary';
+import StorageReport from './storage-report';
+import FileStats from './file-stats';
+import StorageSummary from './storage-summary';
 
 
 export default function FileDashboard() {
