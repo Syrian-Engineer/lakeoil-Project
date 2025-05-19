@@ -43,27 +43,27 @@ export function getColumns(){
       id: 'Pump',
       size: 40,
       header: 'Pump',
-      cell: ({ row: { original } }) => original.pump_name,
+      cell: ({ row: { original } }) => original.pumps.name,
     }),
     columnHelper.display({
       id: 'Nozzle',
       size: 30,
       header: 'Nozzle',
-      cell: ({ row: { original } }) => original.nozzle_name || "N/A",
+      cell: ({ row: { original } }) => original.nozzles.name || "N/A",
     }),
   
     columnHelper.display({
       id: 'Fuel',
       size: 60,
       header: 'Fuel	',
-      cell: ({ row: { original } }) =>original.product_name,
+      cell: ({ row: { original } }) =>original.products_info.name,
       meta:{isExtra:true}
     }),
     columnHelper.display({
       id: 'Tank',
       size: 60,
       header: 'Tank',
-      cell: ({ row: { original } }) => original.tank_name,
+      cell: ({ row: { original } }) => original.tanks.name,
       meta: { isExtra: true } as { isExtra: boolean }, // ✅ fix
     }),
     columnHelper.display({
