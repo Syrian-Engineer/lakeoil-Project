@@ -40,7 +40,7 @@ export default function FileListTable({ className }: { className?: string }) {
       <FileTableFilters table={table} />
       <Table table={table} variant="modern" />
       <TableFooter table={table} />
-      <TablePagination table={table} className="py-4" />
+      {/* <TablePagination table={table} className="py-4" /> */}
     </Box>
   );
 }
