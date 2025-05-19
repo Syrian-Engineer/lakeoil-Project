@@ -11,7 +11,7 @@ import TopProductList from './top-product-list';
 import RecentAppList from './recent-app-list';
 import CircleProgressBars from './circle-progressbars';
 import AreaChartList from './area-chart-list';
-import BarChartList from './bar-chart-list';
+// import BarChartList from './bar-chart-list';
 import { metaObject } from '@/config/site.config';
 
 export const metadata = {
@@ -85,7 +85,7 @@ export default function CardsPage() {
 
         <SectionBlock title={'WidgetCard + List + Chart'}>
           <div className="grid grid-cols-1 gap-5 @2xl:grid-cols-2 @[90rem]:grid-cols-4 3xl:gap-8">
-            <BarChartList />
+            {/* <BarChartList /> */}
             <ParticipantsList />
             <RecentAppList />
             <TransactionsList />
