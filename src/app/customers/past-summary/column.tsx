@@ -9,10 +9,10 @@ import InstagramIcon from '@/components/icons/instagram';
 import { createColumnHelper } from '@tanstack/react-table';
 import LinkedInSquareIcon from '@/components/icons/linkedin-square';
 import FacebookSquareIcon from '@/components/icons/facebook-square';
-import { PostSummaryDataType } from '@/app/_data/social-media-dashboard-data';
+import { oldcusotmerDataType } from '@/app/_data/customer-dashboard-data';
 import { Flex } from 'rizzui';
 
-const columnHelper = createColumnHelper<PostSummaryDataType>();
+const columnHelper = createColumnHelper<oldcusotmerDataType>();
 
 export const defaultColumns = [
   columnHelper.accessor('image', {
@@ -59,6 +59,15 @@ export const defaultColumns = [
   columnHelper.accessor('comments', {
     size: 120,
     header: 'Comments',
+    cell: (info) => (
+      <Flex align="center" gap="1">
+        <CommentsIcon className="size-4 text-primary" />
+        {info.getValue()}
+      </Flex>
+    ),
+  }),columnHelper.accessor('commentss', {
+    size: 120,
+    header: 'Commentss',
     cell: (info) => (
       <Flex align="center" gap="1">
         <CommentsIcon className="size-4 text-primary" />

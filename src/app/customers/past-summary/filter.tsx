@@ -1,7 +1,7 @@
 'use client';
 
 import ToggleColumns from '@/components/table-utils/toggle-columns';
-import { socialMediaOptions } from '@/app/_data/social-media-dashboard-data';
+import { socialMediaOptions } from '@/app/_data/customer-dashboard-data';
 import { type Table as ReactTableType } from '@tanstack/react-table';
 import { useState } from 'react';
 import { Flex, MultiSelect } from 'rizzui';
@@ -19,7 +19,7 @@ export default function Filters<TData extends Record<string, any>>({
   const [state, setState] = useState([socialMediaOptions[0].value]);
   return (
     <Flex align="center" justify="end" className={className}>
-      <MultiSelect
+      {/* <MultiSelect
         value={state}
         onChange={setState}
         options={socialMediaOptions}
@@ -30,7 +30,7 @@ export default function Filters<TData extends Record<string, any>>({
         placement="bottom-end"
         selectedItemClassName="hidden first:block border-0"
         getOptionDisplayValue={renderCustomSocialMultiOption}
-      />
+      /> */}
       <ToggleColumns table={table} />
     </Flex>
   );

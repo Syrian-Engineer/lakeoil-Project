@@ -216,7 +216,7 @@ export default function ProjectSummary({ className }: { className?: string }) {
     <div className={cn('', className)}>
       {showFilterCard && <FilterCard />}
       <WidgetCard
-        title={title}
+        title={title.text}
         actionClassName="ps-0 w-full @xl:ps-2 @xl:w-auto"
         headerClassName="flex-wrap gap-4 @xl:flex-nowrap mb-4 px-5 pt-5 lg:px-7 lg:pt-7"
         className={cn('space-y-4 p-0 @container dark:bg-gray-100/50 lg:p-0', className)}
@@ -227,7 +227,7 @@ export default function ProjectSummary({ className }: { className?: string }) {
               <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-gray-500 border-solid"></div>
           </div>
         ) : data.length === 0 ? (
-          <div className="p-6">{noReportsFound}.</div>
+          <div className={`p-6 ${noReportsFound.className}`}>{noReportsFound.text}.</div>
         ) : (
           <>
             <Table

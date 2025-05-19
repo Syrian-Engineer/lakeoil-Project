@@ -7,7 +7,7 @@ import {
   SelectProps,
   Text,
 } from 'rizzui';
-import { socialMediaOptions } from '@/app/_data/social-media-dashboard-data';
+import { socialMediaOptions } from '@/app/_data/customer-dashboard-data';
 import { PiCheck, PiPlusCircle } from 'react-icons/pi';
 import cn from '@/utils/class-names';
 

@@ -77,6 +77,7 @@ const config: Config = {
       fontFamily: {
         inter: ["var(--font-inter)"],
         lexend: ["var(--font-lexend)"],
+        cairo: ["Cairo", "sans-serif"],
       },
     },
   },

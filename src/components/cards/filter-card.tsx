@@ -147,25 +147,25 @@ export default function FilterCard() {
   // filter config
   const filterConfigs = [
     {
-      label: `${pump}`,
+      label: `${pump.text}`,
       options: pumpOptions,
       value: selectedPump,
       setValue: setSelectedPump,
     },
     {
-      label: `${tank}`,
+      label: `${tank.text}`,
       options: tankOptions,
       value: selectedTank,
       setValue: setSelectedTank,
     },
     {
-      label: `${nozzle}`,
+      label: `${nozzle.text}`,
       options: nozzleOptions,
       value: selectedNozzle,
       setValue: setSelectedNozzle,
     },
     {
-      label: `${product}`,
+      label: `${product.text}`,
       options: productOptions,
       value: selectedProduct,
       setValue: setSelectedProduct,
@@ -173,7 +173,7 @@ export default function FilterCard() {
     ...(isSuperAdmin === 'true'
       ? [
           {
-            label: `${station}`,
+            label: `${station.text}`,
             options: stationOptions,
             value: selectedStation,
             setValue: setSelectedStation,
@@ -184,11 +184,11 @@ export default function FilterCard() {
   return (
     <div className="rounded-md border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-100/20">
       <div className="flex items-center justify-between mb-4">
-        <Title as="h1" className="text-lg font-semibold">{selectFilters}</Title>
+        <Title as="h1" className={`text-lg font-semibold ${selectFilters.className}`}>{selectFilters.text}</Title>
         <div className="flex gap-2">
           <Button
             size="sm"
-            className="hover:scale-95 transition duration-300"
+            className={`hover:scale-95 transition duration-300 ${clearFields.className}`}
             variant="outline"
             onClick={() => {
               setTouched(true); // ✅ mark as touched
@@ -204,16 +204,16 @@ export default function FilterCard() {
               setTagId('');
             }}
           >
-            {clearFields}
+            {clearFields.text}
           </Button>
 
           {touched && (
             <Button
               size="sm"
-              className="bg-primary text-white hover:bg-primary/90 hover:scale-95 transition duration-300"
+              className={`bg-primary text-white hover:bg-primary/90 hover:scale-95 transition duration-300 ${saveFilters.className}`}
               onClick={handleSaveFilters}
             >
-              {saveFilters}
+              {saveFilters.text}
             </Button>
           )}
         </div>

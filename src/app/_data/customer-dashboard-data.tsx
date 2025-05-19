@@ -1,3 +1,4 @@
+'use client'
 import LinkedInSquareIcon from '@/components/icons/linkedin-square';
 import FacebookSquareIcon from '@/components/icons/facebook-square';
 import InstagramIcon from '@/components/icons/instagram';
@@ -7,6 +8,7 @@ import {
   PiDeviceMobileDuotone,
   PiLaptopDuotone,
 } from 'react-icons/pi';
+import { useEffect, useState } from 'react';
 
 export type SocialMediaStatType = {
   title: string;
@@ -300,7 +302,8 @@ export const recentActivitiesData = [
   },
 ];
 
-export type PostSummaryDataType = {
+
+export type oldcusotmerDataType = {
   id: number;
   image: string;
   title: string;
@@ -309,13 +312,13 @@ export type PostSummaryDataType = {
   views: number;
   likes: number;
   comments: number;
+  commentss: number;
   platforms: {
     name: string;
     link: string;
   }[];
 };
-
-export const postSummaryData = [
+export const customersData = [
   {
     id: 1,
     image:
@@ -326,6 +329,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -351,6 +355,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -376,6 +381,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -401,6 +407,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -426,6 +433,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -451,6 +459,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -476,6 +485,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -501,6 +511,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -526,6 +537,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -551,6 +563,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -575,6 +588,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',
@@ -599,6 +613,7 @@ export const postSummaryData = [
     views: 241000,
     likes: 4785,
     comments: 1587,
+    commentss: 1287,
     platforms: [
       {
         name: 'Facebook',

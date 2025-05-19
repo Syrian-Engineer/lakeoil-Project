@@ -25,12 +25,12 @@ export default function SignIn() {
     <AuthWrapperOne
       title={
         <>
-          {welcome}{' '}
-          <span className="relative inline-block">
-            {signin}
+          {welcome.text}{' '}
+          <span className={`relative inline-block ${signin.className}`}>
+            {signin.text}
             <UnderlineShape className="absolute -bottom-2 start-0 h-2.5 w-24 text-blue md:w-28 xl:-bottom-1.5 xl:w-36" />
           </span>{' '}
-          {continuee}
+          {continuee.text}
         </>
       }
       // description="By signing up, you will gain access to exclusive content, special

@@ -4,7 +4,7 @@ import { Text, Avatar, AvatarProps } from "rizzui";
 import cn from "../utils/class-names";
 
 interface AvatarCardProps {
-  src: string;
+  src?: string;
   name: string;
   className?: string;
   nameClassName?: string;

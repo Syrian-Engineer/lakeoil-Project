@@ -1,330 +1,219 @@
 'use client';
 
-import { routes } from '@/config/routes';
-import {
-  messages,
-  MessageType,
-  supportStatuses,
-  SupportStatusType,
-  supportTypes,
-} from '@/app/_data/support-inbox';
-import { useHover } from '@/hooks/use-hover';
-import { useMedia } from '@/hooks/use-media';
-import { LineGroup, Skeleton } from '@/ui/skeleton';
-import cn from '@/utils/class-names';
+import { useEffect, useState } from 'react';
 import { getRelativeTime } from '@/utils/get-relative-time';
-import rangeMap from '@/utils/range-map';
-import { useAtom } from 'jotai';
-import { atomWithReset, atomWithStorage } from 'jotai/utils';
-import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
-import { PiCaretDownBold, PiChats, PiPaperclipLight } from 'react-icons/pi';
-import { ActionIcon, Badge, Checkbox, Select, Title } from 'rizzui';
 
-interface MessageItemProps {
-  message: MessageType;
-  className?: string;
-}
-
-export const messageIdAtom = atomWithStorage('messageId', '');
-export const dataAtom = atomWithReset<MessageType[]>(messages);
-
-export function MessageItem({ className, message }: MessageItemProps) {
-  const hoverRef = useRef(null);
-  const router = useRouter();
-  // @ts-ignore
-  const isHover = useHover(hoverRef);
-  const [data, setData] = useAtom(dataAtom);
-  const isMobile = useMedia('(max-width: 1023px)', false);
-
-  const [messageId, setMessageId] = useAtom(messageIdAtom);
-
-  const isActive = messageId === message.id;
-
-  const handleItemChange = (itemId: string) => {
-    const updatedItems = data.map((item) =>
-      item.id === itemId ? { ...item, selected: !item.selected } : item
-    );
-    setData(updatedItems);
-  };
-
-  const url = routes.support.messageDetails(messageId);
-
+// Inline Notification Component
+function Notification({
+  message,
+  type = 'success',
+  onClose,
+}: {
+  message: string;
+  type?: 'success' | 'error';
+  onClose: () => void;
+}) {
   useEffect(() => {
-    setMessageId(data[0].id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+    const timer = setTimeout(() => onClose(), 3000);
+    return () => clearTimeout(timer);
+  }, [onClose]);
 
-  function handleChange() {
-    setMessageId(message.id);
-    // router.push(url);
-    if (isMobile) {
-      router.push(url);
-    }
-  }
+  const colors =
+    type === 'success'
+      ? 'bg-green-100 text-green-700 border-green-300'
+      : 'bg-red-100 text-red-700 border-red-300';
 
   return (
-    <div
-      ref={hoverRef}
-      onClick={handleChange}
-      className={cn(
-        className,
-        'grid cursor-pointer grid-cols-[24px_1fr] items-start gap-3 border-t border-muted p-5',
-        isActive && 'border-t-2 border-t-primary dark:bg-gray-100/70'
-      )}
-    >
-      {message.selected || isHover ? (
-        <Checkbox
-          {...(isActive && {
-            inputClassName:
-              'bg-primary-lighter border-primary dark:bg-gray-0 dark:border-muted',
-          })}
-          {...(isActive &&
-            message.selected && {
-            variant: 'flat',
-            color: 'primary',
-          })}
-          checked={message.selected}
-          onChange={() => handleItemChange(message.id)}
-        />
-      ) : (
-        <ActionIcon
-          variant="flat"
-          size="sm"
-          className={cn('h-6 w-6 p-0', isActive && 'bg-primary text-white')}
-        >
-          {message.supportType === supportTypes.Chat && (
-            <PiChats className="h-3.5 w-3.5" />
-          )}
-          {message.supportType === supportTypes.Email && (
-            <HiOutlineAdjustmentsHorizontal className="h-3.5 w-3.5" />
-          )}
-        </ActionIcon>
-      )}
-      <div>
-        <div className="flex items-center justify-between lg:flex-col lg:items-start 2xl:flex-row 2xl:items-center">
-          <Title as="h4" className="flex items-center">
-            <span className="text-sm font-semibold dark:text-gray-700">
-              {message.title}
-            </span>
-            {message.hasAttachments && (
-              <PiPaperclipLight className="ml-2 h-4 w-4 text-gray-500" />
-            )}
-            {!message.markedAsRead && (
-              <Badge renderAsDot className="ml-3 h-2.5 w-2.5 bg-primary" />
-            )}
-          </Title>
-          <span className="text-xs text-gray-500">
-            {getRelativeTime(message.date)}
-          </span>
-        </div>
-        <p className="mt-1 line-clamp-3 text-sm text-gray-500">
-          {message.summary}
-        </p>
-      </div>
+    <div className={`fixed top-20 z-50 right-4 px-4 py-2 rounded border shadow ${colors}`}>
+      {message}
     </div>
   );
 }
 
-const sortOptions = {
-  asc: 'asc',
-  desc: 'desc',
-} as const;
-
-const options = [
-  {
-    value: sortOptions.asc,
-    label: 'Oldest',
-  },
-  {
-    value: sortOptions.desc,
-    label: 'Newest',
-  },
-];
-
-const sortByDate = (items: MessageType[], order: SortByType) => {
-  return items.slice().sort((a, b) => {
-    const dateA = new Date(a.date).valueOf();
-    const dateB = new Date(b.date).valueOf();
-
-    if (order === 'asc') {
-      return dateA - dateB;
-    } else {
-      return dateB - dateA;
-    }
-  });
-};
-
-interface InboxListProps {
-  className?: string;
+interface AlarmsProps {
+  date: Date;
+  id: number;
+  message: string;
 }
-type SortByType = keyof typeof sortOptions;
 
-export default function MessageList({ className }: InboxListProps) {
-  const [data, setData] = useAtom(dataAtom);
-  // const resetData = useResetAtom(dataAtom);
-  const [isLoading, setIsLoading] = useState(true);
-  const [sortBy, setSortBy] = useState<SortByType>(sortOptions.desc);
-  const [status, setStatus] = useState<SupportStatusType>(supportStatuses.Open);
-  const [selectAll, setSelectAll] = useState(false);
+interface WarningsProps {
+  date: Date;
+  id: number;
+  message: string;
+}
+
+export default function MessageList() {
+  const [alarms, setAlarms] = useState<AlarmsProps[]>([]);
+  const [warnings, setWarnings] = useState<WarningsProps[]>([]);
+  const [loadingAlarms, setLoadingAlarms] = useState(true);
+  const [loadingWarnings, setLoadingWarnings] = useState(true);
+  const [selectedTab, setSelectedTab] = useState<'alarms' | 'warnings'>('alarms');
+  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   useEffect(() => {
-    const updatedItems = messages.filter(
-      (item) => item.status === supportStatuses.Open
-    );
-    setData(updatedItems);
-    const sortedData = sortByDate(updatedItems, sortBy);
-    setData(sortedData);
+    const fetchAlarms = async () => {
+      try {
+        const res = await fetch('/api/alarms/get-alarms', { credentials: 'include' });
+        const data = await res.json();
+        setAlarms(data.alarms || []);
+      } catch (error) {
+        console.error('Failed to fetch alarms:', error);
+      } finally {
+        setLoadingAlarms(false);
+      }
+    };
 
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500); // 500 milliseconds
+    const fetchWarnings = async () => {
+      try {
+        const res = await fetch('/api/alarms/get-warnings', { credentials: 'include' });
+        const data = await res.json();
+        setWarnings(data.warnings || []);
+      } catch (error) {
+        console.error('Failed to fetch warnings:', error);
+      } finally {
+        setLoadingWarnings(false);
+      }
+    };
 
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchAlarms();
+    fetchWarnings();
   }, []);
 
-  const handleSelectAllChange = () => {
-    const updatedItems = data.map((item) => ({
-      ...item,
-      selected: !selectAll,
-    }));
-    setData(updatedItems);
-    setSelectAll(!selectAll);
-  };
-  const handleOpenErrors = () => {
-    const updatedItems = messages.filter(
-      (item) => item.status === supportStatuses.Open
-    );
-    setData(updatedItems);
-    setStatus(supportStatuses.Open);
-    const sortedData = sortByDate(updatedItems, sortBy);
-    setData(sortedData);
+  const handleDeleteAlarm = async (id: number) => {
+    try {
+      const res = await fetch('/api/alarms/delete-alarm', {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setAlarms((prev) => prev.filter((alarm) => alarm.id !== id));
+        setNotification({ message: data.message || 'Alarm deleted successfully', type: 'success' });
+      } else {
+        setNotification({ message: data.message || 'Failed to delete alarm', type: 'error' });
+      }
+    } catch (err) {
+      console.error('Failed to delete alarm:', err);
+      setNotification({ message: 'Something went wrong while deleting the alarm.', type: 'error' });
+    }
   };
 
-  const handleOpenWarnings = () => {
-    const updatedItems = messages.filter(
-      (item) => item.status === supportStatuses.Closed
-    );
-    setData(updatedItems);
-    setStatus(supportStatuses.Closed);
-    const sortedData = sortByDate(updatedItems, sortBy);
-    setData(sortedData);
-  };
+  const handleDeleteWarning = async (id: number) => {
+    try {
+      const res = await fetch('/api/alarms/delete-warning', {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
 
-  function handleOnChange(order: SortByType) {
-    const sortedData = sortByDate(data, order);
-    setData(sortedData);
-    setSortBy(order);
-  }
-  const handleDeleteSelected = ()=>{
-    const filteredItems = data.filter((item) => !item.selected);
-    setData(filteredItems);
-    setSelectAll(false);
-  }
+      const data = await res.json();
+
+      if (res.ok) {
+        setWarnings((prev) => prev.filter((warning) => warning.id !== id));
+        setNotification({ message: data.message || 'Warning deleted successfully', type: 'success' });
+      } else {
+        setNotification({ message: data.message || 'Failed to delete warning', type: 'error' });
+      }
+    } catch (err) {
+      console.error('Failed to delete warning:', err);
+      setNotification({ message: 'Something went wrong while deleting the warning.', type: 'error' });
+    }
+  };
 
   return (
-    <>
-      <div className={cn(className, 'sticky')}>
-        <div className="mb-7 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Checkbox checked={selectAll} onChange={handleSelectAllChange} />
-            <div className="overflow-hidden rounded border border-muted">
-              <button
-                className={cn(
-                  'px-2.5 py-1.5 text-sm font-medium text-gray-500 transition duration-300',
-                  status === supportStatuses.Open && 'bg-gray-100 text-gray-900'
-                )}
-                onClick={handleOpenErrors}
-              >
-                Errors
-              </button>
-              <button
-                className={cn(
-                  'px-2.5 py-1.5 text-sm font-medium text-gray-500 transition duration-300',
-                  status === supportStatuses.Closed &&
-                  'bg-gray-100 text-gray-900'
-                )}
-                onClick={handleOpenWarnings}
-              >
-                Warnings
-              </button>
+    <div className="p-4 space-y-6">
+      {/* Tab Selector */}
+      <div className="flex space-x-4 mb-4">
+        <button
+          className={`px-4 py-2 rounded ${selectedTab === 'alarms' ? 'bg-red-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setSelectedTab('alarms')}
+        >
+          Alarms
+        </button>
+        <button
+          className={`px-4 py-2 rounded ${selectedTab === 'warnings' ? 'bg-yellow-400 text-white' : 'bg-gray-200'}`}
+          onClick={() => setSelectedTab('warnings')}
+        >
+          Warnings
+        </button>
+      </div>
+
+      {/* Content */}
+      {selectedTab === 'alarms' ? (
+        <div>
+          {loadingAlarms ? (
+            <div className="flex justify-center">
+              <div className="h-6 w-6 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
             </div>
-          </div>
-
-          <div className='flex justify-between gap-5'>
-              <button
-                onClick={handleDeleteSelected}
-                className="text-sm font-medium text-red-500 hover:text-red-700 transition duration-300 "
+          ) : alarms.length === 0 ? (
+            <p className="text-sm text-gray-500">No alarms found.</p>
+          ) : (
+            <ul className="space-y-2">
+              {alarms.map((alarm) => (
+                <li
+                  key={alarm.id}
+                  className="flex justify-between items-center p-3 bg-red-50 border border-red-200 rounded"
                 >
-                Delete
-              </button>            
-
-              <Select
-                size="sm"
-                variant="text"
-                value={sortBy}
-                options={options}
-                getOptionValue={(option) => option.value}
-                onChange={(option: SortByType) => handleOnChange(option)}
-                displayValue={(selected) =>
-                  options.find((o) => o.value === selected)?.label
-                }
-                suffix={<PiCaretDownBold className="w- ml-2 h-3.5 w-3.5" />}
-                selectClassName="text-sm px-2.5"
-                optionClassName="text-sm"
-                dropdownClassName="p-2 !w-32 !z-0"
-                placement="bottom-end"
-                className={'w-auto'}
-              />
-          </div>
+                  <div>
+                    <p className="font-medium text-red-700">{alarm.message}</p>
+                    <p className="text-xs text-gray-500">{getRelativeTime(alarm.date)}</p>
+                  </div>
+                  <button
+                    onClick={() => handleDeleteAlarm(alarm.id)}
+                    className="text-sm text-red-600 hover:underline"
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-
-        <div className="overflow-hidden rounded-lg border border-muted">
-          <div className="custom-scrollbar overflow-y-auto scroll-smooth max-h-[calc(100dvh-356px)] md:max-h-[calc(100dvh-311px)] lg:max-h-[calc(100dvh-240px)] xl:max-h-[calc(100dvh-230px)] 2xl:max-h-[calc(100dvh-240px)] 3xl:max-h-[calc(100dvh-270px)]">
-            {isLoading ? (
-              <div className="grid gap-4">
-                {rangeMap(5, (i) => (
-                  <MessageLoader key={i} />
-                ))}
-              </div>
-            ) : (
-              data.map((message) => (
-                <MessageItem key={message.id} message={message} />
-              ))
-            )}
-          </div>
+      ) : (
+        <div>
+          {loadingWarnings ? (
+            <div className="flex justify-center">
+              <div className="h-6 w-6 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : warnings.length === 0 ? (
+            <p className="text-sm text-gray-500">No warnings found.</p>
+          ) : (
+            <ul className="space-y-2">
+              {warnings.map((warning) => (
+                <li
+                  key={warning.id}
+                  className="flex justify-between items-center p-3 bg-yellow-50 border border-yellow-200 rounded"
+                >
+                  <div>
+                    <p className="font-medium text-yellow-700">{warning.message}</p>
+                    <p className="text-xs text-gray-500">{getRelativeTime(warning.date)}</p>
+                  </div>
+                  <button
+                    onClick={() => handleDeleteWarning(warning.id)}
+                    className="text-sm text-yellow-700 hover:underline"
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-      </div>
-    </>
-  );
-}
+      )}
 
-export function MessageLoader() {
-  return (
-    <div className="grid gap-3 border-t border-muted p-5">
-      <div className="flex items-center gap-2">
-        <Skeleton className="h-6 w-6 rounded" />
-        <Skeleton className="h-3 w-32 rounded" />
-        <Skeleton className="h-3 w-3 rounded-full" />
-        <Skeleton className="ml-auto h-3 w-16 rounded" />
-      </div>
-      <LineGroup
-        columns={6}
-        className="grid-cols-6 gap-1.5"
-        skeletonClassName="h-2"
-      />
-      <LineGroup
-        columns={5}
-        className="grid-cols-5 gap-1.5"
-        skeletonClassName="h-2"
-      />
-      <LineGroup
-        columns={4}
-        className="grid-cols-4 gap-1.5"
-        skeletonClassName="h-2"
-      />
+      {/* Notification */}
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </div>
   );
 }

@@ -117,20 +117,20 @@ export default function SignInForm() {
         <div className="space-y-5">
           {/* Select Dropdown to choose login type */}
           <div>
-            <label htmlFor="loginType" className="block text-sm font-medium text-gray-700">
-              {loginTypee}
+            <label htmlFor="loginType" className={`block text-sm font-medium text-gray-700 ${loginTypee.className}`}>
+              {loginTypee.text}
             </label>
             <select
               id="loginType"
               name="loginType"
               value={loginType}
               onChange={(e) => setLoginType(e.target.value)}
-              className={`custom-select mt-1 block w-full p-2.5 border border-gray-300 rounded-md appearance-none bg-no-repeat bg-[right_0.75rem_center] ${
+              className={`${optionReports.className} custom-select mt-1 block w-full p-2.5 border border-gray-300 rounded-md appearance-none bg-no-repeat bg-[right_0.75rem_center] ${
                 lang === "ar" ? "bg-[url('/icons/arrow-left.svg')]" : "bg-[url('/icons/arrow-right.svg')]"
               }`}
             >
-              <option value="reports">{optionReports}</option>
-              <option value="liveData">{optionLiveData}</option>
+              <option value="reports">{optionReports.text}</option>
+              <option value="liveData">{optionLiveData.text}</option>
             </select>
           </div>
 
@@ -148,39 +148,39 @@ export default function SignInForm() {
           
           {/* Password Field */}
           <Password
-            label={passwordd}
+            label={passwordd.text}
             placeholder="Enter your password"
             size="lg"
             required
-            className="[&>label>span]:font-medium"
+            className={`[&>label>span]:font-medium ${passwordd.className}`}
             inputClassName="text-sm"
             onChange={(e) => setPassword(e.target.value)}
           />
           
           <div className="flex items-center justify-between pb-2">
-            <Checkbox label={rememberMe} className="[&>label>span]:font-medium" />
+            <Checkbox label={rememberMe.text} className={`[&>label>span]:font-medium ${rememberMe.className}`} />
             <Link
               href={routes.auth.forgotPassword1}
-              className="h-auto p-0 text-sm font-semibold text-blue underline transition-colors hover:text-gray-900 hover:no-underline"
+              className={`h-auto p-0 text-sm font-semibold text-blue underline transition-colors hover:text-gray-900 hover:no-underline ${forgetPassword.className}`}
             >
-             {forgetPassword}
+             {forgetPassword.text}
             </Link>
           </div>
           
-          <Button className="w-full" type="submit" size="lg">
-            <span>{login}</span>{' '}
+          <Button className={`w-full ${login.className}`} type="submit" size="lg">
+            <span>{login.text}</span>{' '}
             <PiArrowRightBold className="ms-2 mt-0.5 h-5 w-5" />
           </Button>
         </div>
       </form>
       
-      <Text className="mt-6 text-center leading-loose text-gray-500 lg:mt-8 lg:text-start">
-        {noAccount}{' '}
+      <Text className={`mt-6 text-center leading-loose text-gray-500 lg:mt-8 lg:text-start ${noAccount.className}`}>
+        {noAccount.text}{' '}
         <Link
           href={routes.auth.signUp1}
-          className="font-semibold text-gray-700 transition-colors hover:text-blue"
+          className={`font-semibold text-gray-700 transition-colors hover:text-blue ${signUp.className}`}
         >
-         {signUp}
+         {signUp.text}
         </Link>
       </Text>
     </>

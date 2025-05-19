@@ -1,144 +1,224 @@
 'use client';
 
-import Image from 'next/image';
-import { useState } from 'react';
-import JobBadge from './job-badge';
-import cn from '@/utils/class-names';
-import SingleJob from './single-job-page';
-import JobFeedRating from './job-feed-rating';
-import Breadcrumb from '@/ui/breadcrumb';
-import { Button, Text, Title } from 'rizzui';
-// import { JobFeedFilterDrawer } from './job-feed-filter';
-import { type JobType, jobFeedData } from '@/app/_data/job-feed-data';
-import {
-  PiMapPin,
-  PiSealCheckFill,
-  PiBookmarkSimpleFill,
-  PiBookmarkSimpleThin,
-} from 'react-icons/pi';
-import { useDrawer } from '@/app/shared/drawer-views/use-drawer';
+import { useEffect, useState } from 'react';
+import { Button } from 'rizzui';
 import Link from 'next/link';
+
+// Icons
+import { PiMapPin, PiSealCheckFill } from 'react-icons/pi';
+import Swal from 'sweetalert2';
+
+// Type for each staff record
+type StaffType = {
+  id: number;
+  role: string;
+  username: string;
+};
 
 let countPerPage = 4;
 
 export default function Page() {
   const [isLoading, setLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
+  const [staff, setStaff] = useState<StaffType[]>([]);
   const [nextPage, setNextPage] = useState(countPerPage);
-  let isLoadMore = nextPage < jobFeedData?.length;
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const fetchStaff = async () => {
+      setIsFetching(true);
+      try {
+        const res = await fetch('/api/staff');
+        const data = await res.json();
+        if (data?.data?.page_records) {
+          setStaff(data.data.page_records);
+        }
+      } catch (error) {
+        console.error('Failed to fetch staff:', error);
+      } finally {
+        setIsFetching(false);
+      }
+    };
+
+    fetchStaff();
+  }, []);
+
+  const isLoadMore = nextPage < staff.length;
 
   function handleLoadMore() {
     setLoading(true);
     setTimeout(() => {
-      setLoading(false);
       setNextPage(nextPage + countPerPage);
+      setLoading(false);
     }, 600);
   }
 
+  if (isFetching) {
+    return (
+      <div className="flex justify-center items-center min-h-[300px]">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-primary" />
+      </div>
+    );
+  }
+
   return (
-    <div className={""}>
-      {jobFeedData.slice(0, nextPage).map((job, index) => {
-        return <JobFeedCard key={index} data={job} />;
-      })}
+    <div>
+      {staff.slice(0, nextPage).map((person) => (
+        <StaffCard key={person.id} data={person} />
+      ))}
 
       {isLoadMore && (
         <div className="mb-4 flex justify-center">
-          <Button
-            variant="solid"
-            isLoading={isLoading}
-            onClick={() => handleLoadMore()}
-          >
+          <Button variant="solid" isLoading={isLoading} onClick={handleLoadMore}>
             Load More
           </Button>
         </div>
       )}
-      <div className='w-full flex justify-center mb-12'>
-        <Link 
-            className="w-3/4 absolute z-10 text-center bg-gray-800 text-white p-5 rounded-xl hover:bg-gray-900 hover:cursor-pointer hover:scale-95 transition duration-300" 
-            href={"/staff/new-user"}>New User
+
+      <div className="w-full flex justify-center mb-12">
+        <Link
+          className="w-3/4 absolute z-10 text-center bg-gray-800 text-white p-5 rounded-xl hover:bg-gray-900 hover:cursor-pointer hover:scale-95 transition duration-300"
+          href="/staff/new-user"
+        >
+          New User
         </Link>
       </div>
-      
     </div>
   );
 }
 
-function JobFeedCard({ data }: { data: JobType }) {
-  const { openDrawer } = useDrawer();
-  const [isBookMark, setIsBookMark] = useState(false);
+
+
+
+
+function StaffCard({ data }: { data: StaffType }) {
+  const handleEditClick = async () => {
+    try {
+      const { value: formValues } = await Swal.fire({
+        title: 'Edit Staff Info',
+        html: `
+        <div class="flex flex-col gap-4 text-left w-full">
+          <div class="flex flex-col gap-1 w-full">
+            <label class="text-sm font-medium text-gray-700">Username</label>
+            <input id="swal-input1" class="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Username" value="${data.username}" />
+          </div>
+          <div class="flex flex-col gap-1 w-full">
+            <label class="text-sm font-medium text-gray-700">Role</label>
+            <select id="swal-input3" class="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="Technician" ${data.role === 'Technician' ? 'selected' : ''}>Technician</option>
+              <option value="Manager" ${data.role === 'Manager' ? 'selected' : ''}>Manager</option>
+              <option value="Operator" ${data.role === 'Operator' ? 'selected' : ''}>Operator</option>
+            </select>
+          </div>
+        </div>
+      `,
+        showCancelButton: true,
+        confirmButtonText: '💾 Save',
+        cancelButtonText: '✖ Cancel',
+        icon: 'info',
+        preConfirm: () => {
+          return {
+            username: (document.getElementById('swal-input1') as HTMLInputElement).value,
+            role: (document.getElementById('swal-input3') as HTMLSelectElement).value,
+          };
+        },
+      });
+
+      if (formValues) {
+        const response = await fetch('/api/staff/edit-staff-data', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            id: data.id,
+            username: formValues.username,
+            role: formValues.role,
+          }),
+        });
+
+        const result = await response.json();
+        if (response.ok && result?.status_code === 200) {
+          Swal.fire({
+            icon: 'success',
+            title: 'User Updated',
+            text: 'The user information has been successfully updated!',
+          }).then(() => window.location.reload());
+        } else {
+          throw new Error(result?.message || 'Failed to update user info');
+        }
+      }
+    } catch (error: any) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message,
+      });
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    const confirm = await Swal.fire({
+      title: 'Are you sure?',
+      text: `Do you want to delete user "${data.username}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '🗑️ Delete',
+      cancelButtonText: 'Cancel',
+    });
+
+    if (confirm.isConfirmed) {
+      try {
+        const res = await fetch('/api/staff/delete-staff', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ id: data.id }),
+        });
+
+        const result = await res.json();
+        if (res.ok && result?.status_code === 200) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted',
+            text: 'User has been deleted successfully.',
+          }).then(() => window.location.reload());
+        } else {
+          throw new Error(result?.message || 'Failed to delete user');
+        }
+      } catch (err: any) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: err.message,
+        });
+      }
+    }
+  };
 
   return (
-    <>
-      <div
-        className="mb-6 flex w-full cursor-pointer flex-col gap-y-4 rounded-[10px] border border-muted p-4 @lg:gap-y-6 sm:p-[30px]"
-        onClick={() =>
-          openDrawer({
-            view: <SingleJob data={data} />,
-            placement: 'right',
-            containerClassName: 'max-w-full xl:max-w-[60%] dark:bg-gray-50',
-          })
-        }
-      >
-        <div className="relative flex items-start justify-between gap-4">
-          <div className="flex flex-col items-start gap-4 @xl:flex-row">
-            <Image
-              src={data.logo}
-              alt="job feed image"
-              width={56}
-              height={56}
-              className="size-12 @6xl:size-14"
-            />
-            <div className="space-y-1">
-              <Title as="h3" className="text-base font-medium @xl:text-lg">
-                {data.jobTitle}
-              </Title>
-              <Breadcrumb
-                separator=""
-                separatorVariant="circle"
-                className="flex-wrap gap-y-1 [&>a]:text-xs [&>a]:!text-gray-500 @7xl:[&>a]:text-sm"
-              >
-                {data.breadcrumb.map((item) => (
-                  <Breadcrumb.Item key={item.name}>
-                    {item.name} {item.value}
-                  </Breadcrumb.Item>
-                ))}
-              </Breadcrumb>
-            </div>
+    <div className="mb-6 w-full rounded-[10px] border border-muted p-4 sm:p-[30px]">
+      <div className="flex justify-between items-center">
+        <div>
+          <h3 className="text-lg font-medium">
+            {data.username} <span className="text-sm text-gray-500">(ID: {data.id})</span>
+          </h3>
+          <p className="text-sm text-gray-600">{data.role}</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex gap-2 items-center">
+            <PiSealCheckFill size={20} className="text-primary" />
+            <PiMapPin size={20} className="text-gray-500" />
           </div>
-          <Button
-            size="sm"
-            variant="outline"
-            className={cn('h-10', isBookMark && 'bg-primary/10 text-primary')}
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsBookMark(!isBookMark);
-            }}
-            aria-label="Bookmark this job"
-          >
-            {!isBookMark ? (
-              <PiBookmarkSimpleThin className="size-4 @7xl:size-5" />
-            ) : (
-              <PiBookmarkSimpleFill className="size-4 @7xl:size-5" />
-            )}
+          <Button size="sm" variant="outline" onClick={handleEditClick}>
+            Edit
+          </Button>
+          <Button size="sm"  variant="outline" onClick={handleDeleteClick}>
+            Delete
           </Button>
         </div>
-
-        <Text className="text-sm font-normal leading-normal @xl:leading-relaxed">
-          {data.jobDescription[0].desc}
-        </Text>
-        <JobBadge skills={data.skills} />
-
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 @lg:gap-x-8">
-          <div className="flex gap-x-1.5">
-            <PiSealCheckFill size={20} className="text-primary" />
-            <Text className="text-sm font-medium">Payment Verified</Text>
-          </div>
-          <JobFeedRating rating={[data.rating]} />
-          <div className="flex gap-x-1.5">
-            <PiMapPin size={20} />
-            <Text className="text-sm font-medium">{data.location}</Text>
-          </div>
-        </div>
       </div>
-    </>
+    </div>
   );
 }
+
