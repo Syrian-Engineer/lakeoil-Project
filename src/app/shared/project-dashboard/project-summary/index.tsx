@@ -65,6 +65,8 @@ export default function ProjectSummary({ className }: { className?: string }) {
     if(typeof window !== "undefined"){
       // isSuperAdmin = localStorage.getItem('isSuperAdmin');
       setIsSuperAdmin(localStorage.getItem('isSuperAdmin'))
+   }else{
+    return;
    }
   },[])
   

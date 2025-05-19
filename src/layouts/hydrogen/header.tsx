@@ -16,10 +16,19 @@ import { RootState } from "@/store";
 import { setLanguage } from "@/store/slices/languageSlice";
 
 export default function Header() {
-  const isSuperAdminL = localStorage.getItem("isSuperAdmin");
+  const [isSuperAdminL,setIsSuperAdminL] = useState<string|null>("")
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const pathname = usePathname();
 
+  useEffect(()=>{
+    if(typeof window !=="undefined"){
+      setIsSuperAdminL(localStorage.getItem("isSuperAdmin"))
+    }else{
+      return;
+    }
+  },[])
+
+  
   const dispatch = useDispatch();
   const selectedLang = useSelector((state: RootState) => state.language.language);
 
