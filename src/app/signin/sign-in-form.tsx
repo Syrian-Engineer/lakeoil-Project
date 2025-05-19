@@ -34,7 +34,9 @@ export default function SignInForm() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    if(typeof window === "undefined"){
+      return;
+    }
 
     if(loginType === "reports"){
       try {

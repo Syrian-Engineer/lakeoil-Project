@@ -11,9 +11,18 @@ export default function Page() {
   const [selectedStation, setSelectedStation] = useState<SelectOption | null>(null);
   const [shiftTime, setShiftTime] = useState('07:00');
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
 
-  const isAdmin = typeof window !== 'undefined' && localStorage.getItem('isSuperAdmin') === 'true';
-  const token = typeof window !== 'undefined' ? sessionStorage.getItem('access_token') : null;
+
+
+   useEffect(() => {
+    const admin = localStorage.getItem('isSuperAdmin') === 'true';
+    const accessToken = sessionStorage.getItem('access_token');
+
+    setIsAdmin(admin);
+    setToken(accessToken);
+  }, []);
 
   useEffect(() => {
     if (isAdmin) {
