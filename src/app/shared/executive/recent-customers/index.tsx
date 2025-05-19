@@ -45,7 +45,7 @@ export default function RecentCustomers({ className }: { className?: string }) {
       }
     >
       <Table table={table} variant="modern" />
-      <TablePagination table={table} className="p-4" />
+      {/* <TablePagination table={table} className="p-4" /> */}
     </WidgetCard>
   );
 }
