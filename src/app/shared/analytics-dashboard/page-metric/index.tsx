@@ -72,7 +72,7 @@ export default function PageMetrics({ className }: { className?: string }) {
           rowClassName: 'last:border-0',
         }}
       />
-      <TablePagination table={table} className="p-4" />
+      {/* <TablePagination table={table} className="p-4" /> */}
     </div>
   );
 }
