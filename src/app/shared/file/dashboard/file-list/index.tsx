@@ -56,7 +56,7 @@ export default function FileListTable({ className }: { className?: string }) {
             headerClassName: '!border-t-0',
           }}
         />
-        <TablePagination table={table} />
+        {/* <TablePagination table={table} /> */}
       </Box>
     </div>
   );
