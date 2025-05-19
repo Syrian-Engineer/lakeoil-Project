@@ -55,7 +55,7 @@ export default function WebsiteMetrics({ className }: { className?: string }) {
             '[&>div]:flex [&>div]:justify-end [&>div]:first:justify-start',
         }}
       />
-      <TablePagination table={table} className="p-4" />
+      {/* <TablePagination table={table} className="p-4" /> */}
     </WidgetCard>
   );
 }
