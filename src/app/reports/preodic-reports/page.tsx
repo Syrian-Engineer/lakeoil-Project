@@ -105,7 +105,7 @@ export default function Page() {
               }
             />
           </div>
-        ))}
+          ))}
       </div>
 
       {/* Date Range */}

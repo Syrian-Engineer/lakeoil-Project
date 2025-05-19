@@ -59,8 +59,15 @@ export default function ProjectSummary({ className }: { className?: string }) {
 
   const [showFilterCard] = useAtom(showFilterCardAtom);
   const [filters] = useAtom(filterAtom);
-
-  const isSuperAdmin = localStorage.getItem('isSuperAdmin');
+  const [isSuperAdmin,setIsSuperAdmin] = useState<string|null>("")
+ 
+  useEffect(()=>{
+    if(typeof window !== "undefined"){
+      // isSuperAdmin = localStorage.getItem('isSuperAdmin');
+      setIsSuperAdmin(localStorage.getItem('isSuperAdmin'))
+   }
+  },[])
+  
 
   const {
     filtered_pumps,
