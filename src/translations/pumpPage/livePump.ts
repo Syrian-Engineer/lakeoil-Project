@@ -13,7 +13,7 @@ export const livePumpTranslations = {
     ar:{
         total:"المجموع",
         volume:"المقدار",
-        unitPrice:"سعر الوحدة",
+        unitPrice:"سعر ",
         approval:"موافقة",
         status:"الحالة",
         connected:"متصل",

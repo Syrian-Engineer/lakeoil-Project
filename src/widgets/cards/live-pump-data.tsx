@@ -435,12 +435,12 @@ export default function LivePumpCard({ pump, selected, className }: Props) {
         </ActionIcon>
       }
       descriptionClassName={cn(
-        'font-semibold mt-1',
+        'font-semibold mt-1 ',
         pump.is_connected ? 'text-green-600' : 'text-red-600'
       )}
       className={cn(
         className,
-        'max-w-full transition-all duration-300',
+        `max-w-full transition-all duration-300 ${status.className}`,
         selected && 'ring-2 ring-blue-500 scale-[1.02] shadow-lg',
         highlightOrange && 'ring-2 ring-orange-500 shadow-lg',
         highlightGreen && 'ring-2 ring-green-500 shadow-lg'
@@ -451,7 +451,7 @@ export default function LivePumpCard({ pump, selected, className }: Props) {
         <div className="mt-2 grid w-full grid-cols-1 justify-around gap-2 @sm:py-1 @7xl:gap-4">
           <div className="grid grid-cols-2 gap-5">
             {statData.map((stat) => (
-              <div key={stat.title} className="flex items-center">
+              <div key={stat.title} className={`flex items-center ${total.className}`}>
                 <div
                   className={cn(
                     'me-2 flex h-7 w-7 items-center justify-center rounded-md bg-opacity-10 p-[4px]',

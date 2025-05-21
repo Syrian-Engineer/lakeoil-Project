@@ -88,11 +88,11 @@ export default function Tank({ tank,productName }: Props) {
               </button>
             </div>
             <ul class="text-sm text-gray-700 pl-4 space-y-1">
-              <li>🌡️ <strong>${avgTemperature}:</strong> ${avg} °C</li>
-              <li>⛽ <strong>${fuelLevel}:</strong> ${(probe.f_lvl / 100).toFixed(2)} ${mm}</li>
-              <li>💧 <strong>${waterLevel}:</strong> ${(probe.w_lvl / 100).toFixed(2)} ${mm}</li>
-              <li>🛠️ <strong>${fuelOffset}:</strong> ${probe.fuel_offset} ${mm}</li>
-              <li>🛠️ <strong>${waterOffset}:</strong> ${probe.water_offset} ${mm}</li>
+              <li>🌡️ <strong>${avgTemperature.text}:</strong> ${avg} °C</li>
+              <li>⛽ <strong>${fuelLevel.text}:</strong> ${(probe.f_lvl / 100).toFixed(2)} ${mm.text}</li>
+              <li>💧 <strong>${waterLevel.text}:</strong> ${(probe.w_lvl / 100).toFixed(2)} ${mm.text}</li>
+              <li>🛠️ <strong>${fuelOffset.text}:</strong> ${probe.fuel_offset} ${mm.text}</li>
+              <li>🛠️ <strong>${waterOffset.text}:</strong> ${probe.water_offset} ${mm.text}</li>
             </ul>
           </div>
         `;

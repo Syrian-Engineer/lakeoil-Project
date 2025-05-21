@@ -11,6 +11,6 @@ export function translate(
   ): { text: string; className: string } {
     const fallbackLang = "en";
     const text = translations[lang]?.[key] ?? translations[fallbackLang]?.[key] ?? key;
-    const className = lang === "ar" ? "font-cario" : "";
+    const className = lang === "ar" ? "font-cairo" : "";
     return { text, className };
   }
