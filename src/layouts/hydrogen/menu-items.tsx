@@ -227,6 +227,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { translate } from '@/translations/translate';
 import { menuItemTranslations } from '@/translations/sideBar/menuItemTranslations';
+import { FaCity } from "react-icons/fa";
 
 
 
@@ -251,6 +252,7 @@ export default function useMenuItems(): MenuItem[] {
     const staff = translate(menuItemTranslations, lang, "staff");
     const alarms = translate(menuItemTranslations, lang, "alarms");
     const settings = translate(menuItemTranslations, lang, "settings");
+    const stations = translate(menuItemTranslations,lang,"stations")
 
     const onlyReports = localStorage.getItem("onlyReports");
 
@@ -266,6 +268,11 @@ export default function useMenuItems(): MenuItem[] {
               name: periodic_reports.text,
               href: "/reports/preodic-reports",
               icon: <TbReportSearch />,
+            },
+            {
+              name: stations.text,
+              href: "/station",
+              icon: <FaCity />,
             },
           ]
         : [

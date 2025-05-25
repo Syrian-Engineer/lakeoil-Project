@@ -20,5 +20,5 @@ export const livePumpTranslations = {
         disconnected:"غير متصل",
         pumpTotalizerData:"بيانات عداد المضخة",
         alarm:"إنذار"
-    }
+    },
 }

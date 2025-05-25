@@ -9,7 +9,8 @@ export async function POST(req: Request) {
   
     const body = await req.json();
     const shiftPeriod = body.shift_period;
-  
+    const station_serial_number = body.station_serial;
+
     if (!shiftPeriod) {
       return new Response(JSON.stringify({ error: "Missing shift_period" }), {
         status: 400,
@@ -25,6 +26,7 @@ export async function POST(req: Request) {
         },
         body: JSON.stringify({
           shift_period: shiftPeriod,
+          station_serial:station_serial_number,
         }),
       });
   

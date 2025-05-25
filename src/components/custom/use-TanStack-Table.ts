@@ -203,7 +203,7 @@ export function useTanStackTable<T extends Record<string, any>>({
     const visibility: Record<string, boolean> = {};  // Ensure this is typed properly
 
     columns.forEach((column) => {
-      const meta = column.meta  // Safely access `meta`
+      const meta = column.meta  // Safely acces s `meta`
 
       if  (column.id){
         if (meta?.isExtra) {

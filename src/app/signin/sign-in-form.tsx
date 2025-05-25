@@ -111,7 +111,6 @@ export default function SignInForm() {
   const forgetPassword = translate(signInFormTranslations,lang,"forgetPassword")
   const login = translate(signInFormTranslations,lang,"login")
   const noAccount = translate(signInFormTranslations,lang,"noAccount")
-  const signUp = translate(signInFormTranslations,lang,"signUp")
 
   return (
     <>
@@ -177,13 +176,6 @@ export default function SignInForm() {
       </form>
       
       <Text className={`mt-6 text-center leading-loose text-gray-500 lg:mt-8 lg:text-start ${noAccount.className}`}>
-        {noAccount.text}{' '}
-        <Link
-          href={routes.auth.signUp1}
-          className={`font-semibold text-gray-700 transition-colors hover:text-blue ${signUp.className}`}
-        >
-         {signUp.text}
-        </Link>
       </Text>
     </>
   );

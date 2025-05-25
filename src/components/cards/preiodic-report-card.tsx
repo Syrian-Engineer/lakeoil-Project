@@ -3,12 +3,17 @@
 import { useEffect, useState } from 'react';
 import WidgetCard from '@/components/cards/widget-card';
 import { Button } from 'rizzui';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { reportCardTranslations } from '@/translations/periodicReportsPage/report-card';
+import { translate } from '@/translations/translate';
 
 interface ReportCardProps {
   title: string;
   endpoint: string;
   shiftTime: string;
   token: string | null;
+  station_serial?:any
 }
 
 interface ReportTotals {
@@ -23,7 +28,7 @@ interface ReportDates {
   end: string;
 }
 
-export default function ReportCard({ title, endpoint, shiftTime, token }: ReportCardProps) {
+export default function ReportCard({ title, endpoint, shiftTime, token,station_serial }: ReportCardProps) {
   const [reportData, setReportData] = useState<any[]>([]);
   const [reportTotals, setReportTotals] = useState<ReportTotals | null>(null);
   const [reportDates, setReportDates] = useState<ReportDates | null>(null);
@@ -42,7 +47,12 @@ export default function ReportCard({ title, endpoint, shiftTime, token }: Report
             'Content-Type': 'application/json',
             Authorization: token,
           },
-          body: JSON.stringify({ shift_period: shiftTime }),
+          body: JSON.stringify(
+            {
+               shift_period: shiftTime,
+              ...(station_serial ? { station_serial } : {}), // Only include if defined
+            }
+          ),
         });
 
         const data = await res.json();
@@ -188,6 +198,13 @@ export default function ReportCard({ title, endpoint, shiftTime, token }: Report
     printWindow.document.close();
   };
 
+// for Translations
+  const lang = useSelector((state:RootState)=>state.language.language)
+  const receipts = translate(reportCardTranslations,lang,"receipts");
+  const volume = translate(reportCardTranslations,lang,"volume");
+  const amount = translate(reportCardTranslations,lang,"amount");
+  const type = translate(reportCardTranslations,lang,"type");
+
   return (
     <WidgetCard title={title}>
       {isLoading ? (
@@ -199,10 +216,10 @@ export default function ReportCard({ title, endpoint, shiftTime, token }: Report
           <table className="w-full mt-4 text-sm text-left border-t border-gray-200">
             <thead>
               <tr className="text-gray-500 border-b">
-                <th className="py-2 px-2 font-medium">Type</th>
-                <th className="py-2 px-2 font-medium">Amount (₺)</th>
-                <th className="py-2 px-2 font-medium">Volume (L)</th>
-                <th className="py-2 px-2 font-medium">Receipts</th>
+                <th className="py-2 px-2 font-medium">{type.text}</th>
+                <th className="py-2 px-2 font-medium"> {amount.text}</th>
+                <th className="py-2 px-2 font-medium">{volume.text}</th>
+                <th className="py-2 px-2 font-medium">{receipts.text}</th>
               </tr>
             </thead>
             <tbody>

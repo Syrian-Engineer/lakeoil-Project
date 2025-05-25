@@ -7,7 +7,8 @@ export const menuItemTranslations ={
         customers:"Customers",
         staff:"Staff",
         alarms:"Alarms",
-        settings:"Settings"
+        settings:"Settings",
+        stations:"Stations",
     },
     ar:{
         pumps:"المضخات",
@@ -18,5 +19,6 @@ export const menuItemTranslations ={
         staff:"طاقم العمل",
         alarms:"الإنذارات",
         settings:"الإعدادات",
+        stations:"المحطات",
     }
 }
