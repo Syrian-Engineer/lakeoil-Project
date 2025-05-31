@@ -40,8 +40,8 @@ export default function EditComponent({
     const response = await fetch(`/api/stations/update-station?id=${station.id}`, {
       method: "PUT",
       headers: {
-        Authorization: `${access_token}`,
-        "Content-Type": "application/json",
+          "Content-Type": "application/json",
+          Authorization: `${access_token}`,
       },
       body: JSON.stringify({
          Distributor_Id: newStationData.Distributor_Id,

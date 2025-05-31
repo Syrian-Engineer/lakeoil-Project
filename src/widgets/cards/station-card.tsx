@@ -5,6 +5,10 @@ import { stationProps } from "@/app/station/page";
 import { FaUserCog, FaServer, FaEdit, FaTrash } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import EditComponent from "@/components/EditComponent";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { translate } from "@/translations/translate";
+import { stationCardTranslations } from "@/translations/stationPage/stationCard";
 
 interface Props {
   station: stationProps;
@@ -42,6 +46,7 @@ export default function StationCard({ station,setRefetchStation }: Props) {
         const response = await fetch(`/api/stations/delete-station?id=${station.id}`, {
           method: "DELETE",
           headers: {
+            "Content-Type": "application/json",
             Authorization: `${accessToken}`
           },
         });
@@ -73,8 +78,24 @@ export default function StationCard({ station,setRefetchStation }: Props) {
     }
   };
 
+
+  // for tranlsation
+  const lang = useSelector((state:RootState)=>state.language.language);
+  const license = translate(stationCardTranslations,lang,"license")
+  const region = translate(stationCardTranslations,lang,"region")
+  const district = translate(stationCardTranslations,lang,"district")
+  const edit = translate(stationCardTranslations,lang,"edit")
+  const deleting = translate(stationCardTranslations,lang,"deleting")
+  const deletee = translate(stationCardTranslations,lang,"delete")
+  const name = translate(stationCardTranslations,lang,"name")
+  const provider = translate(stationCardTranslations,lang,"provider")
+  const URL = translate(stationCardTranslations,lang,"URL")
+  const username = translate(stationCardTranslations,lang,"username")
+  const APIKey = translate(stationCardTranslations,lang,"APIKey")
+
+
   return (
-    <div className="w-full h-fit  border rounded-xl p-4 shadow hover:shadow-md transition duration-300 bg-white">
+    <div className={`w-full h-fit  border rounded-xl p-4 shadow hover:shadow-md transition duration-300 bg-white ${license.className}`}>
         {showEditComponent && (
           <div className=" w-fit h-fit absolute top-20 z-50 bg-gray-300 rounded-2xl left-80 right-10">
             <EditComponent 
@@ -94,15 +115,15 @@ export default function StationCard({ station,setRefetchStation }: Props) {
 
                 <div className="flex flex-wrap items-center gap-2 text-sm text-gray-700">
                     <span className="bg-gray-100 px-2 py-1 rounded-full">
-                    <strong>License:</strong> {station.EWURALicenseNo}
+                    <strong>{license.text}:</strong> {station.EWURALicenseNo}
                     </span>
 
                     <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                    <strong>Region:</strong> {station.RegionName}
+                    <strong>{region.text}:</strong> {station.RegionName}
                     </span>
 
                     <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                    <strong>District:</strong> {station.DistrictName}
+                    <strong>{district.text}:</strong> {station.DistrictName}
                     </span>
                 </div>
         </div>
@@ -114,7 +135,7 @@ export default function StationCard({ station,setRefetchStation }: Props) {
             className="flex items-center gap-1 text-sm px-3 py-1.5 rounded bg-blue-600 text-white hover:bg-blue-700"
           >
             <FaEdit className="w-4 h-4" />
-            Edit
+            {edit.text}
           </button>
           <button
             onClick={handleDelete}
@@ -138,10 +159,10 @@ export default function StationCard({ station,setRefetchStation }: Props) {
                         d="M4 12a8 8 0 018-8v8z"
                         />
                     </svg>
-                    Deleting
+                    {deleting.text}
                     </span>
                 ) : (
-                    "Delete"
+                    `${deletee.text}`
                 )}
           </button>
         </div>
@@ -165,7 +186,7 @@ export default function StationCard({ station,setRefetchStation }: Props) {
       {showOperator && (
         <div className="mt-3 bg-blue-50 p-3 rounded text-sm text-blue-900">
           <h3 className="font-medium mb-1">Operator Details</h3>
-          <p><strong>Name:</strong> {station.OperatorName}</p>
+          <p><strong>{name.text}:</strong> {station.OperatorName}</p>
           <p><strong>TIN:</strong> {station.OperatorTin}</p>
           <p><strong>XTIN:</strong> {station.Operator_XTin}</p>
           <p><strong>VRN:</strong> {station.OperatorVrn}</p>
@@ -177,12 +198,12 @@ export default function StationCard({ station,setRefetchStation }: Props) {
       {showProvider && (
         <div className="mt-3 bg-green-50 p-3 rounded text-sm text-green-900">
           <h3 className="font-medium mb-1">VFD Provider Details</h3>
-          <p><strong>Provider:</strong> {station.VFD_provider}</p>
-          <p><strong>URL:</strong> {station.VFD_provider_URL}</p>
-          <p><strong>Username:</strong> {station.VFD_provider_userName}</p>
+          <p><strong>{provider.text}:</strong> {station.VFD_provider}</p>
+          <p><strong>{URL.text}:</strong> {station.VFD_provider_URL}</p>
+          <p><strong>{username.text}:</strong> {station.VFD_provider_userName}</p>
           <div className="relative group w-fit">
             <p className="text-ellipsis overflow-hidden whitespace-nowrap max-w-xs cursor-help">
-              <strong>API Key:</strong> {station.VFD_provider_TAPIkey.slice(0, 40)}...
+              <strong>{APIKey.text}:</strong> {station.VFD_provider_TAPIkey.slice(0, 40)}...
             </p>
 
             {/* Tooltip */}

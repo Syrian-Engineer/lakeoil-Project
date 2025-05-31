@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SlPlus } from "react-icons/sl";
 import { Button } from "rizzui/button";
+import { FaFilter } from "react-icons/fa";
+import StationFilterCard from "@/widgets/cards/filter-station-card";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { translate } from "@/translations/translate";
+import { stationHomePageTranslations } from "@/translations/stationPage/homePage";
+
+
 
 export interface stationProps {
   Distributor_Id: number,
@@ -44,10 +52,12 @@ export interface stationProps {
 
 export default function Page() {
   const [stations, setStations] = useState<stationProps[]>([]);
+  const [filteredStation, setFilteredStation] = useState<stationProps | null>(null);
   const [loading, setIsLoading] = useState(false);
   const [stationLoadingMap, setStationLoadingMap] = useState<{ [key: number]: boolean }>({});
   const router = useRouter();
   const [refetchStations,setRefetchStations] = useState(false)
+  const [showFilterCard,setShowFilterCard] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -105,42 +115,75 @@ export default function Page() {
     router.push("/station/new-station");
   };
 
+  const handleShowFilterCard = ()=>{
+    setShowFilterCard(true);
+  }
+
+
+  // for translation
+  const lang = useSelector((state:RootState)=>state.language.language);
+  const addStation = translate(stationHomePageTranslations,lang,"addStation");
+  const filterStation = translate(stationHomePageTranslations,lang,"filterStation");
+
   return (
     <div className="p-4 space-y-4">
+      {showFilterCard && (
+        <StationFilterCard 
+         setRefetchStations={setRefetchStations}
+         setShowFilterCard={setShowFilterCard}
+         setFilteredStation={setFilteredStation}
+        />
+      )}
       <div className="flex items-center justify-start gap-3 mb-4">
         <Button
           variant="outline"
           className="p-2 text-2xl"
-          title="Add Station"
-          aria-label="Add Tank"
+          title={`${addStation.text}`}
           onClick={handleAddStation}
         >
           <SlPlus />
         </Button>
+
+        {/* For Filters */}
+         <Button
+          variant="outline"
+          className="p-2 text-2xl"
+          title={`${filterStation.text}`}
+          onClick={handleShowFilterCard}
+        >
+          <FaFilter />
+        </Button>
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center h-40">
-          <div className="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin" />
-        </div>
-      ) : (
-        stations.map((station) =>
-          stationLoadingMap[station.id] ? (
-            <div
-              key={station.id}
-              className="w-full h-40 flex justify-center items-center border border-gray-300 rounded-xl shadow-md"
-            >
+            <div className="flex justify-center items-center h-40">
               <div className="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin" />
             </div>
+          ) : filteredStation ? (
+            <StationCard
+              key={filteredStation.id}
+              station={filteredStation}
+              setRefetchStation={setRefetchStations}
+            />
           ) : (
-            <StationCard 
-             key={station.id} 
-             station={station} 
-             setRefetchStation={setRefetchStations}
-             />
-          )
-        )
-      )}
+            stations.map((station) =>
+              stationLoadingMap[station.id] ? (
+                <div
+                  key={station.id}
+                  className="w-full h-40 flex justify-center items-center border border-gray-300 rounded-xl shadow-md"
+                >
+                  <div className="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin" />
+                </div>
+              ) : (
+                <StationCard
+                  key={station.id}
+                  station={station}
+                  setRefetchStation={setRefetchStations}
+                />
+              )
+            )
+       )}
+
     </div>
   );
 }

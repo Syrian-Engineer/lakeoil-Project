@@ -7,10 +7,18 @@ import { Title } from 'rizzui';
 import cn from '@/utils/class-names';
 import SimpleBar from '@/components/ui/simplebar';
 import useMenuItems from '@/layouts/hydrogen/menu-items'; // <- use the hook
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { translate } from '@/translations/translate';
+import { menuItemTranslations } from '@/translations/sideBar/menuItemTranslations';
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
   const menuItems = useMenuItems(); // <- call the hook here
+
+  // for translations
+  const lang = useSelector((state:RootState)=>state.language.language);
+  const classNamee = translate(menuItemTranslations,lang,"pumps")
 
   return (
     <aside
@@ -30,7 +38,7 @@ export default function Sidebar({ className }: { className?: string }) {
       </div>
 
       <SimpleBar className="h-[calc(100%-80px)]">
-        <div className="mt-4 pb-3 3xl:mt-6">
+        <div className={`mt-4 pb-3 3xl:mt-6 ${classNamee.className}`}>
           {menuItems.map((item, index) => {
             const isActive = pathname === item?.href;
 

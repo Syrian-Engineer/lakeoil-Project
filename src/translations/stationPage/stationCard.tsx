@@ -1,0 +1,28 @@
+export const stationCardTranslations = {
+    en:{
+        license:"License",
+        region:"Region",
+        district:"District",
+        edit:"Edit",
+        deleting:"Deleting",
+        delete:"Delete",
+        name:"Name",
+        provider:"Provider",
+        URL:"URL",
+        username:"Username",
+        APIKey:"API Key"
+    },
+    ar:{
+        license:"الرخصة",
+        region:"المنطقة",
+        district:"الحي",
+        edit:"تعديل",
+        Deleting:"جاري الحذف",
+        Delete:"حذف",
+        name:"الاسم",
+        provider:"المزود",
+        URL:"عنوان",
+        username:"اسم المستخدم",
+        APIKey:"مفتاح واجهة البرمجيات"
+    }
+}
