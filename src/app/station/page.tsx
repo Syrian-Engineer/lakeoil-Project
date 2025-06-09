@@ -50,6 +50,81 @@ export interface stationProps {
   created_date: string
 }
 
+
+const mockStations: stationProps[] = [
+  {
+    Distributor_Id: 1,
+    RetailStationName: "Mock Station 1",
+    EWURALicenseNo: "EWURA123",
+    EWURA_URL: "http://mock-ewura.com",
+    OperatorTin: 123456789,
+    Operator_XTin: "XTIN001",
+    OperatorVrn: "VRN123",
+    OperatorUIN: "UIN001",
+    OperatorName: "Mock Operator 1",
+    LicenseeTraSerialNo: "TRA001",
+    RegionName: "Region A",
+    DistrictName: "District A",
+    WardName: "Ward A",
+    Zone: "Zone A",
+    ContactPersonEmailAddress: "contact@station1.com",
+    ContactPersonPhone: 1234567890,
+    default_printer_IP: "192.168.0.101",
+    station_url_or_IP: "http://station1.local",
+    VFD_provider: "VFD Co",
+    VFD_provider_URL: "http://vfd.mock",
+    VFD_provider_userName: "user1",
+    VFD_provider_userPass: "pass1",
+    VFD_provider_TAPIkey: "apikey1",
+    Tax_office: "Tax Office A",
+    automation_server_url: "http://auto1.server",
+    automation_server_username: "auto_user1",
+    automation_server_pass: "auto_pass1",
+    TotalNoTanks: 3,
+    x_active_business: "Business A",
+    mobile_group1: ["0712345678"],
+    mobile_group2: ["0789876543"],
+    id: 1,
+    created_date: "2024-01-01T00:00:00Z",
+  },
+  {
+    Distributor_Id: 2,
+    RetailStationName: "Mock Station 2",
+    EWURALicenseNo: "EWURA456",
+    EWURA_URL: "http://mock-ewura.com",
+    OperatorTin: 987654321,
+    Operator_XTin: "XTIN002",
+    OperatorVrn: "VRN456",
+    OperatorUIN: "UIN002",
+    OperatorName: "Mock Operator 2",
+    LicenseeTraSerialNo: "TRA002",
+    RegionName: "Region B",
+    DistrictName: "District B",
+    WardName: "Ward B",
+    Zone: "Zone B",
+    ContactPersonEmailAddress: "contact@station2.com",
+    ContactPersonPhone: 9876543210,
+    default_printer_IP: "192.168.0.102",
+    station_url_or_IP: "http://station2.local",
+    VFD_provider: "VFD Co",
+    VFD_provider_URL: "http://vfd.mock",
+    VFD_provider_userName: "user2",
+    VFD_provider_userPass: "pass2",
+    VFD_provider_TAPIkey: "apikey2",
+    Tax_office: "Tax Office B",
+    automation_server_url: "http://auto2.server",
+    automation_server_username: "auto_user2",
+    automation_server_pass: "auto_pass2",
+    TotalNoTanks: 5,
+    x_active_business: "Business B",
+    mobile_group1: ["0711122233"],
+    mobile_group2: ["0788877665"],
+    id: 2,
+    created_date: "2024-01-02T00:00:00Z",
+  },
+];
+
+
 export default function Page() {
   const [stations, setStations] = useState<stationProps[]>([]);
   const [filteredStation, setFilteredStation] = useState<stationProps | null>(null);
@@ -126,13 +201,16 @@ export default function Page() {
   const filterStation = translate(stationHomePageTranslations,lang,"filterStation");
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="w-full p-4 space-y-4">
       {showFilterCard && (
-        <StationFilterCard 
-         setRefetchStations={setRefetchStations}
-         setShowFilterCard={setShowFilterCard}
-         setFilteredStation={setFilteredStation}
+        <div className="w-full">
+         <StationFilterCard 
+          setRefetchStations={setRefetchStations}
+          setShowFilterCard={setShowFilterCard}
+          setFilteredStation={setFilteredStation}
         />
+        </div>
+
       )}
       <div className="flex items-center justify-start gap-3 mb-4">
         <Button
@@ -170,7 +248,7 @@ export default function Page() {
               stationLoadingMap[station.id] ? (
                 <div
                   key={station.id}
-                  className="w-full h-40 flex justify-center items-center border border-gray-300 rounded-xl shadow-md"
+                  className="w-full h-40 flex justify-center items-center border border-gray-300 rounded-xl shadow-lg"
                 >
                   <div className="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin" />
                 </div>

@@ -1,8 +1,8 @@
 export async function POST(req: Request) {
     const { email, password } = await req.json();
-  
+  // http://78.189.54.28:6900/login   old endpoint 
     try {
-      const response = await fetch('http://78.189.54.28:6900/login', {
+      const response = await fetch('http://10.8.0.39:6900/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

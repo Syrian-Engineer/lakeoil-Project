@@ -274,6 +274,26 @@ export default function useMenuItems(): MenuItem[] {
               href: "/station",
               icon: <FaCity />,
             },
+            {
+              name: customers.text,
+              href: routes.Customers.dashboard,
+              icon: <MdPerson />,
+            },
+            {
+              name: staff.text,
+              href: routes.Staff.dashboard,
+              icon: <MdGroup />,
+            },
+            {
+              name: alarms.text,
+              href: routes.Alarms.dashboard,
+              icon: <FiAlertCircle />,
+            },
+            {
+              name: settings.text,
+              href: routes.Settings.dashboard,
+              icon: <FiSettings />,
+            },
           ]
         : [
             {

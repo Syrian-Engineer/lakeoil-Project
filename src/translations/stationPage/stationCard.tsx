@@ -10,7 +10,12 @@ export const stationCardTranslations = {
         provider:"Provider",
         URL:"URL",
         username:"Username",
-        APIKey:"API Key"
+        APIKey:"API Key",
+        totalNumberTanks:"Total Number Tanks",
+        personInfo:"Person Info",
+        personEmail:"Person Email",
+        personPhone:"Person Phone",
+        tax:"Tax Office"
     },
     ar:{
         license:"الرخصة",
@@ -23,6 +28,11 @@ export const stationCardTranslations = {
         provider:"المزود",
         URL:"عنوان",
         username:"اسم المستخدم",
-        APIKey:"مفتاح واجهة البرمجيات"
+        APIKey:"مفتاح واجهة البرمجيات",
+        totalNumberTanks:"إجمالي عدد الخزانات",
+        personInfo:"معلومات الشخص",
+        personEmail:"البريد الإلكتروني للشخص",
+        personPhone:"الرقم الشخصي",
+        tax:"مكتب الضرائب"
     }
 }

@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
 
     const response = await fetch("http://78.189.54.28:3800/stationinfo/info", {
       method: "POST",
-      headers: {
+      headers: {  
         "Content-Type": "application/json",
         Authorization: `${access_Token}`,
       },

@@ -51,7 +51,7 @@
 //   const data = usePumpLiveData(code);   // تجريبية 
   
 //   useEffect(()=>{
-//     if(code === data?.code){
+//     if(code === data?.id){
 //         if(data.event === 'filling_info'){
 //           setAmountResponse(data.amount);
 //           setVolumeResponse(data.volume);
@@ -219,7 +219,7 @@
 
 //         {/* Pump Totalizer Section */}
 //         <div className="h-[13rem] w-full @sm:pt-2">
-//           <p className="text-base font-semibold"> {pumpTotalizerData} </p>
+//           <p className="text-base font-semibold"> {pumpTotalizerData.text} </p>
 //           <PumpData
 //               ElectronicTotalizer={Number(pump.mechanical_totalizer || 0).toFixed(2)}
 //               VirtualTotalizer={Number(pump.virtual_totalizer || 0).toFixed(2)}
@@ -230,11 +230,11 @@
 //         {/* Alarm Message */}
 //         {alarmResponse? (
 //           <Badge color="danger" className="mt-2 hover:cursor-pointer" onClick={deleteError}>
-//             {alarm}: {alarmResponse}
+//             {alarm.text}: {alarmResponse}
 //           </Badge>
 //         ):(
 //           <Badge color="danger" className="mt-2 hover:cursor-pointer" onClick={deleteError}>
-//             {alarm}:
+//             {alarm.text}:
 //           </Badge>
 //         )}
 //       </div>
@@ -255,7 +255,7 @@ import {
   PiPulseDuotone,
   PiSlidersHorizontalDuotone,
 } from 'react-icons/pi';
-import usePumpLiveData from '@/app/api/live-data/usePumpLiveData';
+import usePumpLiveData, { PumpLiveData } from '@/app/api/live-data/usePumpLiveData';
 import PumpData from '@/components/PumpData';
 import { useEffect, useState } from 'react';
 import { useSafeState } from 'ahooks';
@@ -268,6 +268,7 @@ import { Button } from 'rizzui'; // Import the Button component from Rizzui
 
 interface Props {
   pump: {
+    id:number;
     name: string;
     code: number;
     approval: number;
@@ -293,33 +294,43 @@ export default function LivePumpCard({ pump, selected, className }: Props) {
   const [highlightGreen, setHighlightGreen] = useState(false);
   const [showTotalizer, setShowTotalizer] = useState(false);
 
-  const code = pump.code;
-  const data = usePumpLiveData(code);
 
+  const pump_id = pump.id;
+
+  
+  const data = useSelector((state:RootState)=>state.pump[pump_id])
+  
   useEffect(() => {
-    if (code === data?.code) {
+      if(!data){
+        return;
+      }
+        console.log(data);
       if (data.event === 'filling_info') {
+        setHighlightGreen(true);
         setAmountResponse(data.amount);
         setVolumeResponse(data.volume);
         setPriceResponse(data.price);
         setProductResponse(data.product);
         setIsFillingInfoReceived(true);
-        setHighlightGreen(true);
       } else if (data.event === 'nozzle_status') {
         setStatusResponse(data.nozzle_status);
         if (data.nozzle_status === 1) {
           setHighlightOrange(true);
+          setAmountResponse(data.amount);
+          setVolumeResponse(data.volume);
+          setPriceResponse(data.price);
+          setProductResponse(data.product);
         } else {
           setHighlightOrange(false);
         }
-        setHighlightGreen(false); // reset green on nozzle change
+        // setHighlightGreen(false); // reset green on nozzle change
       } else if (data.event === 'pump_status') {
         setPumpStatus(data.is_connected);
       } else if (data.event === 'alarm_status') {
         setAlarmResponse(data.alarm_message);
       }
-    }
-  }, [data, code]);
+    // }
+  }, [data, pump_id]);
 
   useEffect(() => {
     if (statusResponse === 1) {
@@ -357,7 +368,7 @@ export default function LivePumpCard({ pump, selected, className }: Props) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ pump_code: code }),
+          body: JSON.stringify({ pump_code: pump_id }),
         })
           .then((response) => {
             if (!response.ok) throw new Error('Response not OK.');
@@ -427,7 +438,7 @@ export default function LivePumpCard({ pump, selected, className }: Props) {
     <WidgetCard
       key={pump.name}
       title={`${pump.name} (${pump.code})`}
-      description={`${status.text}: ${pump.is_connected ? connected.text : disconnected.text}`}
+      description={`${status.text}: ${pumpStatus === 1? connected.text : disconnected.text}`}
       rounded="lg"
       action={
         <ActionIcon variant="outline" rounded="full">
@@ -436,7 +447,7 @@ export default function LivePumpCard({ pump, selected, className }: Props) {
       }
       descriptionClassName={cn(
         'font-semibold mt-1 ',
-        pump.is_connected ? 'text-green-600' : 'text-red-600'
+        pumpStatus === 1 ? 'text-green-600' : 'text-red-600'
       )}
       className={cn(
         className,
@@ -446,10 +457,10 @@ export default function LivePumpCard({ pump, selected, className }: Props) {
         highlightGreen && 'ring-2 ring-green-500 shadow-lg'
       )}
     >
-      <div className="mt-3 grid w-full grid-cols-1 justify-around gap-4 @sm:py-1.5 @7xl:gap-6">
+      <div className={`mt-3 grid w-full grid-cols-1 justify-around gap-4 @sm:py-1.5 @7xl:gap-6`}>
         {/* Stats Block */}
         <div className="mt-2 grid w-full grid-cols-1 justify-around gap-2 @sm:py-1 @7xl:gap-4">
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-2 gap-4">
             {statData.map((stat) => (
               <div key={stat.title} className={`flex items-center ${total.className}`}>
                 <div
@@ -463,7 +474,7 @@ export default function LivePumpCard({ pump, selected, className }: Props) {
                 </div>
                 <div className="">
                   <Text className="mb-0.5 text-gray-600 font-medium text-sm">{stat.title}</Text>
-                  <Title as="h6" className="font-semibold text-[8px]">{stat.metric}</Title>
+                  <Title as="h4" className="font-semibold text-[9px]">{stat.metric}</Title>
                 </div>
               </div>
             ))}
