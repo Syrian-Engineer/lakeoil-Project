@@ -26,10 +26,31 @@ export default function Page() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    const isReportsLogin = localStorage.getItem("onlyReports") === "true";
+    const access_token = sessionStorage.getItem("access_token");
+
+    const endpoint = isReportsLogin
+    ?"/api/reports/staff"
+    :"/api/staff";
+
+    const headers :Record<string,string> = {
+      'Content-Type': 'application/json',
+    }
+
+    if(isReportsLogin && access_token){
+      headers["Authorization"] = `${access_token}`
+    }
+
+
+
     const fetchStaff = async () => {
       setIsFetching(true);
       try {
-        const res = await fetch('/api/staff');
+        const res = await fetch(endpoint,{
+          headers,
+          credentials:isReportsLogin?"omit":"include"
+        });
+        
         const data = await res.json();
         if (data?.data?.page_records) {
           setStaff(data.data.page_records);
@@ -61,7 +82,6 @@ export default function Page() {
       </div>
     );
   }
-
   return (
     <div>
       {staff.slice(0, nextPage).map((person) => (
@@ -126,10 +146,26 @@ function StaffCard({ data }: { data: StaffType }) {
       });
 
       if (formValues) {
-        const response = await fetch('/api/staff/edit-staff-data', {
+        const isReportsLogin = localStorage.getItem("onlyReports") === "true";
+        const access_token = sessionStorage.getItem("access_token");
+
+
+        const endpoint = isReportsLogin
+        ?"/api/reports/staff/edit-staff-data"
+        :"/api/staff/edit-staff-data";
+
+        const headers :Record<string,string> = {
+          'Content-Type': 'application/json'
+        }
+
+        if(isReportsLogin && access_token){
+          headers["Authorization"] = `${access_token}`
+        }
+
+        const response = await fetch(endpoint, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
+          headers,
+          credentials:isReportsLogin?"omit":"include",
           body: JSON.stringify({
             id: data.id,
             username: formValues.username,
@@ -169,10 +205,26 @@ function StaffCard({ data }: { data: StaffType }) {
 
     if (confirm.isConfirmed) {
       try {
-        const res = await fetch('/api/staff/delete-staff', {
+        const isReportsLogin = localStorage.getItem("onlyReports") === "true";
+        const access_token = sessionStorage.getItem("access_token");
+
+        const endpoint = isReportsLogin
+        ?"/api/reports/staff/delete-staff"
+        :"/api/staff/delete-staff";
+
+        const headers :Record<string,string> = {
+          'Content-Type': 'application/json'
+        }
+
+        if(isReportsLogin && access_token){
+          headers["Authorization"] = `${access_token}`
+        }
+
+
+        const res = await fetch(endpoint, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
+          headers,
+          credentials: isReportsLogin?"omit":"include",
           body: JSON.stringify({ id: data.id }),
         });
 

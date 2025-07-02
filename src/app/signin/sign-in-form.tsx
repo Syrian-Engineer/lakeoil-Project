@@ -281,7 +281,7 @@ export default function SignInForm() {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <div className="space-y-5">
+        <div className="space-y-5 ">
           {/* Login Type Select */}
           <div>
             <label htmlFor="loginType" className={`block text-sm font-medium text-gray-700 ${loginTypee.className}`}>

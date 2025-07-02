@@ -34,10 +34,25 @@ export default function AddUserForm() {
 
   const onSubmit: SubmitHandler<AddUserFormValues> = async (data) => {
     try {
-      const response = await fetch('/api/staff/new-staff', {
+      const isReportsLogin = localStorage.getItem("onlyReports") === "true";
+      const access_token = sessionStorage.getItem("access_token");
+
+      const endpoint = isReportsLogin
+      ?"/api/reports/staff/new-staff"
+      :"/api/staff/new-staff"
+
+      const headers :Record<string,string> = {
+        'Content-Type': 'application/json',
+      }
+
+      if(isReportsLogin && access_token){
+        headers["Authorization"] = `${access_token}`
+      }
+
+      const response = await fetch(endpoint, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials:"include",
+        headers,
+        credentials:isReportsLogin?"omit":"include",
         body: JSON.stringify(data),
       });
 

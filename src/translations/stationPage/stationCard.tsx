@@ -15,7 +15,10 @@ export const stationCardTranslations = {
         personInfo:"Person Info",
         personEmail:"Person Email",
         personPhone:"Person Phone",
-        tax:"Tax Office"
+        tax:"Tax Office",
+        operatorInfo:"Operator Info",
+        providerInfo:"Provider Info",
+
     },
     ar:{
         license:"الرخصة",
@@ -33,6 +36,8 @@ export const stationCardTranslations = {
         personInfo:"معلومات الشخص",
         personEmail:"البريد الإلكتروني للشخص",
         personPhone:"الرقم الشخصي",
-        tax:"مكتب الضرائب"
+        tax:"مكتب الضرائب",
+        operatorInfo:"معلومات المشغل",
+        providerInfo:"معلومات المزود",
     }
 }

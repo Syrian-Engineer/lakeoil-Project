@@ -269,6 +269,334 @@
 // }
 
 
+
+
+
+// test 2 
+
+// 'use client';
+
+// import { useState } from 'react';
+// import { useRouter } from 'next/navigation';
+// import Swal from 'sweetalert2';
+// import toast from 'react-hot-toast';
+// import { PiEnvelopeSimple } from 'react-icons/pi';
+// import { Input, Select } from 'rizzui';
+// import FormGroup from '@/app/shared/form-group';
+// import FormFooter from '@/components/form-footer';
+// import { roles } from '@/app/_data/forms/my-details';
+
+// const initialForm = {
+//   name: '',
+//   email: '',
+//   address: '',
+//   phone: '',
+//   id_type: '',
+//   id_value: '',
+//   credit: '',
+//   max_credit: '',
+//   type: '',
+// };
+
+// export default function CustomerCreateForm() {
+//   const [formData, setFormData] = useState(initialForm);
+//   const router = useRouter();
+
+//   const handleChange = (field: string, value: string | number) => {
+//     setFormData((prev) => ({
+//       ...prev,
+//       [field]: value,
+//     }));
+//   };
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+
+//     try {
+//       const res = await fetch('/api/customers/new-customer', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           ...formData,
+//           phone: Number(formData.phone),
+//           id_type: Number(formData.id_type),
+//           id_value: Number(formData.id_value),
+//           credit: Number(formData.credit),
+//           max_credit: Number(formData.max_credit),
+//         }),
+//       });
+
+//       const data = await res.json();
+//       if (res.ok) {
+//         Swal.fire({
+//           title: 'Success!',
+//           text: 'Customer added successfully!',
+//           icon: 'success',
+//           confirmButtonText: 'Done',
+//         }).then((result) => {
+//           if (result.isConfirmed) {
+//             router.push('/customers');
+//           }
+//         });
+//       } else {
+//         toast.error(`Failed: ${data.message || 'Unknown error'}`);
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       toast.error('Request failed');
+//     }
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit} className="space-y-6">
+//       <FormGroup title="Name">
+//         <Input
+//           placeholder="Customer Name"
+//           value={formData.name}
+//           onChange={(e) => handleChange('name', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Email Address">
+//         <Input
+//           type="email"
+//           prefix={<PiEnvelopeSimple className="h-6 w-6 text-gray-500" />}
+//           placeholder="example@mail.com"
+//           value={formData.email}
+//           onChange={(e) => handleChange('email', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Address">
+//         <Input
+//           placeholder="Customer Address"
+//           value={formData.address}
+//           onChange={(e) => handleChange('address', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Phone Number">
+//         <Input
+//           type="number"
+//           placeholder="Phone"
+//           value={formData.phone}
+//           onChange={(e) => handleChange('phone', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="ID Value">
+//         <Input
+//           type="number"
+//           placeholder="ID Value"
+//           value={formData.id_value}
+//           onChange={(e) => handleChange('id_value', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Max Credit">
+//         <Input
+//           type="number"
+//           placeholder="Max Credit"
+//           value={formData.max_credit}
+//           onChange={(e) => handleChange('max_credit', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Current Credit">
+//         <Input
+//           type="number"
+//           placeholder="Current Credit"
+//           value={formData.credit}
+//           onChange={(e) => handleChange('credit', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Type">
+//         <Input
+//           placeholder="Type"
+//           value={formData.type}
+//           onChange={(e) => handleChange('type', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormFooter submitBtnText="Add New Customer" />
+//     </form>
+//   );
+// }
+
+
+
+
+
+// // test 3
+// 'use client';
+
+// import { useState, useEffect } from 'react';
+// import { useRouter } from 'next/navigation';
+// import Swal from 'sweetalert2';
+// import toast from 'react-hot-toast';
+// import { PiEnvelopeSimple } from 'react-icons/pi';
+// import { Input } from 'rizzui';
+// import FormGroup from '@/app/shared/form-group';
+// import FormFooter from '@/components/form-footer';
+
+// const initialForm = {
+//   name: '',
+//   email: '',
+//   address: '',
+//   phone: '',
+//   id_type: '',
+//   id_value: '',
+//   credit: '',
+//   max_credit: '',
+//   type: '',
+// };
+
+// export default function Page() {
+//   const [formData, setFormData] = useState(initialForm);
+//   const [endpoint, setEndpoint] = useState('/api/customers/new-customer');
+//   const router = useRouter();
+
+//   useEffect(() => {
+//     if (typeof window !== 'undefined') {
+//       const reportsLogin = localStorage.getItem('onlyReports') === 'true';
+//       setEndpoint(reportsLogin ? '/api/reports/customers/new-customer' : '/api/customers/new-customer');
+//     }
+//   }, []);
+
+//   const handleChange = (field: string, value: string | number) => {
+//     setFormData((prev) => ({
+//       ...prev,
+//       [field]: value,
+//     }));
+//   };
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+
+//     try {
+//       const res = await fetch(endpoint, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           ...formData,
+//           phone: Number(formData.phone),
+//           id_type: Number(formData.id_type),
+//           id_value: Number(formData.id_value),
+//           credit: Number(formData.credit),
+//           max_credit: Number(formData.max_credit),
+//         }),
+//       });
+
+//       const data = await res.json();
+//       if (res.ok) {
+//         Swal.fire({
+//           title: 'Success!',
+//           text: 'Customer added successfully!',
+//           icon: 'success',
+//           confirmButtonText: 'Done',
+//         }).then((result) => {
+//           if (result.isConfirmed) {
+//             router.push('/customers');
+//           }
+//         });
+//       } else {
+//         toast.error(`Failed: ${data.message || 'Unknown error'}`);
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       toast.error('Request failed');
+//     }
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit} className="space-y-6">
+//       <FormGroup title="Name">
+//         <Input
+//           placeholder="Customer Name"
+//           value={formData.name}
+//           onChange={(e) => handleChange('name', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Email Address">
+//         <Input
+//           type="email"
+//           prefix={<PiEnvelopeSimple className="h-6 w-6 text-gray-500" />}
+//           placeholder="example@mail.com"
+//           value={formData.email}
+//           onChange={(e) => handleChange('email', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Address">
+//         <Input
+//           placeholder="Customer Address"
+//           value={formData.address}
+//           onChange={(e) => handleChange('address', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Phone Number">
+//         <Input
+//           type="number"
+//           placeholder="Phone"
+//           value={formData.phone}
+//           onChange={(e) => handleChange('phone', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="ID Value">
+//         <Input
+//           type="number"
+//           placeholder="ID Value"
+//           value={formData.id_value}
+//           onChange={(e) => handleChange('id_value', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Max Credit">
+//         <Input
+//           type="number"
+//           placeholder="Max Credit"
+//           value={formData.max_credit}
+//           onChange={(e) => handleChange('max_credit', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Current Credit">
+//         <Input
+//           type="number"
+//           placeholder="Current Credit"
+//           value={formData.credit}
+//           onChange={(e) => handleChange('credit', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormGroup title="Type">
+//         <Input
+//           placeholder="Type"
+//           value={formData.type}
+//           onChange={(e) => handleChange('type', e.target.value)}
+//         />
+//       </FormGroup>
+
+//       <FormFooter submitBtnText="Add New Customer" />
+//     </form>
+//   );
+// }
+
+
+
+
+
+
+
+
 'use client';
 
 import { useState } from 'react';
@@ -276,10 +604,9 @@ import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import { PiEnvelopeSimple } from 'react-icons/pi';
-import { Input, Select } from 'rizzui';
+import { Input } from 'rizzui';
 import FormGroup from '@/app/shared/form-group';
 import FormFooter from '@/components/form-footer';
-import { roles } from '@/app/_data/forms/my-details';
 
 const initialForm = {
   name: '',
@@ -308,11 +635,25 @@ export default function CustomerCreateForm() {
     e.preventDefault();
 
     try {
-      const res = await fetch('/api/customers/new-customer', {
+      const isReportsLogin = localStorage.getItem('onlyReports') === 'true';
+      const access_token = sessionStorage.getItem('access_token');
+
+      const endpoint = isReportsLogin
+        ? '/api/reports/customers/new-customer'
+        : '/api/customers/new-customer';
+
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+
+      if (isReportsLogin && access_token) {
+        headers['Authorization'] = ` ${access_token}`;
+      }
+
+      const res = await fetch(endpoint, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
+        credentials: isReportsLogin ? 'omit' : 'include',
         body: JSON.stringify({
           ...formData,
           phone: Number(formData.phone),
@@ -324,6 +665,7 @@ export default function CustomerCreateForm() {
       });
 
       const data = await res.json();
+
       if (res.ok) {
         Swal.fire({
           title: 'Success!',

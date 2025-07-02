@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { getRelativeTime } from '@/utils/get-relative-time';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { translate } from '@/translations/translate';
+import { alarmHomePageTranslations } from '@/translations/alarmPage/home';
 
 // Inline Notification Component
 function Notification({
@@ -23,8 +27,10 @@ function Notification({
       ? 'bg-green-100 text-green-700 border-green-300'
       : 'bg-red-100 text-red-700 border-red-300';
 
+  //  for translations
+  
   return (
-    <div className={`fixed top-20 z-50 right-4 px-4 py-2 rounded border shadow ${colors}`}>
+    <div className={`fixed top-20 z-50 left-4 px-4 py-2 rounded border shadow ${colors}`}>
       {message}
     </div>
   );
@@ -49,11 +55,35 @@ export default function MessageList() {
   const [loadingWarnings, setLoadingWarnings] = useState(true);
   const [selectedTab, setSelectedTab] = useState<'alarms' | 'warnings'>('alarms');
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [deletingAlarmId, setDeletingAlarmId] = useState<number | null>(null);
+  const [deletingWarningId, setDeletingWarningId] = useState<number | null>(null);
 
   useEffect(() => {
+    if(typeof window === "undefined"){
+      return;
+    }
+
+    const isReportsLogin = localStorage.getItem("onlyReports") === "true";
+    const access_token = sessionStorage.getItem("access_token");
+
     const fetchAlarms = async () => {
       try {
-        const res = await fetch('/api/alarms/get-alarms', { credentials: 'include' });
+          const endpoint = isReportsLogin
+          ?"/api/reports/alarms/get-alarms"
+          :"/api/alarms/get-alarms"
+
+          const headers : Record<string,string> = {
+            'Content-Type': 'application/json',
+          }
+
+          if(isReportsLogin && access_token){
+            headers["Authorization"] = `${access_token}`
+          }
+        const res = await fetch(endpoint, {
+           headers,
+           credentials: isReportsLogin?"omit":"include"
+          }
+        );
         const data = await res.json();
         setAlarms(data.alarms || []);
       } catch (error) {
@@ -65,7 +95,23 @@ export default function MessageList() {
 
     const fetchWarnings = async () => {
       try {
-        const res = await fetch('/api/alarms/get-warnings', { credentials: 'include' });
+        const endpoint = isReportsLogin
+        ?"/api/reports/alarms/get-warnings"
+        :"/api/alarms/get-warnings";
+
+        const headers :Record<string,string> = {
+          'Content-Type': 'application/json',
+        }
+
+        if(isReportsLogin && access_token){
+          headers["Authorization"] = `${access_token}`
+        }
+
+        const res = await fetch(endpoint, { 
+          headers,
+          credentials: isReportsLogin?"omit":"include"
+        }
+      );
         const data = await res.json();
         setWarnings(data.warnings || []);
       } catch (error) {
@@ -81,10 +127,26 @@ export default function MessageList() {
 
   const handleDeleteAlarm = async (id: number) => {
     try {
-      const res = await fetch('/api/alarms/delete-alarm', {
+      setDeletingAlarmId(id)
+      const isReportsLogin = localStorage.getItem("onlyReports") === "true";
+      const access_token = sessionStorage.getItem("access_token")
+
+      const endpoint = isReportsLogin
+      ?"/api/reports/alarms/delete-alarm"
+      :"/api/alarms/delete-alarm";
+
+      const headers :Record<string,string> = {
+        'Content-Type': 'application/json',
+      }
+
+      if(isReportsLogin && access_token){
+        headers["Authorization"] = `${access_token}`
+      }
+
+      const res = await fetch(endpoint, {
         method: 'DELETE',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
+        credentials: isReportsLogin?"omit":"include",
         body: JSON.stringify({ id }),
       });
 
@@ -92,7 +154,7 @@ export default function MessageList() {
 
       if (res.ok) {
         setAlarms((prev) => prev.filter((alarm) => alarm.id !== id));
-        setNotification({ message: data.message || 'Alarm deleted successfully', type: 'success' });
+        setNotification({ message: data.message || `${deletedAlarm.text}`, type: 'success' });
       } else {
         setNotification({ message: data.message || 'Failed to delete alarm', type: 'error' });
       }
@@ -102,12 +164,29 @@ export default function MessageList() {
     }
   };
 
-  const handleDeleteWarning = async (id: number) => {
+  const handleDeleteWarning =async (id: number) => {
     try {
-      const res = await fetch('/api/alarms/delete-warning', {
+      setDeletingWarningId(id)
+
+      const isReportsLogin = localStorage.getItem("onlyReports") === "true";
+      const access_token = sessionStorage.getItem("access_token");
+
+      const endpoint = isReportsLogin
+      ?"/api/reports/alarms/delete-warning"
+      :"/api/alarms/delete-warning";
+
+      const headers :Record<string,string> = {
+        'Content-Type': 'application/json',
+      }
+
+      if(isReportsLogin && access_token){
+        headers["Authorization"] = `${access_token}`
+      }
+
+      const res = await fetch(endpoint, {
         method: 'DELETE',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
+        credentials: isReportsLogin?"omit":"include" ,
         body: JSON.stringify({ id }),
       });
 
@@ -125,21 +204,30 @@ export default function MessageList() {
     }
   };
 
+
+  // for Translations
+  const lang = useSelector((state:RootState)=>state.language.language);
+  const alarmss = translate(alarmHomePageTranslations,lang,"alarms");
+  const warningss = translate(alarmHomePageTranslations,lang,"warnings");
+  const deletee = translate(alarmHomePageTranslations,lang,"delete");
+  const deletedAlarm = translate(alarmHomePageTranslations,lang,"deletedAlarm");
+  const deletedWarning = translate(alarmHomePageTranslations,lang,"deletedWarning");
+
   return (
-    <div className="p-4 space-y-6">
+    <div className={`p-4 space-y-6 ${alarmss.className}`}>
       {/* Tab Selector */}
       <div className="flex space-x-4 mb-4">
         <button
           className={`px-4 py-2 rounded ${selectedTab === 'alarms' ? 'bg-red-500 text-white' : 'bg-gray-200'}`}
           onClick={() => setSelectedTab('alarms')}
         >
-          Alarms
+          {alarmss.text}
         </button>
         <button
           className={`px-4 py-2 rounded ${selectedTab === 'warnings' ? 'bg-yellow-400 text-white' : 'bg-gray-200'}`}
           onClick={() => setSelectedTab('warnings')}
         >
-          Warnings
+          {warningss.text}
         </button>
       </div>
 
@@ -165,9 +253,14 @@ export default function MessageList() {
                   </div>
                   <button
                     onClick={() => handleDeleteAlarm(alarm.id)}
-                    className="text-sm text-red-600 hover:underline"
+                    className={` ${deletee.className} text-sm text-red-600 hover:underline flex items-center gap-1`}
+                    disabled={deletingAlarmId === alarm.id}
                   >
-                    Delete
+                    {deletingAlarmId === alarm.id ? (
+                      <div className="h-4 w-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      `${deletee.text}`
+                    )}
                   </button>
                 </li>
               ))}
@@ -195,9 +288,14 @@ export default function MessageList() {
                   </div>
                   <button
                     onClick={() => handleDeleteWarning(warning.id)}
-                    className="text-sm text-yellow-700 hover:underline"
+                    className={`${deletee.className} text-sm text-yellow-700 hover:underline`}
+                    disabled={deletingWarningId === warning.id}
                   >
-                    Delete
+                    {deletingWarningId === warning.id ? (
+                      <div className="h-4 w-4 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      `${deletee.text}`
+                    )}
                   </button>
                 </li>
               ))}

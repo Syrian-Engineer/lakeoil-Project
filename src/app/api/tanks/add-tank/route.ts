@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const backendResponse = await fetch("http://78.189.54.28:6900/tanks/add", {
+    const backendResponse = await fetch("http://10.8.0.39:6900/tanks/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -9,7 +9,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ message: 'Warning ID is required' }, { status: 400 });
     }
 
-    const res = await fetch('http://78.189.54.28:6900/warnings/delete', {
+    const res = await fetch('http://10.8.0.39:6900/warnings/delete', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

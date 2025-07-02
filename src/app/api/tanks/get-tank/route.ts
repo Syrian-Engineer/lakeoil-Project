@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Forward the request to your backend, passing id in body
-    const backendResponse = await fetch("http://78.189.54.28:6900/tanks/get", {
+    const backendResponse = await fetch("http://10.8.0.39:6900/tanks/get", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

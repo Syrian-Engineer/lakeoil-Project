@@ -93,11 +93,25 @@ const defaultCustomerColumns = [
 // for editing customer data 
 const handleEditClick = async (id: number) => {
   try {
-    const res = await fetch("/api/customers/edit-customer-data", {
-      method: "POST",
-      headers: {
+    const isReportsLogin = localStorage.getItem("onlyReports") === "true";
+    const access_token = sessionStorage.getItem("access_token");
+
+    const endpoint = isReportsLogin
+    ?"/api/reports/customers/edit-customer-data"
+    :"/api/customers/edit-customer-data";
+
+     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-      },
+     };
+
+     if (isReportsLogin && access_token) {
+        headers['Authorization'] = ` ${access_token}`;
+      }
+    
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers,
+      credentials:isReportsLogin?"omit":"include",
       body: JSON.stringify({ id }),
     });
 
@@ -166,11 +180,27 @@ const handleEditClick = async (id: number) => {
     });
 
     if (formValues) {
-      const updateRes = await fetch("/api/customers/edit-customer-data/edit", {
+
+      const isReportsLogin = localStorage.getItem("") === "true";
+      const access_token = sessionStorage.getItem("");
+
+      const endpoint = isReportsLogin
+      ?"/api/reports/customers/edit-customer-data/edit"
+      :"/api/customers/edit-customer-data/edit";
+
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+
+      if(isReportsLogin && access_token){
+        headers["Authorization"] = `${access_token}`
+      };
+
+
+      const updateRes = await fetch(endpoint, {
         method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
+        credentials:isReportsLogin?"omit":"include",
         body: JSON.stringify(formValues),
       });
 
@@ -200,9 +230,27 @@ export default function PostSummary({ className }: { className?: string }) {
     if(typeof window === "undefined"){
       return;
     }
+    const isReportsLogin = localStorage.getItem("onlyReports") === 'true';
+    const access_token = sessionStorage.getItem("access_token")
+
+     const endpoint = isReportsLogin
+     ?"/api/reports/customers"
+     :"/api/customers"
+
+     const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+     };
+
+     if (isReportsLogin && access_token) {
+        headers['Authorization'] = ` ${access_token}`;
+      }
+
     const fetchCustomers = async () => {
       try {
-        const res = await fetch('/api/customers');
+        const res = await fetch(endpoint,{
+          headers,
+          credentials:isReportsLogin?"omit":"include"
+        });
         const data = await res.json();
 
         if (data.status_code === 200) {

@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
 
     // Forward to backend API
-    const backendResponse = await fetch("http://78.189.54.28:6900/tanks/update", {
+    const backendResponse = await fetch("http://10.8.0.39:6900/tanks/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

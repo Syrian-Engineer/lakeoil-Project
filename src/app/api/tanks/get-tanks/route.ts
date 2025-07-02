@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const backendResponse = await fetch("http://78.189.54.28:6900/tanks/getall", {
+    const backendResponse = await fetch("http://10.8.0.39:6900/tanks/getall", {
       method: "GET",
       headers: {
         cookie: req.headers.get("cookie") || "", // forward session cookie
