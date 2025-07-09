@@ -30,7 +30,7 @@ export default function SearchTrigger({
           placeholderClassName
         )}
       >
-        Search your page...
+        Search your pumps...
       </span>
       <span className="search-command ms-auto hidden items-center text-sm text-gray-600 lg:flex lg:rounded-md lg:bg-primary lg:px-1.5 lg:py-1 lg:text-xs lg:font-semibold lg:text-primary-foreground xl:justify-normal">
         <PiCommand

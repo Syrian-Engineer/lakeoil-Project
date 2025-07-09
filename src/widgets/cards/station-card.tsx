@@ -189,6 +189,7 @@ import { RootState } from '@/store';
 import { translate } from '@/translations/translate';
 import { stationCardTranslations } from '@/translations/stationPage/stationCard';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface Props {
   station: stationProps;
@@ -220,7 +221,7 @@ export default function StationCard({ station, setRefetchStation }: Props) {
 
   const apiKeyPreview = station.VFD_provider_TAPIkey?.slice(0, windowWidth < 768 ? 20 : 40);
 
-
+  const url = "http://fursan.oktin.sde4it.com"
 
   const handleDelete = async () => {
     setDeleting(true);
@@ -335,6 +336,7 @@ export default function StationCard({ station, setRefetchStation }: Props) {
             <p><strong>XTIN:</strong> {station.Operator_XTin}</p>
             <p><strong>VRN:</strong> {station.OperatorVrn}</p>
             <p><strong>UIN:</strong> {station.OperatorUIN}</p>
+            <Link href={url} target='_blank'>station url : {url}</Link>
           </div>
         </div>
       )}

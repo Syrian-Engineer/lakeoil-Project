@@ -244,7 +244,7 @@ export default function Page() {
               setRefetchStation={setRefetchStations}
             />
           ) : (
-            mockStation.map((station) =>
+            stations.map((station) =>
               stationLoadingMap[station.id] ? (
                 <div
                   key={station.id}

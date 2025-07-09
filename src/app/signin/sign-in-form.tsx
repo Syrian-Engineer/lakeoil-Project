@@ -327,7 +327,7 @@ export default function SignInForm() {
           />
 
           {/* Remember me & Forgot password */}
-          <div className="flex items-center justify-between pb-2">
+          {/* <div className="flex items-center justify-between pb-2">
             <Checkbox label={rememberMe.text} className={`[&>label>span]:font-medium ${rememberMe.className}`} />
             <Link
               href={routes.auth.forgotPassword1}
@@ -335,7 +335,7 @@ export default function SignInForm() {
             >
               {forgetPassword.text}
             </Link>
-          </div>
+          </div> */}
 
           {/* Submit Button with Spinner */}
           <Button className={`w-full ${login.className}`} type="submit" size="lg" disabled={loading}>

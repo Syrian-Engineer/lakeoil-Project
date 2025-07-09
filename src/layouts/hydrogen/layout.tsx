@@ -21,7 +21,7 @@ export default function HydrogenLayout({
       {!isAuthPage && (
         <Sidebar className="fixed hidden xl:block  dark:bg-gray-50" /> 
       )}
-      <div className="flex w-full flex-col xl:ms-[270px] xl:w-[calc(100%-270px)] 2xl:ms-72 2xl:w-[calc(100%-2px)]">
+      <div className="flex w-full flex-col xl:ms-[190px] xl:w-[calc(100%-270px)] 2xl:ms-52 2xl:w-[calc(100%-2px)]">
         {!isAuthPage && (
           <Header />
         )}

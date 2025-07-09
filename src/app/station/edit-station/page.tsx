@@ -217,7 +217,7 @@ export default function Page(){
 
     return(
         <div className={`flex flex-col scroll-smooth gap-2 p-4${basicStationInfo.className}`}>
-            <div className="hidden lg:block w-full fixed z-50 bg-white top-20 border-b px-6 py-2 rounded-md shadow-md border-gray-200">
+            <div className="hidden lg:block w-full  fixed z-50 top-20 border-b px-6 py-2 rounded-md shadow-md border-gray-200">
                 <div className="flex justify-between w-2/3 items-center space-x-4 text-sm font-medium text-gray-700">
                     <Section
                     title={`${basicStationInfo.text}`}

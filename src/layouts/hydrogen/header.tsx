@@ -17,12 +17,24 @@ import { setLanguage } from "@/store/slices/languageSlice";
 
 export default function Header() {
   const [isSuperAdminL,setIsSuperAdminL] = useState<string|null>("")
+  const [showSearchWidget,setShowSearchWidget] = useState(false);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const pathname = usePathname();
 
+  const shouldStick = pathname === "/station/new-station" || pathname === "/station/update-station"
+
+  useEffect(()=>{
+      if(pathname === "/pumps") {
+        setShowSearchWidget(true)
+      }else{
+        setShowSearchWidget(false);
+      }
+  },[pathname])
+
+
   useEffect(()=>{
     if(typeof window !=="undefined"){
-      setIsSuperAdminL(localStorage.getItem("isSuperAdmin"))
+      setIsSuperAdminL(localStorage.getItem("isSuperAdmin"));
     }else{
       return;
     }
@@ -45,7 +57,7 @@ export default function Header() {
   }, [isSuperAdminL]);
 
   return (
-    <StickyHeader className="z-[990] 2xl:py-5 3xl:px-8 4xl:px-10">
+    <StickyHeader className={`z-[990] h-16 2xl:py-5 3xl:px-8 4xl:px-10 ${shouldStick?"sticky":""}`}>
       <div className="flex w-full max-w-2xl items-center">
         <HamburgerButton view={<Sidebar className="static w-full 2xl:w-full" />} />
         <Link
@@ -68,7 +80,9 @@ export default function Header() {
             </select>
           </div>
       </div>
-
+      {showSearchWidget && (
+        <SearchWidget />
+      )}
       <HeaderMenuRight />
     </StickyHeader>
   );

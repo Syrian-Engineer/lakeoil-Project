@@ -8,9 +8,9 @@ import { useSelector } from 'react-redux';
 import { Text } from 'rizzui';
 
 interface Props {
-    ElectronicTotalizer: string;
-    VirtualTotalizer: string;
-    Difference: string;
+    ElectronicTotalizer: number;
+    VirtualTotalizer: number;
+    Difference: number;
 }
 
 
@@ -35,31 +35,40 @@ export default function PumpData({ ElectronicTotalizer, VirtualTotalizer, Differ
         
     return (
         <div>
-            <ul className='flex flex-col gap-5 mt-3'>
+            <ul className='flex flex-col gap-5 mt-3 p-4'>
                 <li className="relative pl-6">
                 <span className={`absolute top-1/2 transform -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-green-500 ${lang === 'ar' ? '-right-4' : 'left-0'}`}/>
                     <div className="flex items-center justify-between">
-                        <Text className={`text-gray-400 font-semibold text-xs ${mechnicalTotalizer.className}`}>{mechnicalTotalizer.text}</Text>
-                        <div className='rounded-full border-2 border-green-500 px-3 p-1 flex justify-center items-center'>
-                            <Text className='font-semibold text-xs'>{ElectronicTotalizer}</Text>
+                        <Text className={`text-gray-600 font-semibold text-lg ${mechnicalTotalizer.className}`}>{mechnicalTotalizer.text}</Text>
+                        <div className='rounded-full border-2 border-green-500 px-3 p-1 flex justify-center items-center hover:scale-95 transition-all duration-300'>
+                            <Text 
+                             className='font-semibold text-md '
+                             >{ElectronicTotalizer.toFixed(2)}
+                            </Text>
                         </div>
                     </div>
                 </li>
                 <li className="relative pl-6">
                 <span className={`absolute top-1/2 transform -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-blue-500 ${lang === 'ar' ? '-right-4' : 'left-0'}`}/>
                     <div className="flex items-center justify-between">
-                        <Text className={`text-gray-400 font-semibold text-xs ${virtualTotalizer.className}`}>{virtualTotalizer.text}</Text>
-                        <div className='rounded-full border-2 border-blue-800 px-3 p-1 flex justify-center items-center'>
-                            <Text className='font-semibold text-xs'>{VirtualTotalizer}</Text>
+                        <Text className={`text-gray-600 font-semibold text-lg ${virtualTotalizer.className}`}>{virtualTotalizer.text}</Text>
+                        <div className='rounded-full border-2 border-blue-800 px-3 p-1 flex justify-center items-center hover:scale-95 transition-all duration-300'>
+                            <Text 
+                             className='font-semibold text-md '
+                             >{VirtualTotalizer.toFixed(2)}
+                            </Text>
                         </div>
                     </div>
                 </li>
                 <li className="relative pl-6">
                 <span className={`absolute top-1/2 transform -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-cyan-500 ${lang === 'ar' ? '-right-4' : 'left-0'}`}/>
                     <div className="flex items-center justify-between">
-                        <Text className={`text-gray-400 font-semibold text-xs ${difference.className}`}>{difference.text}</Text>
-                        <div className='rounded-full border-2 border-cyan-500 px-3 p-1 flex justify-center items-center'>
-                            <Text className='font-semibold text-xs'>{Difference}</Text>
+                        <Text className={`text-gray-600 font-semibold text-lg ${difference.className}`}>{difference.text}</Text>
+                        <div className='rounded-full border-2 border-cyan-500 px-3 p-1 flex justify-center items-center hover:scale-95 transition-all duration-300'>
+                            <Text 
+                             className='font-semibold text-md '
+                             >{Difference.toFixed(2)}
+                            </Text>
                         </div>
                     </div>
                 </li>

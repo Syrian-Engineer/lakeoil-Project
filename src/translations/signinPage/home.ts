@@ -1,7 +1,7 @@
 export const homeTranslations = {
     en:{
         welcome:"Welcome back! Please",
-        signin:"Sign in to",
+        signin:"Login in to",
         continue:"continue.",
     },
     ar:{
