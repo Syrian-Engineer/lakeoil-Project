@@ -158,7 +158,7 @@ export default function PumpCardsGrid({pumps}: {pumps: Pump[];}) {
   return (
     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xlPlus:grid-cols-4 3xl:gap-8">
       {pumps.map((pump) => (
-        <div id={`pump-${pump.name}`}>
+        <div id={`pump-${pump.name+pump.code}`}>
           <LivePumpCard
             key={pump.id}
             pump={pump}
