@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     }
   
     try {
-      const response = await fetch("http://78.189.54.28:5000/sales_reports/periodic/current_month", {
+      const response = await fetch("http://78.189.54.28:25000/sales_reports/periodic/current_month", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

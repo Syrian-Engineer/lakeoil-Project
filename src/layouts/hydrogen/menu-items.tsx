@@ -270,6 +270,11 @@ export default function useMenuItems(): MenuItem[] {
               icon: <TbReportSearch />,
             },
             {
+              name: "Daily-Reports",
+              href: "/daily-reports",
+              icon: <TbReportSearch />,
+            },
+            {
               name: stations.text,
               href: "/station",
               icon: <FaCity />,
@@ -316,6 +321,11 @@ export default function useMenuItems(): MenuItem[] {
               name: customers.text,
               href: routes.Customers.dashboard,
               icon: <MdPerson />,
+            },
+            {
+              name: stations.text,
+              href: "/station",
+              icon: <FaCity />,
             },
             {
               name: staff.text,

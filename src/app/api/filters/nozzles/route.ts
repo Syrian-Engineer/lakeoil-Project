@@ -6,7 +6,7 @@ export async function GET(req: Request) {
     }
   
     try {
-      const res = await fetch('http://78.189.54.28:5000/station/nozzles', {
+      const res = await fetch('http://78.189.54.28:25000/station/nozzles', {
         headers: { Authorization: accessToken },
       });
   

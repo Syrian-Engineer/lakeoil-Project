@@ -29,6 +29,7 @@ export default function SearchWidget({
   }, [open]);
 
   const pathname = usePathname();
+  
   useEffect(() => {
     setOpen(() => false);
     return () => setOpen(() => false);

@@ -160,7 +160,7 @@ export default function Page() {
         }
 
         const data = await response.json();
-        setStations(data);
+        setStations(data.data);
       } catch (error) {
         console.error(error);
       } finally {

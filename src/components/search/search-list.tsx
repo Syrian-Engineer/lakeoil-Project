@@ -192,12 +192,12 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
 
   let menuItemsFiltered = dynamicPageLinks;
 
-  // if (searchText.length > 0) {
-  //   menuItemsFiltered = pageLinks.filter((item: any) => {
-  //     const label = item.name.toLowerCase();
-  //     return label.includes(searchText.toLowerCase());
-  //   });
-  // }
+  if (searchText.length > 0) {
+    menuItemsFiltered = dynamicPageLinks.filter((item: any) => {
+      const label = item.name.toLowerCase();
+      return label.includes(searchText.toLowerCase());
+    });
+  }
 
   useEffect(() => {
     if (inputRef?.current) {
@@ -215,6 +215,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
         <Input
           variant="flat"
           value={searchText}
+          // defaultValue={"Ahmad mohsien"}
           ref={inputRef}
           onChange={(e) => setSearchText(e.target.value)}
           placeholder="Search pages here"
@@ -228,7 +229,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
                 className="h-auto w-auto px-0"
                 onClick={(e) => {
                   e.preventDefault();
-                  setSearchText("");
+                  setSearchText("Ahmad 2");
                 }}
               >
                 Clear
