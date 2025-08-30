@@ -1,29 +1,51 @@
-"use server"
- export async function loginAction(email:string,password:string){
-    try{
-        const response = await fetch("http://78.189.54.28:2500/auth/login",{
-            method:"POST",
-            headers: { "Content-Type": "application/json" },
-            body:JSON.stringify({email,password}),
-            cache:"no-cache"
-        })
-        const result = await response.json();
-        const token = result?.data
+// "use server"
+//  export async function loginAction(email:string,password:string){
+//     try{
+//         const response = await fetch("http://78.189.54.28:2500/auth/login",{
+//             method:"POST",
+//             headers: { "Content-Type": "application/json" },
+//             body:JSON.stringify({email,password}),
+//             cache:"no-cache"    
+//         })
+//         const result = await response.json();
+//         const token = result?.data
 
-        if(!response.ok || !token?.access_token){
-            // throw new Error(result.error || "Login failed")
-            const text = await response.text();
-            throw new Error(`Status: ${response.status} - Body: ${text}`);
-        }
+//         if(!response.ok || !token?.access_token){
+//             // throw new Error(result.error || "Login failed")
+//             const text = await response.text();
+//             throw new Error(`Status: ${response.status} - Body: ${text}`);
+//         }
 
-        return{
-            access_token : token.access_token,
-            refresh_token: token.refresh_token,        
-        }
+//         return{
+//             access_token : token.access_token,
+//             refresh_token: token.refresh_token,        
+//         }
 
-    }catch(error:any){
-        console.error("Login failed:", error.message);
-        throw error;
-    }
- }
+//     }catch(error:any){
+//         console.error("Login failed:", error.message);
+//         throw error;
+//     }
+//  }
  
+
+"use server";
+
+export async function loginAction(formData:FormData) {
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Login failed");
+  }
+
+  const data = await response.json();
+  // save token in sessionStorage on the client side
+  return data;
+}

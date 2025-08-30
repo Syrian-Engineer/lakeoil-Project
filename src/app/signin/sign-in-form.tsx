@@ -198,32 +198,25 @@ export default function SignInForm() {
   const login = translate(signInFormTranslations, lang, "login");
   const noAccount = translate(signInFormTranslations, lang, "noAccount");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    startTransition(async () => {
-      try {
-        const tokens = await loginAction(email, password);
+    const formData = new FormData(e.currentTarget);
 
-        // Save to sessionStorage (client-side only)
-        sessionStorage.setItem("access_token", tokens.access_token);
-        sessionStorage.setItem("refresh_token", tokens.refresh_token);
+    try {
+      const result = await loginAction(formData);
 
-        // Optional: super admin check
-        if (email === "superadmin@admin.com" && password === "ak4tek12") {
-          localStorage.setItem("isSuperAdmin", "true");
-        } else {
-          localStorage.setItem("isSuperAdmin", "false");
-        }
-
-        localStorage.setItem("onlyReports", "true");
-        window.dispatchEvent(new Event("onlyReportsChange"));
-
-        router.push("/reports");
-      } catch (err) {
-        console.error("Error logging in:", err);
+      if (result?.data?.access_token) {
+        sessionStorage.setItem("access_token", result.data.access_token);
+        alert("Login success!");
+        window.location.href = "/reports"; // redirect to reports
+      } else {
+        alert("Login failed");
       }
-    });
-  };
+    } catch (err) {
+      console.error(err);
+      alert("Login failed");
+    }
+  }
 
   return (
     <>
