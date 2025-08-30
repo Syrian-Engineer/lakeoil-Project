@@ -11,7 +11,9 @@
         const token = result?.data
 
         if(!response.ok || !token?.access_token){
-            throw new Error(result.error || "Login failed")
+            // throw new Error(result.error || "Login failed")
+            const text = await response.text();
+            throw new Error(`Status: ${response.status} - Body: ${text}`);
         }
 
         return{
