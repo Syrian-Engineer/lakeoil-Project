@@ -15,8 +15,8 @@ interface DailyReport {
 }
 
 interface Props {
-  dailyReports?: DailyReport[]; // array instead of single object
-  pages?:number,
+  dailyReports: DailyReport[]; // array instead of single object
+  pages:number,
 }
 
 export default function DailyReporstCard({ dailyReports,pages }: Props) {
@@ -58,8 +58,8 @@ export default function DailyReporstCard({ dailyReports,pages }: Props) {
 
   return (
     <div>
-        <DailyReportsPagination totalPages={17} />
-      {mockReports.map((report) => (
+        <DailyReportsPagination totalPages={pages} />
+      {dailyReports.map((report) => (
         <div key={report.id} className="border p-4 mb-2 rounded">
           <p>License: {report.ewura_license_no}</p>
           <p>Created At: {report.created_at}</p>

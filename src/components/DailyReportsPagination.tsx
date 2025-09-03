@@ -65,7 +65,13 @@ interface DailyReportsPaginationProps {
 export default function DailyReportsPagination({ totalPages }: DailyReportsPaginationProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const perPageSelections = [1,2,3,4,5,6];
 
+
+  const handlePerPageChange = (e: React.ChangeEvent<HTMLSelectElement>)=>{
+    const perPage = e.target.value
+    router.push(`?per_page=${perPage}&page=${currentPage}`)
+  }
   const currentPerPage = Number(searchParams.get("per_page")) || 1;
   const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -125,26 +131,41 @@ export default function DailyReportsPagination({ totalPages }: DailyReportsPagin
   if (totalPages === 0) return null;
 
   return (
-    <div className={cn("flex items-center justify-end gap-3")}>
-      <Button
-        size="sm"
-        variant="outline"
-        onClick={goToPreviousPage}
-        disabled={currentPage === 1}
-      >
-        <PiCaretLeftBold className="h-4 w-4" />
-      </Button>
-
-      {renderPageNumbers()}
-
-      <Button
-        size="sm"
-        variant="outline"
-        onClick={goToNextPage}
-        disabled={currentPage === totalPages}
-      >
-        <PiCaretRightBold className="h-4 w-4" />
-      </Button>
+    <div>
+          {/* Per Page Selector */}
+          <div>
+              <label htmlFor="">Reports Per Page</label>
+              <select 
+                value={currentPerPage}
+                className="border px-2 py-1 rounded"
+                onChange={handlePerPageChange}
+                >
+                  {perPageSelections.map((n)=>(
+                    <option key={n} value={n}>
+                         {n}
+                    </option>
+                  ))}
+                </select>
+             </div>
+      <div className={cn("flex items-center justify-end gap-3")}>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={goToPreviousPage}
+          disabled={currentPage === 1}
+        >
+          <PiCaretLeftBold className="h-4 w-4" />
+        </Button>
+        {renderPageNumbers()}
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={goToNextPage}
+          disabled={currentPage === totalPages}
+        >
+          <PiCaretRightBold className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }
