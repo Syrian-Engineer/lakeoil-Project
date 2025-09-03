@@ -10,8 +10,8 @@ export default async function DailyReporstList({searchParams}:{searchParams:{per
     redirect("?per_page=1&page=1")
   }
 
-  const per_page = searchParams.per_page!   //“Trust me, this value will never be undefined here.”
-  const page = searchParams.page!
+  const per_page = searchParams.per_page   
+  const page = searchParams.page
 
   const response = await fetch(`http://78.189.54.28:2500/daily_report?per_page=${per_page}&page=${page}`, {
     method: "GET",
