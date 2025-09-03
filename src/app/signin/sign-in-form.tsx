@@ -174,8 +174,9 @@
 
 
 
-// "use client";
+"use client";
 
+import Cookies from "js-cookie";
 import { useState, useTransition } from "react";
 import { PiArrowRightBold } from "react-icons/pi";
 import { Password, Button, Input, Text } from "rizzui";
@@ -207,7 +208,13 @@ export default function SignInForm() {
 
       if (result?.data?.access_token) {
         sessionStorage.setItem("access_token", result.data.access_token);
-        alert("Login success!");
+
+        // to save the acess_token in the cookies to use it in server components
+        Cookies.set("access_token",result.data.access_token,{
+          path: "/", // ✅ available across the entire site
+          expires: 1, // 1 day
+        })
+
         window.location.href = "/reports"; // redirect to reports
       } else {
         alert("Login failed");
