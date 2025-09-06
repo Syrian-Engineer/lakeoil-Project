@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     }
   
     try {
-      const response = await fetch("http://78.189.54.28:25000/sales_reports/periodic/previous_day", {
+      const response = await fetch("http://central.oktin.ak4tek.com:3950/sales_reports/periodic/previous_day", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

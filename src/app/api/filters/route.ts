@@ -12,10 +12,10 @@ export async function GET(req: Request) {
     const headers = { Authorization: accessToken };
 
     const urls = {
-      pumps: 'http://78.189.54.28:25000/station/pumps',
-      tanks: 'http://78.189.54.28:25000/station/tanks',
-      nozzles: 'http://78.189.54.28:25000/station/nozzles',
-      products: 'http://78.189.54.28:25000/station/products',
+      pumps: 'http://central.oktin.ak4tek.com:3950/0/station/pumps',
+      tanks: 'http://central.oktin.ak4tek.com:3950/0/station/tanks',
+      nozzles: 'http://central.oktin.ak4tek.com:3950/0/station/nozzles',
+      products: 'http://central.oktin.ak4tek.com:3950/0/station/products',
     };
 
     const fetchData = async (key: string, url: string) => {

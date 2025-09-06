@@ -33,7 +33,7 @@
 
 //     try {
 //       if (loginType === 'reports') {
-//         const response = await fetch('http://78.189.54.28:2500/auth/login', {
+//         const response = await fetch('http://central.oktin.ak4tek.com:3950//auth/login', {
 //           method: 'POST',
 //           headers: { 'Content-Type': 'application/json' },
 //           body: JSON.stringify({ email, password }),
