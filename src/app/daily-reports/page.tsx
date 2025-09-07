@@ -6,11 +6,11 @@ export default function Page({
 }: {
   searchParams: Record<string, string | undefined>;
 }) {
-    const start_date = searchParams?.start_date||""
-    const end_date = searchParams?.start_date||""
+    const start_date = searchParams?.start_date|| ""
+    const end_date = searchParams?.end_date|| ""
     const report_no =Number(searchParams?.report_no)
-    const per_page = searchParams?.per_page ??"" // so if there is not it will be 1 by default
-    const page = searchParams?.page ??""
+    const per_page = searchParams?.per_page ?? "" // so if there is not it will be 1 by default
+    const page = searchParams?.page ?? ""
   return (
     <div>
       <Suspense fallback={<LoadingSpinner />}>

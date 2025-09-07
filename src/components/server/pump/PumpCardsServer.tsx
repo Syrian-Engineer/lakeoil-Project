@@ -48,7 +48,7 @@ export default async function PumpCardsServer() {
 
   const cookie = (await headers()).get('cookie');
 
-  const res = await fetch('http://10.8.0.39:6900/pumps/getall', {
+  const res = await fetch('http://central.oktin.ak4tek.com:3950/pumps/getall', {
     headers:{
         cookie:cookie||""
     },

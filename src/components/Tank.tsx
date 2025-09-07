@@ -31,7 +31,7 @@ export default function Tank({ tank,productName }: Props) {
   const [currentVolume,setCurrentVolume] = useState(0);
 
   const avgTemp =
-    tank.probes.length > 0
+    tank.probes?.length > 0
       ? (
           tank.probes
             .map((probe) =>

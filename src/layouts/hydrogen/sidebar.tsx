@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { translate } from '@/translations/translate';
 import { menuItemTranslations } from '@/translations/sideBar/menuItemTranslations';
+import Image from 'next/image';
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
@@ -27,13 +28,18 @@ export default function Sidebar({ className }: { className?: string }) {
         className
       )}
     >
-      <div className="sticky top-0 z-40 bg-gray-0/10 px-6 pb-5 pt-5 2xl:px-8 2xl:pt-6 dark:bg-gray-100/5">
+      <div className="sticky top-2 z-40 bg-gray-0/10 px-6 pb-5 pt-5 2xl:px-8 2xl:pt-6 2xl:right-2 dark:bg-gray-100/5">
         <Link
           href="/"
           aria-label="Site Logo"
           className="text-gray-800 hover:text-gray-900"
         >
-          <Title>LOGO</Title>
+          <Image
+          src="/Logo.jpeg"
+          alt='Website Logo'
+          fill
+          className='object-contain'
+           />
         </Link>
       </div>
 

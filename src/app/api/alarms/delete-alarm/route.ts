@@ -9,7 +9,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ message: 'Alarm ID is required' }, { status: 400 });
     }
 
-    const res = await fetch('http://10.8.0.39:6900/alarms/delete', {
+    const res = await fetch('http://central.oktin.ak4tek.com:3950/alarms/delete', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

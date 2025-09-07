@@ -2,12 +2,13 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const backendResponse = await fetch("http://10.8.0.39:6900/tanks/getall", {
-      method: "GET",
+    const access_token = req.headers.get("Authorization")
+    const backendResponse = await fetch("http://central.oktin.ak4tek.com:3950/ak4tek/tanks/all", {
+      method: "POST",
       headers: {
-        cookie: req.headers.get("cookie") || "", // forward session cookie
+        Authorization:`${access_token}`
       },
     });
 

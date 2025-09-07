@@ -228,6 +228,7 @@ import { RootState } from '@/store';
 import { translate } from '@/translations/translate';
 import { menuItemTranslations } from '@/translations/sideBar/menuItemTranslations';
 import { FaCity } from "react-icons/fa";
+import { TbReportAnalytics } from "react-icons/tb";
 
 
 
@@ -260,6 +261,11 @@ export default function useMenuItems(): MenuItem[] {
       onlyReports === "true"
         ? [
             {
+              name: tanks.text,
+              href: routes.Tanks.dashboard,
+              icon: <GiFuelTank />,
+            },
+            {
               name: sales_reports.text,
               href: "/reports",
               icon: <FaChartBar />,
@@ -272,7 +278,7 @@ export default function useMenuItems(): MenuItem[] {
             {
               name: "Daily-Reports",
               href: "/daily-reports",
-              icon: <TbReportSearch />,
+              icon: <TbReportAnalytics />,
             },
             {
               name: stations.text,

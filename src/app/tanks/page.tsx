@@ -50,15 +50,19 @@ export default function Page() {
   const [tanks, setTanks] = useState<TankProp[]>([]);
   const [products,setProducts] = useState<ProductProp[]>([])
   const [loading, setLoading] = useState<boolean>(true);
-
+  const access_token = sessionStorage.getItem("access_token")
   // for fetching tanks
   const fetchTanks = async () => {
     try {
       const res = await fetch("/api/tanks/get-tanks", {
-        credentials: "include",
+        method:"POST",
+        headers:{
+          "Content-Type": "application/json",   
+          Authorization:`${access_token}`     
+        }
       });
       const data = await res.json();
-      setTanks(data.tanks.data.page_records || []);
+      setTanks(data.tanks.data || []);
     } catch (err) {
       console.error("Failed to fetch tanks:", err);
     } finally {
@@ -80,7 +84,7 @@ export default function Page() {
       try{
         const res = await fetch("/api/tanks/get-products");
         const data = await res.json();
-        setProducts(data.data.page_records || [])
+        setProducts(data.data || [])
       }catch(err){
         console.error("Failed To Fetch Prodcts",err)
       }

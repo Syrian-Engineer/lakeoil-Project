@@ -8,7 +8,7 @@ export async function GET(req: Request) {
         });
       }
   
-      const response = await fetch('http://central.oktin.ak4tek.com:3950//sales_reports/page?', {
+      const response = await fetch('http://central.oktin.ak4tek.com:3950/sales_reports/page?', {
         method: 'GET',
         headers: {
           Authorization: `${accessToken}`,

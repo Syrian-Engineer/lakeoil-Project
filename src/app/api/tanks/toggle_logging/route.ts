@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const backendRes = await fetch("http://10.8.0.39:6900/toggle_logging", {
+    const backendRes = await fetch("http://central.oktin.ak4tek.com:3950/toggle_logging", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -12,7 +12,7 @@ export async function GET(req: Request) {
       // Extract and forward the original query parameters
       const queryParams = url.searchParams.toString(); // this includes pump_names, product_names, etc.
   
-      const response = await fetch(`http://central.oktin.ak4tek.com:3950/0/sales_reports/page?${queryParams}`, {
+      const response = await fetch(`http://central.oktin.ak4tek.com:3950/sales_reports/page?${queryParams}`, {
         method: 'GET',
         headers: {
           Authorization: `${accessToken}`,

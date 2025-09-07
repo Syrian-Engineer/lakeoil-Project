@@ -6,7 +6,6 @@ import SearchWidget from "@/components/search/search";
 import Sidebar from "@/layouts/hydrogen/sidebar";
 import HeaderMenuRight from "@/layouts/header-menu-right";
 import StickyHeader from "@/layouts/sticky-header";
-import { Title } from "rizzui";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -14,6 +13,7 @@ import { usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { setLanguage } from "@/store/slices/languageSlice";
+import Image from "next/image";
 
 export default function Header() {
   const [isSuperAdminL,setIsSuperAdminL] = useState<string|null>("")
@@ -60,16 +60,23 @@ export default function Header() {
     <StickyHeader className={`z-[990] h-16 2xl:py-5 3xl:px-8 4xl:px-10 ${shouldStick?"sticky":""}`}>
       <div className="flex w-full max-w-2xl items-center">
         <HamburgerButton view={<Sidebar className="static w-full 2xl:w-full" />} />
-        <Link
-          href={"/"}
-          aria-label="Site Logo"
-          className="me-4 shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 xl:hidden"
-        >
-          <Title>LOGO</Title>
-        </Link>
+          <div className="relative w-32 h-10">
+            <Link
+              href={"/"}
+              aria-label="Site Logo"
+              className=" me-4 shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 xl:hidden"
+            >
+              <Image
+              src="/Logo.jpeg"
+              fill
+              className="object-contain"
+              alt="Websit Logo"
+              />
+            </Link>
+          </div>
 
         {/* Language Selector */}
-        <div className="relative ml-4 hover:scale-95 transition-all duration-300">
+        <div className="relative hidden md:block ml-4 hover:scale-95 transition-all duration-300">
             <select
               value={selectedLang}
               onChange={handleLangChange}

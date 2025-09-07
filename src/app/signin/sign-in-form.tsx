@@ -214,7 +214,7 @@ export default function SignInForm() {
           path: "/", // ✅ available across the entire site
           expires: 1, // 1 day
         })
-
+        alert("Login Successfully")
         window.location.href = "/reports"; // redirect to reports
       } else {
         alert("Login failed");
@@ -224,6 +224,7 @@ export default function SignInForm() {
       alert("Login failed");
     }
   }
+  
 
   return (
     <>

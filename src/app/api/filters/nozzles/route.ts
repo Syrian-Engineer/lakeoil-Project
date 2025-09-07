@@ -6,7 +6,7 @@ export async function GET(req: Request) {
     }
   
     try {
-      const res = await fetch('http://central.oktin.ak4tek.com:3950/0/station/nozzles', {
+      const res = await fetch('http://central.oktin.ak4tek.com:3950/station/nozzles', {
         headers: { Authorization: accessToken },
       });
   

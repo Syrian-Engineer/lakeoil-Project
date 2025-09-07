@@ -20,9 +20,8 @@ export default async function DailyReporstList({start_date,end_date,report_no,pe
   // Encode start_date and end_date for URL safety
   const encodedStart = encodeURIComponent(start_date);
   const encodedEnd = encodeURIComponent(end_date);
-
-
-  const response = await fetch(`http://central.oktin.ak4tek.com:3950//daily_report?per_page=${per_page}&page=${page}`, {
+// &report_no=${report_no}
+  const response = await fetch(`http://central.oktin.ak4tek.com:3950/daily_report?start_date=${encodedStart}&end_date=${encodedEnd}&per_page=${per_page}&page=${page}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
