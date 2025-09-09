@@ -30,20 +30,24 @@
 // }
 
 
-
 import DailyReporstList from "@/components/DailyReportsList";
 import { Suspense } from "react";
 
-interface PageProps {
-  searchParams?: { [key: string]: string | undefined };
-}
+// Make the signature compatible with the generated type
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: Promise<any>;
+}) {
+  // Await defensively: works whether it's a Promise or a plain object
+  const raw = (await searchParams) ?? {};
+  const sp = raw as Record<string, string | undefined>;
 
-export default function Page({ searchParams }: PageProps) {
-  const start_date = searchParams?.start_date ?? "";
-  const end_date = searchParams?.end_date ?? "";
-  const report_no = Number(searchParams?.report_no);
-  const per_page = searchParams?.per_page ?? "";
-  const page = searchParams?.page ?? "";
+  const start_date = sp.start_date ?? "";
+  const end_date = sp.end_date ?? "";
+  const report_no = Number(sp.report_no);
+  const per_page = sp.per_page ?? "";
+  const page = sp.page ?? "";
 
   return (
     <div>
