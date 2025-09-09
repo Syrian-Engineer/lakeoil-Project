@@ -143,7 +143,7 @@ export default function SignInForm() {
 
     try {
       const response = await fetch(
-        "http://central.oktin.ak4tek.com:3950/auth/login",
+        "/api/auth/login",
         {
           method: "POST",
           headers: {
