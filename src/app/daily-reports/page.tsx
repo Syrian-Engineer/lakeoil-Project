@@ -6,7 +6,7 @@ export default async function Page({
 }: {
   searchParams: Record<string, string | undefined>;
 }) {
-    const params = await searchParams
+    const params =  searchParams
     const start_date = params?.start_date|| ""
     const end_date = params?.end_date|| ""
     const report_no =Number(params?.report_no)
