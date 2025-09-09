@@ -1,16 +1,17 @@
 import DailyReporstList from "@/components/DailyReportsList";
 import { Suspense } from "react";
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams: Record<string, string | undefined>;
 }) {
-    const start_date = searchParams?.start_date|| ""
-    const end_date = searchParams?.end_date|| ""
-    const report_no =Number(searchParams?.report_no)
-    const per_page = searchParams?.per_page ?? "" // so if there is not it will be 1 by default
-    const page = searchParams?.page ?? ""
+    const params = await searchParams
+    const start_date = params?.start_date|| ""
+    const end_date = params?.end_date|| ""
+    const report_no =Number(params?.report_no)
+    const per_page = params?.per_page ?? "" // so if there is not it will be 1 by default
+    const page = params?.page ?? ""
   return (
     <div>
       <Suspense fallback={<LoadingSpinner />}>

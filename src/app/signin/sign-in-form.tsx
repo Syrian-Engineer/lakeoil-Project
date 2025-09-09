@@ -193,6 +193,10 @@ export default function SignInForm() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+  const SuperAdminDetails = {
+    email: 'ak4tek@admin.com',
+    password: '!Ak4tek12*',
+  };
   // Translations
   const lang = useSelector((state: RootState) => state.language.language);
   const passwordd = translate(signInFormTranslations, lang, "password");
@@ -214,6 +218,14 @@ export default function SignInForm() {
           path: "/", // ✅ available across the entire site
           expires: 1, // 1 day
         })
+        if(
+          email === SuperAdminDetails.email&&
+          password === SuperAdminDetails.password
+        ){
+          localStorage.setItem('isSuperAdmin', 'true');
+        }else{
+          localStorage.setItem('isSuperAdmin', 'false');
+        }
         alert("Login Successfully")
         window.location.href = "/reports"; // redirect to reports
       } else {
