@@ -15,7 +15,7 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    const response = await fetch(`http://78.189.54.28:3800/stationinfo/${id}`, {
+    const response = await fetch(`http://central.oktin.ak4tek.com:3950/stationinfo/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

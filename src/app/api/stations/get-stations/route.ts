@@ -8,7 +8,7 @@ export async function GET(req: Request) {
         });
       }
   
-      const response = await fetch('http://78.189.54.28:3800/stationinfo/all', {
+      const response = await fetch('http://central.oktin.ak4tek.com:3950/stationinfo/all', {
         method: 'GET',
         headers: {
           Authorization: `${accessToken}`,

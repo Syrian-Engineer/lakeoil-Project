@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
     const access_Token = req.headers.get("Authorization");
     const body = await req.json();
 
-    const response = await fetch("http://78.189.54.28:3800/stationinfo/info", {
+    const response = await fetch("http://central.oktin.ak4tek.com:3950/stationinfo/info", {
       method: "POST",
       headers: {  
         "Content-Type": "application/json",
