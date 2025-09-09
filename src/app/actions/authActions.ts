@@ -32,7 +32,7 @@ interface LoginPayload {
 
 export async function loginAction({ email, password }: LoginPayload) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`,
+    `http://central.oktin.ak4tek.com:3950/auth/login`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

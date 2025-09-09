@@ -118,61 +118,76 @@
 
 
 
+"use client";
 
-import { redirect } from "next/navigation";
+import { useState } from "react";
 import { translate } from "@/translations/translate";
 import { signInFormTranslations } from "@/translations/signinPage/signinFrom";
-import { loginAction } from "@/app/actions/authActions";
-import { cookies } from "next/headers";
-
-interface FormDataType {
-  email: string;
-  password: string;
-}
+import { useRouter } from "next/navigation";
 
 export default function SignInForm() {
-  const lang = "en"; // You can get this from your i18n server state
+  const lang = "en";
   const loginText = translate(signInFormTranslations, lang, "login");
   const passwordText = translate(signInFormTranslations, lang, "password");
 
-  // Server Action
-  async function handleLogin(formData: FormData) {
-    "use server";
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    const email = formData.get("email")?.toString() || "";
-    const password = formData.get("password")?.toString() || "";
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-    // SuperAdmin logic
-    const isSuperAdmin = email === "ak4tek@admin.com" && password === "!Ak4tek12*";
+    try {
+      const response = await fetch(
+        "http://central.oktin.ak4tek.com:3950/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
-    const result = await loginAction({ email, password });
-    if (!result?.data?.access_token) {
-      throw new Error("Login failed");
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const result = await response.json();
+
+      const accessToken = result?.data?.access_token;
+      const userRecord = result?.data?.user_record;
+
+      if (!accessToken) {
+        throw new Error("Login failed: no token received");
+      }
+
+      // Save token and user info in sessionStorage
+      sessionStorage.setItem("access_token", accessToken);
+      sessionStorage.setItem("user_record", JSON.stringify(userRecord));
+
+      // Optionally store isSuperAdmin flag
+      const isSuperAdmin = userRecord?.roles?.name === "SuperAdmin";
+      sessionStorage.setItem("isSuperAdmin", isSuperAdmin ? "true" : "false");
+
+      router.push("/reports");
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
-
-    // Set HTTP-only cookie
-    (await
-      // Set HTTP-only cookie
-      cookies()).set("access_token", result.data.access_token, {
-      path: "/",
-      httpOnly: true,
-      maxAge: 60 * 60 * 24, // 1 day
-    });
-
-    // Optionally set isSuperAdmin flag in cookie as well
-    (await
-      // Optionally set isSuperAdmin flag in cookie as well
-      cookies()).set("isSuperAdmin", isSuperAdmin ? "true" : "false", {
-      path: "/",
-      httpOnly: true,
-      maxAge: 60 * 60 * 24,
-    });
-
-    redirect("/reports");
   }
 
   return (
-    <form action={handleLogin} className="space-y-5">
+    <form onSubmit={handleLogin} className="space-y-5">
+      {error && (
+        <p className="text-red-500 text-sm font-medium">{error}</p>
+      )}
       <div>
         <label>Email</label>
         <input
@@ -181,6 +196,8 @@ export default function SignInForm() {
           required
           placeholder="Enter your email"
           className="border rounded px-3 py-2 w-full"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
 
@@ -192,14 +209,19 @@ export default function SignInForm() {
           required
           placeholder="Enter your password"
           className="border rounded px-3 py-2 w-full"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
 
       <button
         type="submit"
-        className={`w-full bg-blue-500 text-white py-2 px-4 rounded ${loginText.className}`}
+        disabled={loading}
+        className={`w-full bg-blue-500 text-white py-2 px-4 rounded ${loginText.className} ${
+          loading ? "opacity-50 cursor-not-allowed" : ""
+        }`}
       >
-        {loginText.text}
+        {loading ? "Logging in..." : loginText.text}
       </button>
     </form>
   );
