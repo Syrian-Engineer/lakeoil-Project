@@ -50,7 +50,15 @@ export default function Page() {
   const [tanks, setTanks] = useState<TankProp[]>([]);
   const [products,setProducts] = useState<ProductProp[]>([])
   const [loading, setLoading] = useState<boolean>(true);
-  const access_token = sessionStorage.getItem("access_token")
+  const [access_token,setAcess_token] = useState<string | null>(null)
+
+  useEffect(()=>{
+    if(typeof window !== "undefined"){
+      setAcess_token(sessionStorage.getItem("access_token"));
+    }
+  },[])
+
+  
   // for fetching tanks
   const fetchTanks = async () => {
     try {
