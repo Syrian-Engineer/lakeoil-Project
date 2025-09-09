@@ -124,6 +124,8 @@ import { useState } from "react";
 import { translate } from "@/translations/translate";
 import { signInFormTranslations } from "@/translations/signinPage/signinFrom";
 import { useRouter } from "next/navigation";
+import { Input, Button, Title, Text, Password } from "rizzui";
+import { PiArrowRightBold } from "react-icons/pi";
 
 export default function SignInForm() {
   const lang = "en";
@@ -184,45 +186,52 @@ export default function SignInForm() {
   }
 
   return (
-    <form onSubmit={handleLogin} className="space-y-5">
-      {error && (
-        <p className="text-red-500 text-sm font-medium">{error}</p>
-      )}
-      <div>
-        <label>Email</label>
-        <input
+    <>
+      <form onSubmit={handleLogin} className="space-y-5">
+        {/* Email Field */}
+        <Input
           type="email"
+          size="lg"
           name="email"
+          label="Email"
           required
           placeholder="Enter your email"
-          className="border rounded px-3 py-2 w-full"
+          className="[&>label>span]:font-medium"
+          inputClassName="text-sm"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-      </div>
 
-      <div>
-        <label>{passwordText.text}</label>
-        <input
-          type="password"
+        {/* Password Field */}
+        <Password
+          label={"password"}
+          placeholder="Enter your password"
+          size="lg"
           name="password"
           required
-          placeholder="Enter your password"
-          className="border rounded px-3 py-2 w-full"
+          className={`[&>label>span]:font-medium`}
+          inputClassName="text-sm"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-      </div>
 
-      <button
-        type="submit"
-        disabled={loading}
-        className={`w-full bg-blue-500 text-white py-2 px-4 rounded ${loginText.className} ${
-          loading ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-      >
-        {loading ? "Logging in..." : loginText.text}
-      </button>
-    </form>
+        {/* Submit Button */}
+        <Button className={`w-full`} type="submit" size="lg" disabled={loading}>
+          {loading ? (
+            <div className="flex items-center justify-center gap-2">
+              <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              <span>Logging in...</span>
+            </div>
+          ) : (
+            <>
+              <span>{"login"}</span>
+              <PiArrowRightBold className="ms-2 mt-0.5 h-5 w-5" />
+            </>
+          )}
+        </Button>
+      </form>
+
+      <Text className={`mt-6 text-center leading-loose text-gray-500 lg:mt-8 lg:text-start`} />
+    </>
   );
 }
