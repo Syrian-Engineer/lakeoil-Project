@@ -258,8 +258,7 @@ export default function useMenuItems(): MenuItem[] {
     const onlyReports = localStorage.getItem("onlyReports");
 
     const newMenu: MenuItem[] =
-      onlyReports === "true"
-        ? [
+           [
             {
               name: tanks.text,
               href: routes.Tanks.dashboard,
@@ -306,49 +305,7 @@ export default function useMenuItems(): MenuItem[] {
               icon: <FiSettings />,
             },
           ]
-        : [
-            {
-              name: pumps.text,
-              href: "/pumps",
-              icon: <FaGasPump />,
-            },
-            {
-              name: tanks.text,
-              href: routes.Tanks.dashboard,
-              icon: <GiFuelTank />,
-            },
-            // {
-            //   name: sales_reports.text,
-            //   href: routes.Reports.dashboard,
-            //   icon: <FaChartBar />,
-            //   badge: "NEW",
-            // },
-            {
-              name: customers.text,
-              href: routes.Customers.dashboard,
-              icon: <MdPerson />,
-            },
-            {
-              name: stations.text,
-              href: "/station",
-              icon: <FaCity />,
-            },
-            {
-              name: staff.text,
-              href: routes.Staff.dashboard,
-              icon: <MdGroup />,
-            },
-            {
-              name: alarms.text,
-              href: routes.Alarms.dashboard,
-              icon: <FiAlertCircle />,
-            },
-            {
-              name: settings.text,
-              href: routes.Settings.dashboard,
-              icon: <FiSettings />,
-            },
-          ];
+  
 
     setMenuItems(newMenu);
   }, [lang]);
