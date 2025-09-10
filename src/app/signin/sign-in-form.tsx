@@ -138,6 +138,12 @@ export default function SignInForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const SuperAdminDetails = {
+    email: 'ak4tek@admin.com',
+    password: '!Ak4tek12*',
+  };
+
+
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -167,11 +173,16 @@ export default function SignInForm() {
       if (!accessToken) {
         throw new Error("Login failed: no token received");
       }
-
+      if(
+        email === SuperAdminDetails.email
+        && password === SuperAdminDetails.password
+      ){
+        localStorage.setItem("isSuperAdmin","true")
+      }
       // Save token and user info in sessionStorage
       sessionStorage.setItem("access_token", accessToken);
       sessionStorage.setItem("user_record", JSON.stringify(userRecord));
-
+      localStorage.setItem("email",email)
       // Optionally store isSuperAdmin flag
       const isSuperAdmin = userRecord?.roles?.name === "SuperAdmin";
       sessionStorage.setItem("isSuperAdmin", isSuperAdmin ? "true" : "false");
