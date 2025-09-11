@@ -1,4 +1,4 @@
-// app/daily-reports/ReportDetails.tsx
+"use client"
 import React from "react";
 
 interface ReportResponse {

@@ -118,7 +118,8 @@ import { Suspense, useEffect, useState, useTransition } from "react";
 import DailyReportsPagination from "./DailyReportsPagination";
 import { Button } from "rizzui/button";
 import { useRouter } from "next/navigation";
-import ReportDetails from "./DailyReportsDetails"; // server component
+import ReportDetails from "./DailyReportsDetails";
+// import ReportDetails from "./DailyReportsDetails"; // server component
 
 interface DailyReport {
   id: number;
@@ -144,9 +145,8 @@ export default function DailyReporstCard({
   totalReports,
 }: Props) {
   const [showFilters, setShowFilters] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const [openId, setOpenId] = useState<number | null>(null);
-  const [loadedReports, setLoadedReports] = useState<number[]>([]);
+  const [showDetails,setShowDetails] = useState(false);
+  
   const router = useRouter();
 
   // Local state for optimistic updates
@@ -158,11 +158,8 @@ export default function DailyReporstCard({
   }, [dailyReports]);
 
 
-    const handleToggleDetails = (id: number) => {
-    setOpenId(openId === id ? null : id);
-    if (!loadedReports.includes(id)) {
-      setLoadedReports([...loadedReports, id]);
-    }
+    const handleToggleDetails = () => {
+      setShowDetails((prev)=>!prev)
   };
 
   return (
@@ -225,15 +222,15 @@ export default function DailyReporstCard({
             <div className="flex justify-end gap-2 mt-4">
               <Button
                 className="bg-gray-500 hover:bg-gray-600 text-white"
-                onClick={()=>handleToggleDetails(report.id)}
+                onClick={handleToggleDetails}
               >
-                {openId === report.id ? "Hide Details" : "Show Details"}
+                {showDetails ? "Hide Details" : "Show Details"}
 
               </Button>
             </div>
 
             {/* ✅ render ReportDetails OUTSIDE the Button */}
-            {openId === report.id && loadedReports.includes(report.id) && (
+            {showDetails && (
               <Suspense fallback={<p>Loading details...</p>}>
                 <ReportDetails id={report.id} />
               </Suspense>
