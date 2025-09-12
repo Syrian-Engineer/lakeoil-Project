@@ -1,0 +1,43 @@
+import { cookies } from "next/headers";
+import TankCard from "./TankCard";
+
+export default async function TankCardList() {
+  const access_token = (await cookies()).get("access_token")?.value;
+
+  if (!access_token) {
+    throw new Error("No access token found");
+  }
+
+  // Run both requests in parallel
+  const [tanksRes, stationsRes] = await Promise.all([
+    fetch("http://central.oktin.ak4tek.com:3950/ak4tek/tanks/all", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:`${access_token}`,
+      },
+    }),
+    fetch("http://central.oktin.ak4tek.com:3950/stationinfo/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:`${access_token}`,
+      },
+    }),
+  ]);
+
+  const tanksResult = await tanksRes.json();
+  const stationsResult = await stationsRes.json();
+
+  if (!tanksResult.ok) {
+    throw new Error("There Is No Tanks");
+  }
+  if (!stationsResult.ok) {
+    throw new Error("There Is No Stations");
+  }
+
+  const tanks = tanksResult.data || [];
+  const stations = stationsResult.data || [];
+
+  return <TankCard tanks1={tanks} stations={stations} />;
+}
