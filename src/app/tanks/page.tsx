@@ -311,7 +311,7 @@ import TankCardList from "@/components/TankCardList";
 
 export interface TankProp {
   tank_capacity: number;
-  LicenseeTraSerialNo:number;
+  LicenseeTraSerialNo:string;
   id: number;
   min_level: number;
   tank_name: string;
