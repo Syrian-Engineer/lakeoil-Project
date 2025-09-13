@@ -26,18 +26,19 @@ export default async function TankCardList() {
     }),
   ]);
 
+    if (!tanksRes.ok) {
+    throw new Error("There Is No Tanks");
+  }
+  if (!stationsRes.ok) {
+    throw new Error("There Is No Stations");
+  }
+
   const tanksResult = await tanksRes.json();
   const stationsResult = await stationsRes.json();
 
   console.log("Tanks result:", tanksResult);
   console.log("Stations result:", stationsResult);
   
-  if (!tanksResult.ok) {
-    throw new Error("There Is No Tanks");
-  }
-  if (!stationsResult.ok) {
-    throw new Error("There Is No Stations");
-  }
 
   const tanks = tanksResult.data || [];
   const stations = stationsResult.data || [];
