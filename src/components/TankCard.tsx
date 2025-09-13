@@ -18,7 +18,6 @@ interface Props{
 export default function TankCard({tanks1,stations}:Props){
       const [tanks, setTanks] = useState<TankProp[]>(tanks1);
       const [products,setProducts] = useState<ProductProp[]>([])
-      const [loading, setLoading] = useState<boolean>(true);
       const [access_token,setAcess_token] = useState<string | null>(null)
     
       useEffect(()=>{
@@ -73,14 +72,6 @@ export default function TankCard({tanks1,stations}:Props){
     //     }
     //     fetchProduct();
     //   },[])
-    
-      if (loading) {
-        return (
-          <div className="flex items-center justify-center h-screen">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
-          </div>
-        );
-      }
     
       const MySwal = withReactContent(Swal);
     
