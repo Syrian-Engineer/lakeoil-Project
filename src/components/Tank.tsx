@@ -466,6 +466,7 @@ import { Badge } from "rizzui/badge";
 
 import LiquidFillGauge from 'react-liquid-gauge';
 import { interpolateRgb } from 'd3-interpolate';
+import { color } from 'd3-color';
 
 
 
@@ -558,14 +559,14 @@ export default function Tank ({tanks}:Props){
                         waveStyle={{
                             fill: fillColor
                         }}
-                        textStyle={{
-                            // fill: color('#444').toString(),
-                            fontFamily: 'Arial'
-                        }}
-                        waveTextStyle={{
-                            // fill: color('#fff').toString(),
-                            fontFamily: 'Arial'
-                        }}
+                      textStyle={{
+                          fill: color('#444')?.toString() ?? '#444',
+                          fontFamily: 'Arial'
+                      }}
+                      waveTextStyle={{
+                          fill: color('#fff')?.toString() ?? '#fff',
+                          fontFamily: 'Arial'
+                      }}
                     />
                     <div className="gauge-summary">
                         <Badge className="product-badge" id="ProductBadge">{product_name}</Badge>
