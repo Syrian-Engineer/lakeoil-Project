@@ -24,10 +24,9 @@ import Swal from 'sweetalert2';
 
 interface Props {
   tank: TankProp;
-  productName: string;
 }
 
-export default function Tank({ tank,productName }: Props) {
+export default function Tank({ tank }: Props) {
   const [currentVolume,setCurrentVolume] = useState(0);
 
   const avgTemp =
@@ -401,7 +400,7 @@ const handleLoggingClick = async (enable: boolean, tankId: number) => {
       {/* Tank Info */}
       <div className="flex justify-between mt-5">
         <div className="flex flex-col gap-12">
-          <InfoBlock icon={<PiFileTextDuotone />} title={fuelType.text} value={productName} className={fuelType.className} />
+          <InfoBlock icon={<PiFileTextDuotone />} title={fuelType.text} value={tank.product_name} className={fuelType.className} />
           <InfoBlock icon={<PiFileTextDuotone />} title={fuelCapacity.text} value={`${tank.capacity} ${liters.text}`} className={fuelCapacity.className}/>
           <InfoBlock icon={<PiFileTextDuotone />} title={fuelLevel.text} value={`${(totalFuel / 100).toFixed(2)} ${mm.text}`} className={fuelLevel.className} />
         </div>

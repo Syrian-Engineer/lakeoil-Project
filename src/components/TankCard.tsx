@@ -58,21 +58,21 @@ export default function TankCard({tanks1,stations}:Props){
     //   }, []);
     
       // for fetching products
-      useEffect(()=>{
-        if(typeof window === "undefined"){
-          return;
-        }
-        const fetchProduct = async()=>{
-          try{
-            const res = await fetch("/api/tanks/get-products");
-            const data = await res.json();
-            setProducts(data.data || [])
-          }catch(err){
-            console.error("Failed To Fetch Prodcts",err)
-          }
-        }
-        fetchProduct();
-      },[])
+    //   useEffect(()=>{
+    //     if(typeof window === "undefined"){
+    //       return;
+    //     }
+    //     const fetchProduct = async()=>{
+    //       try{
+    //         const res = await fetch("/api/tanks/get-products");
+    //         const data = await res.json();
+    //         setProducts(data.data || [])
+    //       }catch(err){
+    //         console.error("Failed To Fetch Prodcts",err)
+    //       }
+    //     }
+    //     fetchProduct();
+    //   },[])
     
       if (loading) {
         return (
@@ -269,7 +269,7 @@ export default function TankCard({tanks1,stations}:Props){
           const productName = product ? product.name : "Unknown";
           return (
             <div key={tank.id} className="w-full">
-              <Tank tank={tank} productName={productName} />
+              <Tank tank={tank} />
             </div>
           );
         })}

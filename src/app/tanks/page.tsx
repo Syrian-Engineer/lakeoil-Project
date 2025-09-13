@@ -315,6 +315,7 @@ export interface TankProp {
   min_level: number;
   name: string;
   product_id: number;
+  product_name:string
   probes: Probe[];
 }
 
