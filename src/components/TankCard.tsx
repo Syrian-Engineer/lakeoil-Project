@@ -11,7 +11,7 @@ import { stationProps } from "@/app/station/page";
 
 interface Props{
     tanks1:TankProp[]
-    stations:stationProps[]
+    stations?:stationProps[]
 }
 
 
@@ -118,7 +118,7 @@ export default function TankCard({tanks1,stations}:Props){
         try {
           // Fetch tank details by selected id
           const res = await fetch('/api/tanks/get-tank', {
-            method: 'GET',
+            method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
                 Authorization :`${access_token}`
