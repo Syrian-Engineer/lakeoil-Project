@@ -106,7 +106,7 @@ export default function TankCard({tanks1,stations}:Props){
           title: "Select Tank to Edit",
           input: 'select',
           inputOptions: tanks.reduce((opts, tank) => {
-            opts[tank.id] = tank.name;
+            opts[tank.id] = tank.tank_name;
             return opts;
           }, {} as Record<number, string>),
           inputPlaceholder: 'Select a tank',
@@ -118,8 +118,11 @@ export default function TankCard({tanks1,stations}:Props){
         try {
           // Fetch tank details by selected id
           const res = await fetch('/api/tanks/get-tank', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authorization :`${access_token}`
+             },
             body: JSON.stringify({ id: Number(selectedTankId) }),
           });
           if (!res.ok) throw new Error("Failed to fetch tank details");

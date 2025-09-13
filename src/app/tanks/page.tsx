@@ -310,10 +310,10 @@
 import TankCardList from "@/components/TankCardList";
 
 export interface TankProp {
-  capacity: number;
+  tank_capacity: number;
   id: number;
   min_level: number;
-  name: string;
+  tank_name: string;
   product_id: number;
   average_temp:number;
   fuel_volume:number;

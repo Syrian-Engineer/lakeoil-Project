@@ -11,13 +11,12 @@ export async function POST(req: NextRequest) {
     }
 
     // Forward the request to your backend, passing id in body
-    const backendResponse = await fetch("http://central.oktin.ak4tek.com:3950/tanks/get", {
-      method: "POST",
+    const backendResponse = await fetch(`http://central.oktin.ak4tek.com:3950/ak4tek/tanks/summary/${id}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         cookie: req.headers.get("cookie") || "", // forward session cookie if needed
       },
-      body: JSON.stringify({ id }),
     });
 
     const data = await backendResponse.json();

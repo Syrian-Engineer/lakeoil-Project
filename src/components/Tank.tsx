@@ -457,7 +457,6 @@
 //   );
 // }
 
-
 "use client";
 
 import { TankProp } from "@/app/tanks/page";
@@ -475,8 +474,8 @@ export default function Tank({ tanks }: Props) {
   const [showDetails, setShowDetails] = useState(false);
   const {
     fuel_volume,
-    name,
-    capacity,
+    tank_name,
+    tank_capacity,
     average_temp,
     fuel_volume_15,
     water_volume,
@@ -486,7 +485,7 @@ export default function Tank({ tanks }: Props) {
 
   // Safe values to prevent NaN
   const safeFuelVolume = fuel_volume ?? 0;
-  const safeCapacity = capacity ?? 1; // avoid division by zero
+  const safeCapacity = tank_capacity ?? 1; // avoid division by zero
   const fillRatio = Math.min(safeFuelVolume / safeCapacity, 1);
   const percentage = fillRatio * 100;
 
@@ -524,7 +523,7 @@ export default function Tank({ tanks }: Props) {
     <div id="LiquidGauge" className="compact">
       <div className="gauge-header">
         <Badge className="name-badge" id="NameBadge">
-          {name}
+          {tank_name}
         </Badge>
         <div className="toggle-details" onClick={toggleDetails}>
           <i className={`fas fa-chevron-${showDetails ? "up" : "down"}`}></i>
