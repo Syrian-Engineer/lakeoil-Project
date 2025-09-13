@@ -315,7 +315,12 @@ export interface TankProp {
   min_level: number;
   name: string;
   product_id: number;
-  product_name:string
+  average_temp:number;
+  fuel_volume:number;
+  fuel_volume_15:number
+  water_volume:number
+  product_name:string;
+  probe_id:string
   probes: Probe[];
 }
 

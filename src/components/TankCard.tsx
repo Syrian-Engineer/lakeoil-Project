@@ -217,7 +217,7 @@ export default function TankCard({tanks1,stations}:Props){
         {tanks.map((tank) => {
           return (
             <div key={tank.id} className="w-full">
-              <Tank tank={tank} />
+              <Tank tanks={tank} />
             </div>
           );
         })}
