@@ -1,9 +1,4 @@
 // 'use client';
-
-import { TankProp } from "@/app/tanks/page";
-import { useState } from "react";
-import { Badge } from "rizzui/badge";
-
 // import { ProductProp, TankProp } from '@/app/tanks/page';
 // import { RootState } from '@/store';
 // import { tankHomeTranslations } from '@/translations/TankPage/home';
@@ -463,132 +458,158 @@ import { Badge } from "rizzui/badge";
 // }
 
 
+"use client";
 
-import LiquidFillGauge from 'react-liquid-gauge';
-import { interpolateRgb } from 'd3-interpolate';
-import { color } from 'd3-color';
-
-
+import { TankProp } from "@/app/tanks/page";
+import { useState } from "react";
+import { Badge } from "rizzui/badge";
+import LiquidFillGauge from "react-liquid-gauge";
+import { interpolateRgb } from "d3-interpolate";
+import { color } from "d3-color";
 
 interface Props {
   tanks: TankProp;
 }
 
-export default function Tank ({tanks}:Props){
-    const [showDetails, setShowDetails] = useState(false);
-    const{fuel_volume, name, capacity, average_temp, fuel_volume_15, water_volume, product_name, probe_id} = tanks
-    
-    let startColor = '#dc143c'; // crimson
-    let endColor = '#6495ed'; // cornflowerblue
- 
-    const radius = 60; // Smaller radius for compact layout
-    const interpolate = interpolateRgb(startColor, endColor);
-    const fillColor = interpolate(fuel_volume/capacity);
-    const gradientStops = [
-        {
-            key: '0%',
-            // stopColor: color(fillColor).darker(0.5).toString(),
-            stopOpacity: 1,
-            offset: '0%'
-        },
-        {
-            key: '50%',
-            stopColor: fillColor,
-            stopOpacity: 0.75,
-            offset: '50%'
-        },
-        {
-            key: '100%',
-            // stopColor: color(fillColor).brighter(0.5).toString(),
-            stopOpacity: 0.5,
-            offset: '100%'
-        }
-    ];
+export default function Tank({ tanks }: Props) {
+  const [showDetails, setShowDetails] = useState(false);
+  const {
+    fuel_volume,
+    name,
+    capacity,
+    average_temp,
+    fuel_volume_15,
+    water_volume,
+    product_name,
+    probe_id,
+  } = tanks;
 
-    const toggleDetails = () => {
-        setShowDetails(!showDetails);
-    };
+  // Safe values to prevent NaN
+  const safeFuelVolume = fuel_volume ?? 0;
+  const safeCapacity = capacity ?? 1; // avoid division by zero
+  const fillRatio = Math.min(safeFuelVolume / safeCapacity, 1);
+  const percentage = fillRatio * 100;
 
-    return (
-        <div id="LiquidGauge" className="compact">
-            <div className="gauge-header">
-                <Badge className="name-badge" id="NameBadge">{name}</Badge>
-                <div className="toggle-details" onClick={toggleDetails}>
-                    <i className={`fas fa-chevron-${showDetails ? 'up' : 'down'}`}></i>
-                </div>
-            </div>
-            
-            <div className="gauge-content">
-                <div className="gauge-container">
-                    <LiquidFillGauge
-                        style={{ margin: '0 auto' }}
-                        width={radius * 2}
-                        height={radius * 2}
-                        value={(fuel_volume/capacity)*100}
-                        percent="%"
-                        textSize={1}
-                        textOffsetX={0}
-                        textOffsetY={0}
-                        textRenderer={(props:any) => {
-                            const value = Math.round(props.value);
-                            const radius = Math.min(props.height / 2, props.width / 2);
-                            const textPixels = (props.textSize * radius / 2);
-                            const valueStyle = {
-                                fontSize: textPixels
-                            };
-                            const percentStyle = {
-                                fontSize: textPixels * 0.6
-                            };
-     
-                            return (
-                                <tspan>
-                                    <tspan className="value" style={valueStyle}>{value}</tspan>
-                                    <tspan style={percentStyle}>{props.percent}</tspan>
-                                </tspan>
-                            );
-                        }}
-                        riseAnimation
-                        waveAnimation
-                        waveFrequency={2}
-                        waveAmplitude={1}
-                        gradient
-                        gradientStops={gradientStops}
-                        circleStyle={{
-                            fill: fillColor
-                        }}
-                        waveStyle={{
-                            fill: fillColor
-                        }}
-                      textStyle={{
-                          fill: color('#444')?.toString() ?? '#444',
-                          fontFamily: 'Arial'
-                      }}
-                      waveTextStyle={{
-                          fill: color('#fff')?.toString() ?? '#fff',
-                          fontFamily: 'Arial'
-                      }}
-                    />
-                    <div className="gauge-summary">
-                        <Badge className="product-badge" id="ProductBadge">{product_name}</Badge>
-                        <div className="volume-info">
-                            <span>{fuel_volume} / {capacity} L</span>
-                        </div>
-                    </div>
-                </div>
-                
-                {showDetails && (
-                    <div className="details-section">
-                        <div className="details-grid">
-                            <Badge className="details-badge">Capacity: {capacity.toLocaleString()} L</Badge>
-                            <Badge className="details-badge">Current: {fuel_volume.toLocaleString()} L</Badge>
-                            <Badge className="details-badge">@15°C: {fuel_volume_15.toLocaleString()} L</Badge>
-                            <Badge className="details-badge">Water: {water_volume.toLocaleString()} L</Badge>
-                            <Badge className="details-badge">Temp: {average_temp}°C</Badge>
-                            <Badge className="details-badge">Probe ID: {probe_id}</Badge>
-                        </div>
-                    </div>
-                )}
-            </div>
+  let startColor = "#dc143c"; // crimson
+  let endColor = "#6495ed"; // cornflowerblue
+  const radius = 60;
+
+  const interpolate = interpolateRgb(startColor, endColor);
+  const fillColor = interpolate(fillRatio);
+
+  const gradientStops = [
+    {
+      key: "0%",
+      stopOpacity: 1,
+      offset: "0%",
+    },
+    {
+      key: "50%",
+      stopColor: fillColor,
+      stopOpacity: 0.75,
+      offset: "50%",
+    },
+    {
+      key: "100%",
+      stopOpacity: 0.5,
+      offset: "100%",
+    },
+  ];
+
+  const toggleDetails = () => {
+    setShowDetails(!showDetails);
+  };
+
+  return (
+    <div id="LiquidGauge" className="compact">
+      <div className="gauge-header">
+        <Badge className="name-badge" id="NameBadge">
+          {name}
+        </Badge>
+        <div className="toggle-details" onClick={toggleDetails}>
+          <i className={`fas fa-chevron-${showDetails ? "up" : "down"}`}></i>
         </div>
-    );
-  }
+      </div>
+
+      <div className="gauge-content">
+        <div className="gauge-container">
+          <LiquidFillGauge
+            style={{ margin: "0 auto" }}
+            width={radius * 2}
+            height={radius * 2}
+            value={percentage}
+            percent="%"
+            textSize={1}
+            textOffsetX={0}
+            textOffsetY={0}
+            textRenderer={(props: any) => {
+              const value = Math.round(props.value);
+              const radius = Math.min(props.height / 2, props.width / 2);
+              const textPixels = (props.textSize * radius) / 2;
+              const valueStyle = { fontSize: textPixels };
+              const percentStyle = { fontSize: textPixels * 0.6 };
+
+              return (
+                <tspan>
+                  <tspan className="value" style={valueStyle}>
+                    {value}
+                  </tspan>
+                  <tspan style={percentStyle}>{props.percent}</tspan>
+                </tspan>
+              );
+            }}
+            riseAnimation
+            waveAnimation
+            waveFrequency={2}
+            waveAmplitude={1}
+            gradient
+            gradientStops={gradientStops}
+            circleStyle={{ fill: fillColor }}
+            waveStyle={{ fill: fillColor }}
+            textStyle={{
+              fill: color("#444")?.toString() ?? "#444",
+              fontFamily: "Arial",
+            }}
+            waveTextStyle={{
+              fill: color("#fff")?.toString() ?? "#fff",
+              fontFamily: "Arial",
+            }}
+          />
+          <div className="gauge-summary">
+            <Badge className="product-badge" id="ProductBadge">
+              {product_name}
+            </Badge>
+            <div className="volume-info">
+              <span>
+                {safeFuelVolume} / {safeCapacity} L
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {showDetails && (
+          <div className="details-section">
+            <div className="details-grid">
+              <Badge className="details-badge">
+                Capacity: {safeCapacity.toLocaleString()} L
+              </Badge>
+              <Badge className="details-badge">
+                Current: {safeFuelVolume.toLocaleString()} L
+              </Badge>
+              <Badge className="details-badge">
+                @15°C: {fuel_volume_15?.toLocaleString() ?? 0} L
+              </Badge>
+              <Badge className="details-badge">
+                Water: {water_volume?.toLocaleString() ?? 0} L
+              </Badge>
+              <Badge className="details-badge">
+                Temp: {average_temp ?? 0}°C
+              </Badge>
+              <Badge className="details-badge">Probe ID: {probe_id}</Badge>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
