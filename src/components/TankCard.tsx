@@ -31,47 +31,6 @@ export default function TankCard({tanks1,stations}:Props){
     useEffect(()=>{
         setTanks(tanks1)
     },[tanks1])
-      
-    //   // for fetching tanks
-    //   const fetchTanks = async () => {
-    //     try {
-    //       const res = await fetch("/api/tanks/get-tanks", {
-    //         method:"POST",
-    //         headers:{
-    //           "Content-Type": "application/json",   
-    //           Authorization:`${access_token}`     
-    //         }
-    //       });
-    //       const tanks = await res.json();
-    //       setTanks(tanks.data || []);
-    //     } catch (err) {
-    //       console.error("Failed to fetch tanks:", err);
-    //     } finally {
-    //       setLoading(false);
-    //     }
-    //   };
-    
-    //   useEffect(() => {
-    //     if (typeof window === "undefined") return;
-    //     fetchTanks();
-    //   }, []);
-    
-      // for fetching products
-    //   useEffect(()=>{
-    //     if(typeof window === "undefined"){
-    //       return;
-    //     }
-    //     const fetchProduct = async()=>{
-    //       try{
-    //         const res = await fetch("/api/tanks/get-products");
-    //         const data = await res.json();
-    //         setProducts(data.data || [])
-    //       }catch(err){
-    //         console.error("Failed To Fetch Prodcts",err)
-    //       }
-    //     }
-    //     fetchProduct();
-    //   },[])
     
       const MySwal = withReactContent(Swal);
     
@@ -256,8 +215,6 @@ export default function TankCard({tanks1,stations}:Props){
 
       <div className="w-full grid grid-cols-1 md:grid-cols-2 xlPlus:grid-cols-3 gap-3">
         {tanks.map((tank) => {
-          const product = products.find((p) => p.id === tank.product_id);
-          const productName = product ? product.name : "Unknown";
           return (
             <div key={tank.id} className="w-full">
               <Tank tank={tank} />
