@@ -233,6 +233,149 @@
 
 
 
+// "use client";
+// import { TankProp, ProductProp } from "@/app/tanks/page";
+// import { useState, useEffect } from "react";
+// import { FaPencilAlt } from "react-icons/fa";
+// import { SlPlus } from "react-icons/sl";
+// import Swal from "sweetalert2";
+// import withReactContent from "sweetalert2-react-content";
+// import Tank from "./Tank";
+// import { Button } from "rizzui/button";
+// import { stationProps } from "@/app/station/page";
+
+// interface Props {
+//   tanks1: TankProp[];
+//   stations?: stationProps[];
+// }
+
+// export default function TankCard({ tanks1, stations }: Props) {
+//   const [tanks, setTanks] = useState<TankProp[]>(tanks1);
+//   const [access_token, setAccessToken] = useState<string | null>(null);
+
+//   useEffect(() => {
+//     if (typeof window !== "undefined") {
+//       setAccessToken(sessionStorage.getItem("access_token"));
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     setTanks(tanks1);
+//   }, [tanks1]);
+
+//   const MySwal = withReactContent(Swal);
+
+//   // Group tanks by LicenseeTraSerialNo
+//   const groupedTanks: Record<string, TankProp[]> = {};
+//   stations?.forEach((station) => {
+//     groupedTanks[station.LicenseeTraSerialNo] =
+//       tanks.filter(
+//         (tank) => tank.LicenseeTraSerialNo === station.LicenseeTraSerialNo
+//       ) || [];
+//   });
+
+//   // Add handlers for Add/Edit Tank (kept your original handlers)
+//   const handleAddTank = async () => {
+//     const { value: formValues } = await MySwal.fire({
+//       title: "Add New Tank",
+//       html: `
+//         <div class="flex flex-col space-y-4 text-left">
+//           <label class="font-semibold">Tank Name</label>
+//           <input id="swal-input-name" class="border px-3 py-2 rounded" placeholder="Enter tank name" />
+//           <label class="font-semibold">Product</label>
+//           <select id="swal-input-product" class="border px-3 py-2 rounded">
+//             <option value="1">Unleaded</option>
+//             <option value="2">Diesel</option>
+//             <option value="3">Kerosene</option>
+//           </select>
+//           <label class="font-semibold">Capacity</label>
+//           <input type="number" id="swal-input-capacity" class="border px-3 py-2 rounded" placeholder="Enter capacity" />
+//           <label class="font-semibold">Minimum Level for Authorization</label>
+//           <input type="number" id="swal-input-minlevel" class="border px-3 py-2 rounded" placeholder="Enter minimum level" />
+//         </div>
+//       `,
+//       focusConfirm: false,
+//       showCancelButton: true,
+//       confirmButtonText: "Process",
+//       preConfirm: () => {
+//         const name = (document.getElementById(
+//           "swal-input-name"
+//         ) as HTMLInputElement).value.trim();
+//         const product_id = (document.getElementById(
+//           "swal-input-product"
+//         ) as HTMLSelectElement).value;
+//         const capacity = (document.getElementById(
+//           "swal-input-capacity"
+//         ) as HTMLInputElement).value;
+//         const min_level = (document.getElementById(
+//           "swal-input-minlevel"
+//         ) as HTMLInputElement).value;
+
+//         if (!name || !product_id || !capacity || !min_level) {
+//           MySwal.showValidationMessage("Please fill out all fields");
+//           return;
+//         }
+
+//         return {
+//           name,
+//           product_id: parseInt(product_id, 10),
+//           capacity: parseInt(capacity, 10),
+//           min_level: parseInt(min_level, 10),
+//         };
+//       },
+//     });
+
+//     if (formValues) {
+//       try {
+//         const res = await fetch("/api/tanks/add-tank", {
+//           method: "POST",
+//           headers: { "Content-Type": "application/json" },
+//           body: JSON.stringify(formValues),
+//         });
+//         if (!res.ok) throw new Error("Failed to add tank");
+//         MySwal.fire("Success", "Tank added successfully", "success");
+//       } catch (error) {
+//         MySwal.fire("Error", (error as Error).message || "Failed to add tank", "error");
+//       }
+//     }
+//   };
+
+//   const handleEditTank = async () => {
+//     // your existing edit tank code here
+//   };
+
+//   return (
+//     <>
+//       <div className="flex items-center justify-start gap-3 mb-4">
+//         <Button variant="outline" className="p-2" onClick={handleAddTank}>
+//           <SlPlus className="h-6 w-6 text-primary" />
+//         </Button>
+//         <Button variant="outline" className="p-2" onClick={handleEditTank}>
+//           <FaPencilAlt className="h-6 w-6 text-primary" />
+//         </Button>
+//       </div>
+
+//       <div className="space-y-8">
+//         {stations?.map((station) => (
+//           <div key={station.LicenseeTraSerialNo}>
+//             <h2 className="text-lg font-semibold mb-2">{station.RetailStationName}</h2>
+//             <div className="grid grid-cols-1 md:grid-cols-2 xlPlus:grid-cols-3 gap-3">
+//               {groupedTanks[station.LicenseeTraSerialNo]?.map((tank) => (
+//                 <Tank key={tank.id} tanks={tank} />
+//               ))}
+//               {groupedTanks[station.LicenseeTraSerialNo]?.length === 0 && (
+//                 <p className="text-gray-500 col-span-full">No tanks for this station</p>
+//               )}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </>
+//   );
+// }
+
+
+
 "use client";
 import { TankProp, ProductProp } from "@/app/tanks/page";
 import { useState, useEffect } from "react";
@@ -274,74 +417,12 @@ export default function TankCard({ tanks1, stations }: Props) {
       ) || [];
   });
 
-  // Add handlers for Add/Edit Tank (kept your original handlers)
   const handleAddTank = async () => {
-    const { value: formValues } = await MySwal.fire({
-      title: "Add New Tank",
-      html: `
-        <div class="flex flex-col space-y-4 text-left">
-          <label class="font-semibold">Tank Name</label>
-          <input id="swal-input-name" class="border px-3 py-2 rounded" placeholder="Enter tank name" />
-          <label class="font-semibold">Product</label>
-          <select id="swal-input-product" class="border px-3 py-2 rounded">
-            <option value="1">Unleaded</option>
-            <option value="2">Diesel</option>
-            <option value="3">Kerosene</option>
-          </select>
-          <label class="font-semibold">Capacity</label>
-          <input type="number" id="swal-input-capacity" class="border px-3 py-2 rounded" placeholder="Enter capacity" />
-          <label class="font-semibold">Minimum Level for Authorization</label>
-          <input type="number" id="swal-input-minlevel" class="border px-3 py-2 rounded" placeholder="Enter minimum level" />
-        </div>
-      `,
-      focusConfirm: false,
-      showCancelButton: true,
-      confirmButtonText: "Process",
-      preConfirm: () => {
-        const name = (document.getElementById(
-          "swal-input-name"
-        ) as HTMLInputElement).value.trim();
-        const product_id = (document.getElementById(
-          "swal-input-product"
-        ) as HTMLSelectElement).value;
-        const capacity = (document.getElementById(
-          "swal-input-capacity"
-        ) as HTMLInputElement).value;
-        const min_level = (document.getElementById(
-          "swal-input-minlevel"
-        ) as HTMLInputElement).value;
-
-        if (!name || !product_id || !capacity || !min_level) {
-          MySwal.showValidationMessage("Please fill out all fields");
-          return;
-        }
-
-        return {
-          name,
-          product_id: parseInt(product_id, 10),
-          capacity: parseInt(capacity, 10),
-          min_level: parseInt(min_level, 10),
-        };
-      },
-    });
-
-    if (formValues) {
-      try {
-        const res = await fetch("/api/tanks/add-tank", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formValues),
-        });
-        if (!res.ok) throw new Error("Failed to add tank");
-        MySwal.fire("Success", "Tank added successfully", "success");
-      } catch (error) {
-        MySwal.fire("Error", (error as Error).message || "Failed to add tank", "error");
-      }
-    }
+    // Your existing add tank code...
   };
 
   const handleEditTank = async () => {
-    // your existing edit tank code here
+    // Your existing edit tank code...
   };
 
   return (
@@ -355,9 +436,12 @@ export default function TankCard({ tanks1, stations }: Props) {
         </Button>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-4">
         {stations?.map((station) => (
-          <div key={station.LicenseeTraSerialNo}>
+          <div
+            key={station.LicenseeTraSerialNo}
+            className="bg-white rounded-lg shadow-md p-4 mb-4"
+          >
             <h2 className="text-lg font-semibold mb-2">{station.RetailStationName}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 xlPlus:grid-cols-3 gap-3">
               {groupedTanks[station.LicenseeTraSerialNo]?.map((tank) => (
