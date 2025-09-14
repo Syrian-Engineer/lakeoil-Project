@@ -243,7 +243,7 @@ export default function Tank({ tanks }: Props) {
                       hover:text-gray-700 active:scale-95 transition duration-300"
           >
             <i
-              className={`fas fa-chevron-${showDetails ? "up" : "down"} text-sm`}
+              className={`${showDetails ? "up" : "down"} text-sm`}
             ></i>
           </Button>
         </div>
@@ -314,19 +314,19 @@ export default function Tank({ tanks }: Props) {
             </h4>
             <div className="grid grid-cols-2 gap-2 text-sm">
               <Badge className=" bg-white shadow-sm border px-2 py-1">
-                Capacity: {safeCapacity.toLocaleString()} L
+                Capacity: {safeCapacity} L
               </Badge>
               <Badge className=" bg-white shadow-sm border px-2 py-1">
-                Current: {safeFuelVolume.toLocaleString()} L
+                Current: {safeFuelVolume} L
               </Badge>
               <Badge className=" bg-white shadow-sm border px-2 py-1">
-                @15°C: {fuel_volume_15?.toLocaleString() ?? 0} L
+                @15°C: {fuel_volume_15} L
               </Badge>
               <Badge className=" bg-white shadow-sm border px-2 py-1">
-                Water: {water_volume?.toLocaleString() ?? 0} L
+                Water: {water_volume} L
               </Badge>
               <Badge className=" bg-white shadow-sm border px-2 py-1">
-                Temp: {average_temp ?? 0}°C
+                Temp: {average_temp}°C
               </Badge>
               <Badge className=" bg-white shadow-sm border px-2 py-1">
                 Probe ID: {probe_id}
