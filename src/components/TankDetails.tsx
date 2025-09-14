@@ -16,7 +16,7 @@ export default function TankDetails ({capacity,fuelVolume,fuel_volume_15,water_v
             <h4 className="text-sm font-semibold text-gray-700 mb-2">
               Tank Details
             </h4>
-            <div className="grid grid-cols-2 gap-2 text-sm">
+            <div className="grid grid-cols-2 gap-2 text-sm text-slate-800">
               <Badge className=" bg-white shadow-sm border px-2 py-1">
                 Capacity: {capacity} L
               </Badge>
