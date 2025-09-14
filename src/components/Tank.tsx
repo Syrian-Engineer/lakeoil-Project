@@ -525,8 +525,15 @@ export default function Tank({ tanks }: Props) {
         <Badge className="name-badge" id="NameBadge">
           {tank_name}
         </Badge>
-        <div className="toggle-details" onClick={toggleDetails}>
-          <i className={`fas fa-chevron-${showDetails ? "up" : "down"}`}></i>
+        <div
+          className="toggle-details cursor-pointer flex items-center justify-center 
+                    w-8 h-8 rounded-full bg-gray-100 text-gray-600 shadow-sm 
+                    hover:bg-gray-200 hover:text-gray-800 active:scale-95 
+                    transition duration-200"
+          onClick={toggleDetails}
+          title={showDetails ? "Hide details" : "Show details"}
+        >
+          <i className={`fas fa-chevron-${showDetails ? "up" : "down"} text-sm`}></i>
         </div>
       </div>
 
