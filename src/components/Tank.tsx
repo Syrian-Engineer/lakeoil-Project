@@ -173,6 +173,7 @@ import LiquidFillGauge from "react-liquid-gauge";
 import { interpolateRgb } from "d3-interpolate";
 import { color } from "d3-color";
 import { Button } from "rizzui/button";
+import TankDetails from "./TankDetails";
 
 interface Props {
   tanks: TankProp;
@@ -307,33 +308,7 @@ export default function Tank({ tanks }: Props) {
         </div>
 
         {/* Details Section */}
-        {showDetails && (
-          <div className="mt-4 rounded-lg bg-gray-50 border border-gray-200 p-3 shadow-inner">
-            <h4 className="text-sm font-semibold text-gray-700 mb-2">
-              Tank Details
-            </h4>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
-                Capacity: {safeCapacity} L
-              </Badge>
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
-                Current: {safeFuelVolume} L
-              </Badge>
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
-                @15°C: {fuel_volume_15} L
-              </Badge>
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
-                Water: {water_volume} L
-              </Badge>
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
-                Temp: {average_temp}°C
-              </Badge>
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
-                Probe ID: {probe_id}
-              </Badge>
-            </div>
-          </div>
-        )}
+        {showDetails && <TankDetails capacity={safeCapacity} fuelVolume={safeFuelVolume} fuel_volume_15={fuel_volume_15} water_volume={water_volume} average_temp={average_temp} probe_id={probe_id} />}
       </div>
     </div>
   );
