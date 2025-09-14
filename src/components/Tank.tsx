@@ -172,6 +172,7 @@ import { Badge } from "rizzui/badge";
 import LiquidFillGauge from "react-liquid-gauge";
 import { interpolateRgb } from "d3-interpolate";
 import { color } from "d3-color";
+import { Button } from "rizzui/button";
 
 interface Props {
   tanks: TankProp;
@@ -234,17 +235,17 @@ export default function Tank({ tanks }: Props) {
           <Badge className="name-badge px-3 py-1 text-sm font-semibold bg-gray-200 text-gray-600 rounded-md">
             {tank_name}
           </Badge>
-          <button
+          <Button
             onClick={toggleDetails}
             title={showDetails ? "Hide details" : "Show details"}
             className="flex items-center justify-center w-8 h-8 rounded-full 
-                      bg-gray-100 text-gray-600 shadow-sm hover:bg-blue-100 
-                      hover:text-blue-600 active:scale-95 transition duration-200"
+                      bg-gray-100 text-gray-600 shadow-sm hover:bg-gray-200 
+                      hover:text-gray-700 active:scale-95 transition duration-300"
           >
             <i
               className={`fas fa-chevron-${showDetails ? "up" : "down"} text-sm`}
             ></i>
-          </button>
+          </Button>
         </div>
 
         {/* Gauge Section */}
