@@ -12,7 +12,7 @@ interface Props{
 
 export default function TankDetails ({capacity,fuelVolume,fuel_volume_15,water_volume,average_temp,probe_id}:Props){
     return(
-<div className="mt-4 rounded-lg bg-gray-50 border border-gray-200 p-3 shadow-inner">
+<div className="mt-4 rounded-lg bg-gray-50 border border-gray-200 p-3 shadow-inner text-gray-500">
             <h4 className="text-sm font-semibold text-gray-700 mb-2">
               Tank Details
             </h4>

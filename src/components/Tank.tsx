@@ -244,7 +244,7 @@ export default function Tank({ tanks }: Props) {
                       hover:text-gray-700 active:scale-95 transition duration-300"
           >
             <i
-              className={`${showDetails ? "up" : "down"} text-sm`}
+              className={`${showDetails ? "up" : "down"} text-sm text-gray-500`}
             ></i>
           </Button>
         </div>

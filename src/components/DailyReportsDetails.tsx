@@ -30,6 +30,15 @@ interface Product {
   sales_count: number;
 }
 
+interface Amount{
+  id:number,
+  report_id:number,
+  amount:string,
+  total_sales:number,
+  total_volume:number,
+  sales_count:number
+}
+
 interface Report {
   id: number;
   date: string;
@@ -44,6 +53,7 @@ interface Report {
   pumps_list: Pump[];
   tanks_list: Tank[];
   products_list: Product[];
+  amount_list:Amount[]
 }
 
 interface ReportResponse {
@@ -95,7 +105,7 @@ export default function ReportDetails({ id }: { id: number }) {
 
       {/* PRODUCTS SUMMARY */}
       <div className="p-4 border rounded-xl bg-white shadow">
-        <h3 className="text-lg font-semibold mb-3">Products Summary</h3>
+        <h3 className="text-lg font-semibold mb-3">Products List</h3>
         <table className="w-full text-sm border">
           <thead className="bg-gray-100">
             <tr>
@@ -181,7 +191,36 @@ export default function ReportDetails({ id }: { id: number }) {
           </table>
         </div>
       </div>
-
+      {/* Amounts SUMMARY */}
+      <div className="p-4 border rounded-xl bg-white shadow">
+        <h3 className="text-lg font-semibold mb-3">Amounts</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-2 border">id</th>
+                <th className="p-2 border">report_id</th>
+                <th className="p-2 border">amount</th>
+                <th className="p-2 border">total_sales</th>
+                <th className="p-2 border">total_volume</th>
+                <th className="p-2 border">sales_count</th>
+              </tr>
+            </thead>
+            <tbody>
+              {report.amount_list.map((amount) => (
+                <tr key={amount.id} className="text-center">
+                  <td className="p-2 border">{amount.id}</td>
+                  <td className="p-2 border">{amount.report_id}</td>
+                  <td className="p-2 border">{amount.amount}</td>
+                  <td className="p-2 border">{amount.total_sales}</td>
+                  <td className="p-2 border">{amount.total_volume.toFixed(2)}</td>
+                  <td className="p-2 border">{amount.sales_count.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
       {/* EWURA Summary (XML) */}
       <div className="p-4 border rounded-xl bg-white shadow">
         <details>
