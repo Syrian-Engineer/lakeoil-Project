@@ -227,117 +227,113 @@ export default function Tank({ tanks }: Props) {
   };
 
   return (
-<div id="LiquidGauge" className="compact">
-  <div className="gauge-header flex items-center justify-between">
-    <Badge className="name-badge font-semibold text-sm px-3 py-1 bg-blue-100 text-blue-700 rounded">
-      {tank_name}
-    </Badge>
-
-    {/* Show/Hide Button */}
-    <button
-      onClick={toggleDetails}
-      className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium 
-                 rounded-md border border-gray-200 bg-white shadow-sm 
-                 text-gray-600 hover:bg-gray-50 hover:text-gray-800 
-                 active:scale-95 transition duration-200"
-    >
-      <span>{showDetails ? "Hide Details" : "Show Details"}</span>
-      <i
-        className={`fas fa-chevron-${showDetails ? "up" : "down"} text-[10px]`}
-      ></i>
-    </button>
-  </div>
-
-  <div className="gauge-content">
-    <div className="gauge-container">
-      {/* Gauge stays the same */}
-      <LiquidFillGauge
-        style={{ margin: "0 auto" }}
-        width={radius * 2}
-        height={radius * 2}
-        value={percentage}
-        percent="%"
-        textSize={1}
-        textOffsetX={0}
-        textOffsetY={0}
-        textRenderer={(props: any) => {
-          const value = Math.round(props.value);
-          const radius = Math.min(props.height / 2, props.width / 2);
-          const textPixels = (props.textSize * radius) / 2;
-          const valueStyle = { fontSize: textPixels };
-          const percentStyle = { fontSize: textPixels * 0.6 };
-
-          return (
-            <tspan>
-              <tspan className="value" style={valueStyle}>
-                {value}
-              </tspan>
-              <tspan style={percentStyle}>{props.percent}</tspan>
-            </tspan>
-          );
-        }}
-        riseAnimation
-        waveAnimation
-        waveFrequency={2}
-        waveAmplitude={1}
-        gradient
-        gradientStops={gradientStops}
-        circleStyle={{ fill: fillColor }}
-        waveStyle={{ fill: fillColor }}
-        textStyle={{
-          fill: color("#444")?.toString() ?? "#444",
-          fontFamily: "Arial",
-        }}
-        waveTextStyle={{
-          fill: color("#fff")?.toString() ?? "#fff",
-          fontFamily: "Arial",
-        }}
-      />
-
-      {/* Summary */}
-      <div className="gauge-summary mt-2 text-center">
-        <Badge className="product-badge px-2 py-0.5 bg-gray-200 text-gray-700 rounded">
-          {product_name}
-        </Badge>
-        <div className="volume-info text-xs text-gray-600 mt-1">
-          {safeFuelVolume} / {safeCapacity} L
+    <div className="mb-6 rounded-2xl shadow-lg bg-white border border-gray-200 p-4">
+      <div id="LiquidGauge" className="compact">
+        {/* Header with Tank Name + Toggle */}
+        <div className="flex items-center justify-between mb-3">
+          <Badge className="name-badge px-3 py-1 text-sm font-semibold bg-gray-200 text-gray-600 rounded-md">
+            {tank_name}
+          </Badge>
+          <button
+            onClick={toggleDetails}
+            title={showDetails ? "Hide details" : "Show details"}
+            className="flex items-center justify-center w-8 h-8 rounded-full 
+                      bg-gray-100 text-gray-600 shadow-sm hover:bg-blue-100 
+                      hover:text-blue-600 active:scale-95 transition duration-200"
+          >
+            <i
+              className={`fas fa-chevron-${showDetails ? "up" : "down"} text-sm`}
+            ></i>
+          </button>
         </div>
+
+        {/* Gauge Section */}
+        <div className="gauge-content">
+          <div className="gauge-container flex flex-col items-center">
+            <LiquidFillGauge
+              style={{ margin: "0 auto" }}
+              width={radius * 2}
+              height={radius * 2}
+              value={percentage}
+              percent="%"
+              textSize={1}
+              textOffsetX={0}
+              textOffsetY={0}
+              textRenderer={(props: any) => {
+                const value = Math.round(props.value);
+                const radius = Math.min(props.height / 2, props.width / 2);
+                const textPixels = (props.textSize * radius) / 2;
+                const valueStyle = { fontSize: textPixels };
+                const percentStyle = { fontSize: textPixels * 0.6 };
+
+                return (
+                  <tspan>
+                    <tspan className="value" style={valueStyle}>
+                      {value}
+                    </tspan>
+                    <tspan style={percentStyle}>{props.percent}</tspan>
+                  </tspan>
+                );
+              }}
+              riseAnimation
+              waveAnimation
+              waveFrequency={2}
+              waveAmplitude={1}
+              gradient
+              gradientStops={gradientStops}
+              circleStyle={{ fill: fillColor }}
+              waveStyle={{ fill: fillColor }}
+              textStyle={{
+                fill: color("#444")?.toString() ?? "#444",
+                fontFamily: "Arial",
+              }}
+              waveTextStyle={{
+                fill: color("#fff")?.toString() ?? "#fff",
+                fontFamily: "Arial",
+              }}
+            />
+
+            {/* Gauge Summary */}
+            <div className="gauge-summary mt-3 text-center">
+              <Badge className="product-badge px-3 py-1 text-sm bg-green-100 text-green-700 rounded-md">
+                {product_name}
+              </Badge>
+              <div className="mt-1 text-sm text-gray-600">
+                {safeFuelVolume} / {safeCapacity} L
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Details Section */}
+        {showDetails && (
+          <div className="mt-4 rounded-lg bg-gray-50 border border-gray-200 p-3 shadow-inner">
+            <h4 className="text-sm font-semibold text-gray-700 mb-2">
+              Tank Details
+            </h4>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+                Capacity: {safeCapacity.toLocaleString()} L
+              </Badge>
+              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+                Current: {safeFuelVolume.toLocaleString()} L
+              </Badge>
+              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+                @15°C: {fuel_volume_15?.toLocaleString() ?? 0} L
+              </Badge>
+              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+                Water: {water_volume?.toLocaleString() ?? 0} L
+              </Badge>
+              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+                Temp: {average_temp ?? 0}°C
+              </Badge>
+              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+                Probe ID: {probe_id}
+              </Badge>
+            </div>
+          </div>
+        )}
       </div>
     </div>
-
-    {/* Details Section */}
-    {showDetails && (
-      <div
-        className="details-section mt-4 rounded-lg border border-gray-200 
-                   bg-gray-50 shadow-sm p-3 animate-fadeIn"
-      >
-        <h4 className="text-sm font-semibold text-gray-700 mb-2">
-          Tank Details
-        </h4>
-        <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
-          <div className="p-2 rounded bg-white shadow-sm">
-            Capacity: {safeCapacity.toLocaleString()} L
-          </div>
-          <div className="p-2 rounded bg-white shadow-sm">
-            Current: {safeFuelVolume.toLocaleString()} L
-          </div>
-          <div className="p-2 rounded bg-white shadow-sm">
-            @15°C: {fuel_volume_15?.toLocaleString() ?? 0} L
-          </div>
-          <div className="p-2 rounded bg-white shadow-sm">
-            Water: {water_volume?.toLocaleString() ?? 0} L
-          </div>
-          <div className="p-2 rounded bg-white shadow-sm">
-            Temp: {average_temp ?? 0}°C
-          </div>
-          <div className="p-2 rounded bg-white shadow-sm">
-            Probe ID: {probe_id}
-          </div>
-        </div>
-      </div>
-    )}
-  </div>
-</div>
-
   );
 }
