@@ -16,23 +16,23 @@ export default function TankDetails ({capacity,fuelVolume,fuel_volume_15,water_v
             <h4 className="text-sm font-semibold text-gray-700 mb-2">
               Tank Details
             </h4>
-            <div className="grid grid-cols-2 gap-2 text-sm text-slate-800">
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <Badge className=" bg-gray-400 shadow-sm border px-2 py-1">
                 Capacity: {capacity} L
               </Badge>
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-gray-400 shadow-sm border px-2 py-1">
                 Current: {fuelVolume} L
               </Badge>
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-gray-400 shadow-sm border px-2 py-1">
                 @15°C: {fuel_volume_15} L
               </Badge>
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-gray-400 shadow-sm border px-2 py-1">
                 Water: {water_volume} L
               </Badge>
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-gray-400 shadow-sm border px-2 py-1">
                 Temp: {average_temp}°C
               </Badge>
-              <Badge className=" bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-gray-400 shadow-sm border px-2 py-1">
                 Probe ID: {probe_id}
               </Badge>
             </div>
