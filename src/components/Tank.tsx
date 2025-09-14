@@ -240,12 +240,12 @@ export default function Tank({ tanks }: Props) {
             onClick={toggleDetails}
             title={showDetails ? "Hide details" : "Show details"}
             className="flex items-center justify-center w-8 h-8 rounded-full 
-                      bg-gray-100 text-gray-600 shadow-sm hover:bg-gray-200 
-                      hover:text-gray-700 active:scale-95 transition duration-300"
+                      bg-gray-100  shadow-sm hover:bg-gray-200 
+                      active:scale-95 transition duration-300"
           >
-            <i
-              className={`${showDetails ? "up" : "down"} text-sm text-black`}
-            ></i>
+
+              {`${showDetails ? "up" : "down"} text-sm text-black`}
+            
           </Button>
         </div>
 
