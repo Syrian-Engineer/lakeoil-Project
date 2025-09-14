@@ -241,10 +241,10 @@ export default function Tank({ tanks }: Props) {
             title={showDetails ? "Hide details" : "Show details"}
             className="flex items-center justify-center w-8 h-8 rounded-full 
                       bg-gray-100  shadow-sm hover:bg-gray-200 
-                      active:scale-95 transition duration-300"
+                      active:scale-95 transition duration-300 text-sm"
           >
 
-              {`${showDetails ? "up" : "down"} text-sm text-black`}
+              {`${showDetails ? "up" : "down"}`}
             
           </Button>
         </div>
