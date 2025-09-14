@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 interface Pump {
   id: number;
   pump: string;
+  electronic_totalizer:number,
+  last_electronic_totalizer:number,
+  virtual_totalizer:number
   product: string;
   Price: number;
   total_sales: number;
@@ -15,8 +18,11 @@ interface Tank {
   id: number;
   TankID: string;
   TankProdName: string;
+  ATGDeliveryVolume:boolean;
+  MeasuredEndVolume:boolean, 
   SaleVolume: number;
   SaleNumber: number;
+  StartVolume:boolean
   CalculatedEndVolume: number;
   VolumeDifference: number;
 }
@@ -143,6 +149,9 @@ export default function ReportDetails({ id }: { id: number }) {
                 <th className="p-2 border">Sales ($)</th>
                 <th className="p-2 border">Volume</th>
                 <th className="p-2 border">Transactions</th>
+                <th className="p-2 border">electronic_totalizer</th>
+                <th className="p-2 border">last_electronic_totalizer</th>
+                <th className="p-2 border">virtual_totalizer</th>
               </tr>
             </thead>
             <tbody>
@@ -154,6 +163,9 @@ export default function ReportDetails({ id }: { id: number }) {
                   <td className="p-2 border">{pump.total_sales.toFixed(2)}</td>
                   <td className="p-2 border">{pump.total_volume.toFixed(2)}</td>
                   <td className="p-2 border">{pump.sales_count}</td>
+                  <td className="p-2 border">{pump.electronic_totalizer}</td>
+                  <td className="p-2 border">{pump.last_electronic_totalizer}</td>
+                  <td className="p-2 border">{pump.virtual_totalizer}</td>
                 </tr>
               ))}
             </tbody>
@@ -174,6 +186,9 @@ export default function ReportDetails({ id }: { id: number }) {
                 <th className="p-2 border">Transactions</th>
                 <th className="p-2 border">Calculated End Volume</th>
                 <th className="p-2 border">Difference</th>
+                <th className="p-2 border">StartVolume</th>
+                <th className="p-2 border">ATGDeliveryVolume</th>
+                <th className="p-2 border">MeasuredEndVolume</th>
               </tr>
             </thead>
             <tbody>
@@ -185,6 +200,9 @@ export default function ReportDetails({ id }: { id: number }) {
                   <td className="p-2 border">{tank.SaleNumber}</td>
                   <td className="p-2 border">{tank.CalculatedEndVolume.toFixed(2)}</td>
                   <td className="p-2 border">{tank.VolumeDifference.toFixed(2)}</td>
+                  <td className="p-2 border">{tank.StartVolume}</td>
+                  <td className="p-2 border">{tank.ATGDeliveryVolume}</td>
+                  <td className="p-2 border">{tank.MeasuredEndVolume}</td>
                 </tr>
               ))}
             </tbody>
