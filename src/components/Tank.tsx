@@ -229,10 +229,10 @@ export default function Tank({ tanks }: Props) {
 
   return (
     <div className="mb-6 rounded-2xl shadow-lg bg-white border border-gray-200 p-4">
-      <div id="LiquidGauge" className="compact">
+      <div id="LiquidGauge" className="">
         {/* Header with Tank Name + Toggle */}
         <div className="flex items-center justify-between mb-3">
-          <Badge className="name-badge px-3 py-1 text-sm font-semibold bg-gray-200 text-gray-600 rounded-md">
+          <Badge className=" px-3 py-1 text-sm font-semibold bg-gray-200 text-gray-600 rounded-md">
             {tank_name}
           </Badge>
           <Button
@@ -249,8 +249,8 @@ export default function Tank({ tanks }: Props) {
         </div>
 
         {/* Gauge Section */}
-        <div className="gauge-content">
-          <div className="gauge-container flex flex-col items-center">
+        <div>
+          <div className=" flex flex-col items-center">
             <LiquidFillGauge
               style={{ margin: "0 auto" }}
               width={radius * 2}
@@ -313,22 +313,22 @@ export default function Tank({ tanks }: Props) {
               Tank Details
             </h4>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-white shadow-sm border px-2 py-1">
                 Capacity: {safeCapacity.toLocaleString()} L
               </Badge>
-              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-white shadow-sm border px-2 py-1">
                 Current: {safeFuelVolume.toLocaleString()} L
               </Badge>
-              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-white shadow-sm border px-2 py-1">
                 @15°C: {fuel_volume_15?.toLocaleString() ?? 0} L
               </Badge>
-              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-white shadow-sm border px-2 py-1">
                 Water: {water_volume?.toLocaleString() ?? 0} L
               </Badge>
-              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-white shadow-sm border px-2 py-1">
                 Temp: {average_temp ?? 0}°C
               </Badge>
-              <Badge className="details-badge bg-white shadow-sm border px-2 py-1">
+              <Badge className=" bg-white shadow-sm border px-2 py-1">
                 Probe ID: {probe_id}
               </Badge>
             </div>
