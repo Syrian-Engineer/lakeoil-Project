@@ -16,6 +16,7 @@ export default async function TankCardList() {
         "Content-Type": "application/json",
         Authorization:`${access_token}`,
       },
+      next:{revalidate:100}
     }),
     fetch("http://central.oktin.ak4tek.com:3950/stationinfo/all", {
       method: "GET",
@@ -23,6 +24,7 @@ export default async function TankCardList() {
         "Content-Type": "application/json",
         Authorization:`${access_token}`,
       },
+      next:{revalidate:100}
     }),
   ]);
 

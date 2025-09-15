@@ -394,13 +394,6 @@ interface Props {
 
 export default function TankCard({ tanks1, stations }: Props) {
   const [tanks, setTanks] = useState<TankProp[]>(tanks1);
-  const [access_token, setAccessToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setAccessToken(sessionStorage.getItem("access_token"));
-    }
-  }, []);
 
   useEffect(() => {
     setTanks(tanks1);
