@@ -308,6 +308,7 @@
 
 
 import TankCardList from "@/components/TankCardList";
+import { Suspense } from "react";
 
 export interface TankProp {
   tank_capacity: number;
@@ -354,6 +355,18 @@ export interface ProductProp{
 
 export default function page (){
   return(
-    <TankCardList />
+    <Suspense fallback={<LoadingSpinner />}>
+       <TankCardList />
+    </Suspense>
   )
+}
+
+
+
+function LoadingSpinner() {
+  return (
+    <div className="flex justify-center items-center p-10">
+      <div className="h-10 w-10 border-4 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
 }
