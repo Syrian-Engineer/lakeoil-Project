@@ -241,7 +241,7 @@ export default function Tank({ tanks }: Props) {
           <button
             onClick={toggleDetails}
             title={showDetails ? "Hide details" : "Show details"}
-            className=" rounded-full shadow-sm active:scale-95 transition duration-300 text-sm"
+            className=" rounded-full shadow-sm active:scale-95 transition duration-300 text-md w-8 h-8"
           >
 
               {showDetails ? <CiCircleChevUp /> : <CiCircleChevDown />}
