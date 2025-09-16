@@ -18,11 +18,11 @@ interface Tank {
   id: number;
   TankID: string;
   TankProdName: string;
-  ATGDeliveryVolume:boolean;
-  MeasuredEndVolume:boolean, 
+  ATGDeliveryVolume:number;
+  MeasuredEndVolume:number, 
   SaleVolume: number;
   SaleNumber: number;
-  StartVolume:boolean
+  StartVolume:number
   CalculatedEndVolume: number;
   VolumeDifference: number;
 }

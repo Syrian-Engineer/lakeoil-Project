@@ -9,7 +9,7 @@ export default async function TankCardList() {
   }
 
   // ⏳ Add 5 sec delay
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  // await new Promise((resolve) => setTimeout(resolve, 5000));
 
   // Run both requests in parallel
   const [tanksRes, stationsRes] = await Promise.all([

@@ -238,17 +238,15 @@ export default function Tank({ tanks }: Props) {
           <Badge className=" px-3 py-1 text-sm font-semibold bg-gray-200 text-gray-600 rounded-md">
             {tank_name}
           </Badge>
-          <Button
+          <button
             onClick={toggleDetails}
             title={showDetails ? "Hide details" : "Show details"}
-            className="flex items-center justify-center w-8 h-8 rounded-full 
-                        shadow-sm  
-                      active:scale-95 transition duration-300 text-sm"
+            className=" rounded-full shadow-sm active:scale-95 transition duration-300 text-sm"
           >
 
               {showDetails ? <CiCircleChevUp /> : <CiCircleChevDown />}
             
-          </Button>
+          </button>
         </div>
 
         {/* Gauge Section */}
