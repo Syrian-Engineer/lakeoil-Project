@@ -8,6 +8,9 @@ export default async function TankCardList() {
     throw new Error("No access token found");
   }
 
+  // ⏳ Add 5 sec delay
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
   // Run both requests in parallel
   const [tanksRes, stationsRes] = await Promise.all([
     fetch("http://central.oktin.ak4tek.com:3950/ak4tek/tanks/all", {

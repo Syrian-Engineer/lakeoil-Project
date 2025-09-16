@@ -27,6 +27,7 @@ export default async function DailyReporstList({start_date,end_date,report_no,pe
       "Content-Type": "application/json",
       Authorization: `${access_token}`,
     },
+    next:{revalidate:100}
   });
 
   const result = await response.json();

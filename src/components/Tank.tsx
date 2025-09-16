@@ -174,6 +174,8 @@ import { interpolateRgb } from "d3-interpolate";
 import { color } from "d3-color";
 import { Button } from "rizzui/button";
 import TankDetails from "./TankDetails";
+import { CiCircleChevUp } from "react-icons/ci";
+import { CiCircleChevDown } from "react-icons/ci";
 
 interface Props {
   tanks: TankProp;
@@ -244,7 +246,7 @@ export default function Tank({ tanks }: Props) {
                       active:scale-95 transition duration-300 text-sm"
           >
 
-              {`${showDetails ? "up" : "down"}`}
+              {`${showDetails ? <CiCircleChevUp /> : <CiCircleChevDown />}`}
             
           </Button>
         </div>
