@@ -246,7 +246,7 @@ export default function Tank({ tanks }: Props) {
                       active:scale-95 transition duration-300 text-sm"
           >
 
-              {`${showDetails ? <CiCircleChevUp /> : <CiCircleChevDown />}`}
+              {showDetails ? <CiCircleChevUp /> : <CiCircleChevDown />}
             
           </Button>
         </div>
