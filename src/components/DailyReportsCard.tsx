@@ -133,7 +133,7 @@ import { Suspense, useEffect, useState } from "react";
 import DailyReportsPagination from "./DailyReportsPagination";
 import { Button } from "rizzui/button";
 import { useRouter } from "next/navigation";
-import ReportDetails from "./DailyReportsDetails";
+import ReportDetails, { Amount, Product } from "./DailyReportsDetails";
 
 interface DailyReport {
   id: number;
@@ -145,6 +145,8 @@ interface DailyReport {
   ewura_license_no: string;
   created_at: string;
   updated_at: string;
+  products_list:Product[],
+  amount_list:Amount[]
 }
 
 interface Props {
@@ -195,43 +197,76 @@ export default function DailyReporstCard({
           const isOpen = openDetails === report.id;
 
           return (
-            <div
-              key={report.id}
-              className="border rounded-2xl p-4 shadow-md hover:shadow-lg transition dark:bg-gray-100"
-            >
-              <h1 className="text-lg font-semibold text-primary mb-2">
-                Report #{report.id}
-              </h1>
+          <div
+                key={report.id}
+                className="border rounded-2xl p-4 shadow-md hover:shadow-lg transition dark:bg-gray-100"
+              >
+                <h1 className="text-lg font-semibold text-primary mb-2">
+                  Report #{report.id}
+                </h1>
 
-              <div className="text-lg text-gray-700 dark:text-gray-600 font-lexend space-y-1">
-                <p>
-                  <span className="font-medium">License:</span>{" "}
-                  {report.ewura_license_no}
-                </p>
-                <p>
-                  <span className="font-medium">Trader Doc No:</span>{" "}
-                  {report.trader_docno}
-                </p>
-                <p>
-                  <span className="font-medium">Date:</span> {report.date}
-                </p>
-                <p>
-                  <span className="font-medium">Print Date:</span>{" "}
-                  {report.printedate}
-                </p>
-                <p>
-                  <span className="font-medium">Printed:</span>{" "}
-                  {report.dailyreport_printed ? "✅ Yes" : "❌ No"}
-                </p>
-                <p>
-                  <span className="font-medium">Created At:</span>{" "}
-                  {report.created_at}
-                </p>
-                <p>
-                  <span className="font-medium">Updated At:</span>{" "}
-                  {report.updated_at}
-                </p>
-              </div>
+                <div className="text-lg text-gray-700 dark:text-gray-600 font-lexend space-y-1">
+                  <p>
+                    <span className="font-medium">License:</span>{" "}
+                    {report.ewura_license_no}
+                  </p>
+
+                {/* PRODUCTS SUMMARY */}
+                  <div className="p-4 border rounded-xl bg-white shadow">
+                    <h3 className="text-lg font-semibold mb-3">Products List</h3>
+                    <table className="w-full text-sm border">
+                      <thead className="bg-gray-100">
+                        <tr>
+                          <th className="p-2 border">Product</th>
+                          <th className="p-2 border">Price</th>
+                          <th className="p-2 border">total_sales</th>
+                          <th className="p-2 border">total_volume</th>
+                          <th className="p-2 border">Transactions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {report.products_list.map((product) => (
+                          <tr key={product.id} className="text-center">
+                            <td className="p-2 border">{product.product}</td>
+                            <td className="p-2 border">{product.Price.toFixed(2)}</td>
+                            <td className="p-2 border">{product.total_sales.toFixed(2)}</td>
+                            <td className="p-2 border">{product.total_volume.toFixed(2)}</td>
+                            <td className="p-2 border">{product.sales_count}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Amounts SUMMARY */}
+                <div className="p-4 border rounded-xl bg-white shadow">
+                  <h3 className="text-lg font-semibold mb-3">Amounts</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm border">
+                      <thead className="bg-gray-100">
+                        <tr>
+                          <th className="p-2 border">report_id</th>
+                          <th className="p-2 border">amount</th>
+                          <th className="p-2 border">total_sales</th>
+                          <th className="p-2 border">total_volume</th>
+                          <th className="p-2 border">sales_count</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {report.amount_list.map((amount) => (
+                          <tr key={amount.id} className="text-center">
+                            <td className="p-2 border">{amount.report_id}</td>
+                            <td className="p-2 border">{amount.amount}</td>
+                            <td className="p-2 border">{amount.total_sales}</td>
+                            <td className="p-2 border">{amount.total_volume.toFixed(2)}</td>
+                            <td className="p-2 border">{amount.sales_count.toFixed(2)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
 
               <div className="flex justify-end gap-2 mt-4">
                 <Button

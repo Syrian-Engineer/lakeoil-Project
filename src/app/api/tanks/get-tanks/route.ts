@@ -1,26 +1,35 @@
-// /app/api/tanks/get-tanks/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
-  try {
-    const access_token = req.headers.get("Authorization")
-    const backendResponse = await fetch("http://central.oktin.ak4tek.com:3950/ak4tek/tanks/all", {
+export async function GET(req:NextRequest) {
+      const access_token = req.headers.get('Authorization');
+  
+
+  if (!access_token) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  const [tanksRes, stationsRes] = await Promise.all([
+    fetch("http://central.oktin.ak4tek.com:3950/ak4tek/tanks/all", {
       method: "POST",
       headers: {
-        Authorization:`${access_token}`
+        "Content-Type": "application/json",
+        Authorization: access_token,
       },
-    });
+    }),
+    fetch("http://central.oktin.ak4tek.com:3950/stationinfo/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: access_token,
+      },
+    }),
+  ]);
 
-    const data = await backendResponse.json();
+  const tanksResult = await tanksRes.json();
+  const stationsResult = await stationsRes.json();
 
-    if (!backendResponse.ok) {
-      return NextResponse.json({ message: data.message || "Failed to fetch tanks" }, { status: backendResponse.status });
-    }
-
-    return NextResponse.json({ tanks: data });
-  } catch (err) {
-    console.error("Error in /api/tanks/get-tanks:", err);
-    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
-  }
+  return NextResponse.json({
+    tanks: tanksResult.data || [],
+    stations: stationsResult.data || [],
+  });
 }

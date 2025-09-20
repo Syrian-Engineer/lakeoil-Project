@@ -27,7 +27,7 @@ interface Tank {
   VolumeDifference: number;
 }
 
-interface Product {
+export interface Product {
   id: number;
   product: string;
   Price: number;
@@ -36,7 +36,7 @@ interface Product {
   sales_count: number;
 }
 
-interface Amount{
+export interface Amount{
   id:number,
   report_id:number,
   amount:string,

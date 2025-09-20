@@ -238,14 +238,25 @@ export default function Tank({ tanks }: Props) {
           <Badge className=" px-3 py-1 text-sm font-semibold bg-gray-200 text-gray-600 rounded-md">
             {tank_name}
           </Badge>
-          <button
+          {/* <button
             onClick={toggleDetails}
             title={showDetails ? "Hide details" : "Show details"}
-            className=" rounded-full shadow-sm active:scale-95 transition duration-300 text-md w-8 h-8"
+            className=" rounded-full shadow-sm hover:scale-95 transition duration-300 text-4xl"
           >
 
               {showDetails ? <CiCircleChevUp /> : <CiCircleChevDown />}
             
+          </button> */}
+          <button
+              onClick={toggleDetails}
+              title={showDetails ? "Hide details" : "Show details"}
+              className="rounded-full shadow-sm hover:scale-95 transition duration-300 text-4xl"
+            >
+              <CiCircleChevDown
+                className={`transform transition-transform duration-300 ${
+                  showDetails ? "rotate-180" : "rotate-0"
+                }`}
+              />
           </button>
         </div>
 

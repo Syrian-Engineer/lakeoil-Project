@@ -386,13 +386,18 @@ import withReactContent from "sweetalert2-react-content";
 import Tank from "./Tank";
 import { Button } from "rizzui/button";
 import { stationProps } from "@/app/station/page";
+import { MdLocalGasStation } from "react-icons/md";
+import { FaDatabase } from "react-icons/fa";
+import TankSummary from "./TankSummary";
 
 interface Props {
   tanks1: TankProp[];
   stations?: stationProps[];
+  lastUpdate: Date | null;
+  onRefresh: () => void;
 }
 
-export default function TankCard({ tanks1, stations }: Props) {
+export default function TankCard({ tanks1, stations,lastUpdate,onRefresh }: Props) {
   const [tanks, setTanks] = useState<TankProp[]>(tanks1);
 
   useEffect(() => {
@@ -428,6 +433,15 @@ export default function TankCard({ tanks1, stations }: Props) {
           <FaPencilAlt className="h-6 w-6 text-primary" />
         </Button>
       </div>
+
+      {/* Summary */}
+
+      <TankSummary 
+        stations_length={stations?.length} 
+        tanks_length={tanks.length}
+        lastUpdate={lastUpdate}
+        onRefresh={onRefresh}
+         />
 
       <div className="space-y-4">
         {stations?.map((station) => (
