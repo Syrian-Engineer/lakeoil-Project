@@ -6,9 +6,13 @@
 // import LiquidFillGauge from "react-liquid-gauge";
 // import { interpolateRgb } from "d3-interpolate";
 // import { color } from "d3-color";
+// import TankDetails from "./TankDetails";
+// import { CiCircleChevDown } from "react-icons/ci";
+// import { FaFillDrip } from "react-icons/fa";
 
 // interface Props {
 //   tanks: TankProp;
+//   LicenseeTraSerialNo:string
 // }
 
 // export default function Tank({ tanks }: Props) {
@@ -60,102 +64,99 @@
 //     setShowDetails(!showDetails);
 //   };
 
+//   const handleFillingClick = ()=>{
+    
+//   }
+
 //   return (
-//     <div id="LiquidGauge" className="compact">
-//       <div className="gauge-header">
-//         <Badge className="name-badge" id="NameBadge">
-//           {tank_name}
-//         </Badge>
-//         <div
-//           className="toggle-details cursor-pointer flex items-center justify-center 
-//                     w-8 h-8 rounded-full bg-gray-100 text-gray-600 shadow-sm 
-//                     hover:bg-gray-200 hover:text-gray-800 active:scale-95 
-//                     transition duration-200"
-//           onClick={toggleDetails}
-//           title={showDetails ? "Hide details" : "Show details"}
-//         >
-//           <i className={`fas fa-chevron-${showDetails ? "up" : "down"} text-sm`}></i>
+//     <div className="mb-6 rounded-2xl shadow-lg bg-white border border-gray-200 p-4">
+//       <div id="LiquidGauge" className="">
+//         {/* Header with Tank Name + Toggle */}
+//         <div className="flex items-center justify-between mb-3">
+//           <Badge className=" px-3 py-1 text-sm font-semibold bg-gray-200 text-gray-600 rounded-md">
+//             {tank_name}
+//           </Badge>
+
+//           <button
+//             className="rounded-full shadow-sm hover:scale-95 transition duration-300 text-4xl"
+//             onClick={handleFillingClick}
+//            >
+//             <FaFillDrip />
+//           </button>
+
+//           <button
+//               onClick={toggleDetails}
+//               title={showDetails ? "Hide details" : "Show details"}
+//               className="rounded-full shadow-sm hover:scale-95 transition duration-300 text-4xl"
+//             >
+//               <CiCircleChevDown
+//                 className={`transform transition-transform duration-300 ${
+//                   showDetails ? "rotate-180" : "rotate-0"
+//                 }`}
+//               />
+//           </button>
 //         </div>
-//       </div>
 
-//       <div className="gauge-content">
-//         <div className="gauge-container">
-//           <LiquidFillGauge
-//             style={{ margin: "0 auto" }}
-//             width={radius * 2}
-//             height={radius * 2}
-//             value={percentage}
-//             percent="%"
-//             textSize={1}
-//             textOffsetX={0}
-//             textOffsetY={0}
-//             textRenderer={(props: any) => {
-//               const value = Math.round(props.value);
-//               const radius = Math.min(props.height / 2, props.width / 2);
-//               const textPixels = (props.textSize * radius) / 2;
-//               const valueStyle = { fontSize: textPixels };
-//               const percentStyle = { fontSize: textPixels * 0.6 };
+//         {/* Gauge Section */}
+//         <div>
+//           <div className=" flex flex-col items-center">
+//             <LiquidFillGauge
+//               style={{ margin: "0 auto" }}
+//               width={radius * 2}
+//               height={radius * 2}
+//               value={percentage}
+//               percent="%"
+//               textSize={1}
+//               textOffsetX={0}
+//               textOffsetY={0}
+//               textRenderer={(props: any) => {
+//                 const value = Math.round(props.value);
+//                 const radius = Math.min(props.height / 2, props.width / 2);
+//                 const textPixels = (props.textSize * radius) / 2;
+//                 const valueStyle = { fontSize: textPixels };
+//                 const percentStyle = { fontSize: textPixels * 0.6 };
 
-//               return (
-//                 <tspan>
-//                   <tspan className="value" style={valueStyle}>
-//                     {value}
+//                 return (
+//                   <tspan>
+//                     <tspan className="value" style={valueStyle}>
+//                       {value}
+//                     </tspan>
+//                     <tspan style={percentStyle}>{props.percent}</tspan>
 //                   </tspan>
-//                   <tspan style={percentStyle}>{props.percent}</tspan>
-//                 </tspan>
-//               );
-//             }}
-//             riseAnimation
-//             waveAnimation
-//             waveFrequency={2}
-//             waveAmplitude={1}
-//             gradient
-//             gradientStops={gradientStops}
-//             circleStyle={{ fill: fillColor }}
-//             waveStyle={{ fill: fillColor }}
-//             textStyle={{
-//               fill: color("#444")?.toString() ?? "#444",
-//               fontFamily: "Arial",
-//             }}
-//             waveTextStyle={{
-//               fill: color("#fff")?.toString() ?? "#fff",
-//               fontFamily: "Arial",
-//             }}
-//           />
-//           <div className="gauge-summary">
-//             <Badge className="product-badge" id="ProductBadge">
-//               {product_name}
-//             </Badge>
-//             <div className="volume-info">
-//               <span>
+//                 );
+//               }}
+//               riseAnimation
+//               waveAnimation
+//               waveFrequency={2}
+//               waveAmplitude={1}
+//               gradient
+//               gradientStops={gradientStops}
+//               circleStyle={{ fill: fillColor }}
+//               waveStyle={{ fill: fillColor }}
+//               textStyle={{
+//                 fill: color("#444")?.toString() ?? "#444",
+//                 fontFamily: "Arial",
+//               }}
+//               waveTextStyle={{
+//                 fill: color("#fff")?.toString() ?? "#fff",
+//                 fontFamily: "Arial",
+//               }}
+//             />
+
+//             {/* Gauge Summary */}
+//             <div className="gauge-summary mt-3 text-center">
+//               <Badge className="product-badge px-3 py-1 text-sm bg-green-100 text-green-700 rounded-md">
+//                 {product_name}
+//               </Badge>
+//               <div className="mt-1 text-sm text-gray-600">
 //                 {safeFuelVolume} / {safeCapacity} L
-//               </span>
+//               </div>
 //             </div>
 //           </div>
 //         </div>
 
-//         {showDetails && (
-//           <div className="details-section">
-//             <div className="details-grid">
-//               <Badge className="details-badge">
-//                 Capacity: {safeCapacity.toLocaleString()} L
-//               </Badge>
-//               <Badge className="details-badge">
-//                 Current: {safeFuelVolume.toLocaleString()} L
-//               </Badge>
-//               <Badge className="details-badge">
-//                 @15°C: {fuel_volume_15?.toLocaleString() ?? 0} L
-//               </Badge>
-//               <Badge className="details-badge">
-//                 Water: {water_volume?.toLocaleString() ?? 0} L
-//               </Badge>
-//               <Badge className="details-badge">
-//                 Temp: {average_temp ?? 0}°C
-//               </Badge>
-//               <Badge className="details-badge">Probe ID: {probe_id}</Badge>
-//             </div>
-//           </div>
-//         )}
+//         {/* Details Section */}
+//         {showDetails && <TankDetails capacity={safeCapacity} fuelVolume={safeFuelVolume} fuel_volume_15={fuel_volume_15} water_volume={water_volume} average_temp={average_temp} probe_id={probe_id} />}
 //       </div>
 //     </div>
 //   );
@@ -172,17 +173,20 @@ import { Badge } from "rizzui/badge";
 import LiquidFillGauge from "react-liquid-gauge";
 import { interpolateRgb } from "d3-interpolate";
 import { color } from "d3-color";
-import { Button } from "rizzui/button";
 import TankDetails from "./TankDetails";
-import { CiCircleChevUp } from "react-icons/ci";
 import { CiCircleChevDown } from "react-icons/ci";
+import { FaFillDrip } from "react-icons/fa";
+import { useRouter } from "next/navigation"; // ✅ import router
 
 interface Props {
   tanks: TankProp;
+  LicenseeTraSerialNo: string;
 }
 
-export default function Tank({ tanks }: Props) {
+export default function Tank({ tanks, LicenseeTraSerialNo }: Props) {
   const [showDetails, setShowDetails] = useState(false);
+  const router = useRouter(); // ✅ initialize router
+
   const {
     fuel_volume,
     tank_name,
@@ -208,26 +212,18 @@ export default function Tank({ tanks }: Props) {
   const fillColor = interpolate(fillRatio);
 
   const gradientStops = [
-    {
-      key: "0%",
-      stopOpacity: 1,
-      offset: "0%",
-    },
-    {
-      key: "50%",
-      stopColor: fillColor,
-      stopOpacity: 0.75,
-      offset: "50%",
-    },
-    {
-      key: "100%",
-      stopOpacity: 0.5,
-      offset: "100%",
-    },
+    { key: "0%", stopOpacity: 1, offset: "0%" },
+    { key: "50%", stopColor: fillColor, stopOpacity: 0.75, offset: "50%" },
+    { key: "100%", stopOpacity: 0.5, offset: "100%" },
   ];
 
   const toggleDetails = () => {
     setShowDetails(!showDetails);
+  };
+
+  const handleFillingClick = () => {
+    // ✅ Navigate to /tanks/filling with query param
+    router.push(`/tanks/filling?serial=${LicenseeTraSerialNo}`);
   };
 
   return (
@@ -238,25 +234,24 @@ export default function Tank({ tanks }: Props) {
           <Badge className=" px-3 py-1 text-sm font-semibold bg-gray-200 text-gray-600 rounded-md">
             {tank_name}
           </Badge>
-          {/* <button
+
+          <button
+            onClick={handleFillingClick}
+            className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-400 text-white shadow-md hover:bg-gray-600 hover:scale-95 transition duration-300"
+          >
+            <FaFillDrip className="text-xl" />
+          </button>
+
+          <button
             onClick={toggleDetails}
             title={showDetails ? "Hide details" : "Show details"}
-            className=" rounded-full shadow-sm hover:scale-95 transition duration-300 text-4xl"
+            className="rounded-full shadow-sm hover:scale-95 transition duration-300 text-4xl"
           >
-
-              {showDetails ? <CiCircleChevUp /> : <CiCircleChevDown />}
-            
-          </button> */}
-          <button
-              onClick={toggleDetails}
-              title={showDetails ? "Hide details" : "Show details"}
-              className="rounded-full shadow-sm hover:scale-95 transition duration-300 text-4xl"
-            >
-              <CiCircleChevDown
-                className={`transform transition-transform duration-300 ${
-                  showDetails ? "rotate-180" : "rotate-0"
-                }`}
-              />
+            <CiCircleChevDown
+              className={`transform transition-transform duration-300 ${
+                showDetails ? "rotate-180" : "rotate-0"
+              }`}
+            />
           </button>
         </div>
 
@@ -319,8 +314,18 @@ export default function Tank({ tanks }: Props) {
         </div>
 
         {/* Details Section */}
-        {showDetails && <TankDetails capacity={safeCapacity} fuelVolume={safeFuelVolume} fuel_volume_15={fuel_volume_15} water_volume={water_volume} average_temp={average_temp} probe_id={probe_id} />}
+        {showDetails && (
+          <TankDetails
+            capacity={safeCapacity}
+            fuelVolume={safeFuelVolume}
+            fuel_volume_15={fuel_volume_15}
+            water_volume={water_volume}
+            average_temp={average_temp}
+            probe_id={probe_id}
+          />
+        )}
       </div>
     </div>
   );
 }
+
