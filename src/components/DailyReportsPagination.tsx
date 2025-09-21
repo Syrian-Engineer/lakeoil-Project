@@ -20,13 +20,21 @@ export default function DailyReportsPagination({
 }: DailyReportsPaginationProps) {
 
   const [filteredReportNumber, setFilteredReportNumber] = useState(0);
-  const [stationsName,setStationsName] = useState<string[]>([])
+  const [stationsList, setStationsList] = useState<
+    { name: string; licenseNo: string }[]
+  >([]);
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  useEffect(()=>{
-    setStationsName(stations.map((station)=>station.RetailStationName))
-  },[stations])
+  useEffect(() => {
+    setStationsList(
+      stations.map((station) => ({
+        name: station.RetailStationName,
+        licenseNo: station.EWURALicenseNo, // keep license too
+      }))
+    );
+  }, [stations]);
 
   const currentPerPage = Number(searchParams.get("per_page")) || 1;
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -169,17 +177,17 @@ export default function DailyReportsPagination({
         <select
           className="w-full border px-3 py-2 rounded-lg shadow-sm focus:ring focus:ring-primary"
           onChange={(e) => {
-            const selectedStation = e.target.value;
+            const selectedLicenseNo = e.target.value; // send licenseNo not name
             const params = new URLSearchParams(searchParams.toString());
-            params.set("station", selectedStation);
+            params.set("station", selectedLicenseNo);
             router.push(`?${params.toString()}`);
           }}
           defaultValue={searchParams.get("station") || ""}
         >
           <option value="">All Stations</option>
-          {stationsName.map((name, i) => (
-            <option key={i} value={name}>
-              {name}
+          {stationsList.map((station, i) => (
+            <option key={i} value={station.licenseNo}>
+              {station.name}
             </option>
           ))}
         </select>

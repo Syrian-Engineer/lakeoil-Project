@@ -8,9 +8,10 @@ interface Props {
   report_no:number
   per_page:string,
   page:string
+  station:string
 }
 
-export default async function DailyReporstList({start_date,end_date,report_no,per_page,page}:Props) {
+export default async function DailyReporstList({start_date,end_date,report_no,per_page,page,station}:Props) {
 
   const access_token = (await cookies()).get("access_token")?.value;
 
@@ -21,7 +22,7 @@ export default async function DailyReporstList({start_date,end_date,report_no,pe
   const encodedStart = encodeURIComponent(start_date);
   const encodedEnd = encodeURIComponent(end_date);
 // &report_no=${report_no}
-  const response = await fetch(`http://central.oktin.ak4tek.com:3950/daily_report?start_date=${encodedStart}&end_date=${encodedEnd}&per_page=${per_page}&page=${page}`, {
+  const response = await fetch(`http://central.oktin.ak4tek.com:3950/daily_report?start_date=${encodedStart}&end_date=${encodedEnd}&per_page=${per_page}&page=${page}&EWURALicenseNo=${station}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

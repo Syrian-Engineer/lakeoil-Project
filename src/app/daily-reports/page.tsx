@@ -16,6 +16,7 @@ export default async function Page({
   const report_no = Number(sp.report_no);
   const per_page = sp.per_page ?? "";
   const page = sp.page ?? "";
+  const station = sp.station ?? ""
 
   return (
     <div>
@@ -26,6 +27,7 @@ export default async function Page({
           report_no={report_no}
           per_page={per_page}
           page={page}
+          station={station}
         />
       </Suspense>
     </div>
