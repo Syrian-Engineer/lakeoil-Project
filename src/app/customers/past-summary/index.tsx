@@ -234,7 +234,7 @@ export default function PostSummary({ className }: { className?: string }) {
     const access_token = sessionStorage.getItem("access_token")
 
      const endpoint = isReportsLogin
-     ?"/api/reports/customers"
+     ?"/api/customers"
      :"/api/customers"
 
      const headers: Record<string, string> = {

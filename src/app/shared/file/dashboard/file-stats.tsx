@@ -6,122 +6,69 @@ import { useScrollableSlider } from '@/hooks/use-scrollable-slider';
 import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
 import MetricCard from '@/components/cards/metric-card';
 import CircleProgressBar from '@/components/charts/circle-progressbar';
-import TrendingUpIcon from '@/components/icons/trending-up';
-import TrendingDownIcon from '@/components/icons/trending-down';
+import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import FuelSpinner from '@/components/FuelSpinner';
 
 type FileStatsType = {
   className?: string;
-};  
+  stationSerial:string
+};
 
-const filesStatData = [
-  {
-    id: 1,
-    title: 'Total Images',
-    metric: '36,476 GB',
-    fill: '#3872FA',
-    percentage: 32,
-    increased: true,
-    decreased: false,
-    value: '+32.40',
-  },
-  {
-    id: 2,
-    title: 'Total Videos',
-    metric: '53,406 GB',
-    fill: '#3872FA',
-    percentage: 48,
-    increased: false,
-    decreased: true,
-    value: '-18.45',
-  },
-  {
-    id: 3,
-    title: 'Total Documents',
-    metric: '90,875 GB',
-    fill: '#EE0000',
-    percentage: 89,
-    increased: true,
-    decreased: false,
-    value: '+20.34',
-  },
-  {
-    id: 4,
-    title: 'Total Musics',
-    metric: '63,076 GB',
-    fill: '#3872FA',
-    percentage: 54,
-    increased: true,
-    decreased: false,
-    value: '+14.45',
-  },
-  {
-    id: 5,
-    title: 'Total Musics',
-    metric: '63,076 GB',
-    fill: '#3872FA',
-    percentage: 54,
-    increased: true,
-    decreased: false,
-    value: '+14.45',
-  },
-  {
-    id: 6,
-    title: 'Total Musics',
-    metric: '63,076 GB',
-    fill: '#3872FA',
-    percentage: 54,
-    increased: true,
-    decreased: false,
-    value: '+14.45',
-  },
-  {
-    id: 7,
-    title: 'Total Musics',
-    metric: '63,076 GB',
-    fill: '#3872FA',
-    percentage: 54,
-    increased: true,
-    decreased: false,
-    value: '+14.45',
-  },
-  {
-    id: 8,
-    title: 'Total Musics',
-    metric: '63,076 GB',
-    fill: '#3872FA',
-    percentage: 54,
-    increased: true,
-    decreased: false,
-    value: '+14.45',
-  },
+interface TankData {
+  id: number;
+  tank_id: string;
+  probe_id: string;
+  tank_name: string;
+  product_name: string;
+  fuel_volume: number;
+  fuel_volume_15: number;
+  tank_capacity: number;
+  average_temp: number;
+  water_volume: number;
+  updated_at: string;
+  date: string;
+  EWURALicenseNo: string;
+  LicenseeTraSerialNo: string;
+}
 
-];
-
-export function FileStatGrid({ className }: { className?: string }) {
+// ================== Tank Grid =====================
+function FileStatGrid({
+  className,
+  tanks,
+}: {
+  className?: string;
+  tanks: TankData[];
+}) {
   return (
     <>
-      {filesStatData.map((stat: any) => {
+      {tanks.map((tank) => {
+        const percentage =
+          tank.tank_capacity > 0
+            ? ((tank.fuel_volume / tank.tank_capacity) * 100).toFixed(1)
+            : 0;
+
         return (
           <MetricCard
-            key={stat.id}
-            title={stat.title}
-            metric={stat.metric}
+            key={tank.id}
+            title={tank.tank_name}
+            metric={`${tank.tank_capacity.toLocaleString()} L`}
             metricClassName="3xl:text-[22px]"
             className={cn('w-full max-w-full justify-between', className)}
             chart={
               <CircleProgressBar
-                percentage={stat.percentage}
+                percentage={Number(percentage)}
                 size={80}
                 stroke="#D7E3FE"
                 strokeWidth={7}
-                progressColor={stat.fill}
+                progressColor="#3872FA"
                 useParentResponsive={true}
                 label={
                   <Text
                     as="span"
                     className="font-lexend text-base font-medium text-gray-700"
                   >
-                    {stat.percentage}%
+                    {percentage}%
                   </Text>
                 }
                 strokeClassName="dark:stroke-gray-300"
@@ -129,21 +76,11 @@ export function FileStatGrid({ className }: { className?: string }) {
             }
           >
             <Text className="mt-3 flex items-center leading-none text-gray-500">
-              <Text
-                as="span"
-                className={cn(
-                  'me-2 inline-flex items-center font-medium',
-                  stat.increased ? 'text-green' : 'text-red'
-                )}
-              >
-                {stat.increased ? (
-                  <TrendingUpIcon className="me-1 h-4 w-4" />
-                ) : (
-                  <TrendingDownIcon className="me-1 h-4 w-4" />
-                )}
-                {stat.value}%
-              </Text>
-              last month
+              {/* Updated at:{' '}
+              {new Date(tank.updated_at).toLocaleString(undefined, {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })} */}
             </Text>
           </MetricCard>
         );
@@ -152,7 +89,8 @@ export function FileStatGrid({ className }: { className?: string }) {
   );
 }
 
-export default function FileStats({ className }: FileStatsType) {
+// ================== Main Component =====================
+export default function FileStats({ className,stationSerial }: FileStatsType) {
   const {
     sliderEl,
     sliderPrevBtn,
@@ -161,6 +99,78 @@ export default function FileStats({ className }: FileStatsType) {
     scrollToTheLeft,
   } = useScrollableSlider();
 
+  const router = useRouter();
+  const [tanks, setTanks] = useState<TankData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const access_token =
+    typeof window !== 'undefined'
+      ? sessionStorage.getItem('access_token')
+      : null;
+
+  // Redirect if no token
+  useEffect(() => {
+    if (!access_token) {
+      router.push('/signin');
+    }
+  }, [access_token, router]);
+
+  // Fetch tanks
+  const fetchTanks = useCallback(async () => {
+    if (!access_token) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch('/api/tanks/get-tanks', {
+        headers: {
+          Authorization: access_token,
+        },
+      });
+
+      if (!res.ok) throw new Error('Failed to fetch tanks');
+
+      const data = await res.json();
+      
+      let fetchedTanks: TankData[] = data.tanks || [];
+
+      // Filter tanks based on stationSerial unless "all"
+      if (stationSerial && stationSerial !== "all") {
+        fetchedTanks = fetchedTanks.filter(
+          (tank) => tank.EWURALicenseNo === stationSerial
+        );
+      }
+
+      setTanks(fetchedTanks);
+
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  }, [access_token,stationSerial]);
+
+  useEffect(() => {
+    fetchTanks();
+  }, [fetchTanks]);
+
+  // Loading and error states
+  if (loading)
+    return( 
+      <div className='w-full h-full flex justify-center items-center'> 
+        <FuelSpinner word='Fueling Tanks' />
+      </div>
+      )
+  if (error)
+    return (
+      <Text className="text-red-500">
+        Failed to load tanks: {error}
+      </Text>
+    );
+
   return (
     <div
       className={cn(
@@ -168,28 +178,33 @@ export default function FileStats({ className }: FileStatsType) {
         className
       )}
     >
+      {/* Left Button */}
       <Button
         title="Prev"
         variant="text"
         ref={sliderPrevBtn}
-        onClick={() => scrollToTheLeft()}
+        onClick={scrollToTheLeft}
         className="!absolute -left-1 top-0 z-10 !h-full w-20 !justify-start rounded-none bg-gradient-to-r from-gray-0 via-gray-0/70 to-transparent px-0 ps-1 text-gray-500 hover:text-gray-900 dark:from-gray-50 dark:via-gray-50/70 3xl:hidden"
       >
         <PiCaretLeftBold className="h-5 w-5" />
       </Button>
+
+      {/* Scrollable Tanks */}
       <div className="w-full overflow-hidden">
         <div
           ref={sliderEl}
           className="custom-scrollbar grid grid-flow-col gap-5 overflow-x-auto scroll-smooth 2xl:gap-6 3xl:gap-8 [&::-webkit-scrollbar]:h-0"
         >
-          <FileStatGrid className="min-w-[292px]" />
+          <FileStatGrid className="min-w-[292px]" tanks={tanks} />
         </div>
       </div>
+
+      {/* Right Button */}
       <Button
         title="Next"
         variant="text"
         ref={sliderNextBtn}
-        onClick={() => scrollToTheRight()}
+        onClick={scrollToTheRight}
         className="!absolute right-0 top-0 z-10 !h-full w-20 !justify-end rounded-none bg-gradient-to-l from-gray-0 via-gray-0/70 to-transparent px-0 text-gray-500 hover:text-gray-900 dark:from-gray-50 dark:via-gray-50/70 3xl:hidden"
       >
         <PiCaretRightBold className="h-5 w-5" />

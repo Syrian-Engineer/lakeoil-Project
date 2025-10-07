@@ -80,6 +80,9 @@ const config: Config = {
         cairo: ["cairo", "sans-serif"],
       },
     },
+    animation:{
+      'spin-slow': 'spin 4s linear infinite',
+    }
   },
   plugins: [
     require("@tailwindcss/forms"),
