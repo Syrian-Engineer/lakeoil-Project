@@ -43,7 +43,7 @@
 
 import { useEffect, useState } from "react";
 
-interface Pump {
+export interface Pump {
   id: number;
   pumpName?: string;
   product?: string;
