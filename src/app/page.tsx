@@ -6,8 +6,9 @@ interface PageProps {
   };
 }
 
-export default function Page({ searchParams }: PageProps) {
-  const stationSerial = searchParams.station || "all";
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams
+  const stationSerial = params.station || "all";
 
   return (
     <div>
