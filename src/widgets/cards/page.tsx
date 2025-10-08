@@ -4,7 +4,7 @@ import cn from '@/utils/class-names';
 import PageHeader from '@/app/shared/page-header';
 import MetricCardsWithIcon from '@/app/shared/support/dashboard/stat-cards';
 import MetricCardWithBarChart from '@/app/shared/analytics-dashboard/stat-cards';
-import { FileStatGrid } from '@/app/shared/file/dashboard/file-stats';
+// import { FileStatGrid } from '@/app/shared/file/dashboard/file-stats';
 import ParticipantsList from './participants-list';
 import TransactionsList from './transactions-list';
 import TopProductList from './top-product-list';
@@ -75,7 +75,7 @@ export default function CardsPage() {
 
         <SectionBlock title={'MetricCard + ProgressBar'}>
           <div className="grid grid-cols-1 gap-5 @xl:grid-cols-2 @6xl:grid-cols-4 3xl:gap-8">
-            <FileStatGrid />
+            {/* <FileStatGrid /> */}
           </div>
         </SectionBlock>
 
