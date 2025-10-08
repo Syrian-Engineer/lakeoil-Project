@@ -184,7 +184,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
 
     const dynamicPageLinks = [
     ...pumps.map((pump) => ({
-      name: pump.name,
+      name: pump.pumpName,
       // href: `/pumps?name=${pump.name}`, // or routes.Pumps.dashboard
     })),
   ];
