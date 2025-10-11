@@ -11,6 +11,7 @@ import { stationProps } from "@/app/station/page";
 import { MdLocalGasStation } from "react-icons/md";
 import { FaDatabase } from "react-icons/fa";
 import TankSummary from "./TankSummary";
+import PumpCard from "./PumpCard";
 
 interface Props {
   tanks1: TankProp[];
@@ -72,6 +73,7 @@ export default function TankCard({ tanks1, stations,lastUpdate,onRefresh }: Prop
             className="bg-white rounded-lg shadow-md p-4 mb-4"
           >
             <h2 className="text-lg font-semibold mb-2">{station.RetailStationName}</h2>
+            {/* For Tanks */}
             <div className="grid grid-cols-1 md:grid-cols-2 xlPlus:grid-cols-3 gap-3">
               {groupedTanks[station.LicenseeTraSerialNo]?.map((tank) => (
                 <Tank key={tank.id} tanks={tank} LicenseeTraSerialNo={station.LicenseeTraSerialNo} />
@@ -79,6 +81,11 @@ export default function TankCard({ tanks1, stations,lastUpdate,onRefresh }: Prop
               {groupedTanks[station.LicenseeTraSerialNo]?.length === 0 && (
                 <p className="text-gray-500 col-span-full">No tanks for this station</p>
               )}
+            </div>
+
+            {/* For Pumps Socket */}
+            <div>
+                <PumpCard station_url="ws://10.8.0.12:8080/" />
             </div>
           </div>
         ))}

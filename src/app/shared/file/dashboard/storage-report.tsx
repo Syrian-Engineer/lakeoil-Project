@@ -400,13 +400,13 @@ function CustomYAxisTick({ x, y, payload }: any) {
   return (
     <g transform={`translate(${x},${y})`}>
       <text
-        x={4}
+        x={12}
         y={0}
         dy={16}
         textAnchor="end"
         className="fill-gray-500 text-sm"
       >
-        {`${payload.value.toLocaleString()}`} $
+        {`${payload.value.toLocaleString()}`} SAR
       </text>
     </g>
   );
@@ -503,7 +503,7 @@ export default function StorageReport({ className, stationSerial }: Props) {
 
   return (
     <WidgetCard
-      title="Total Sales (TZS)"
+      title="Total Sales"
       titleClassName="font-normal text-gray-700 sm:text-base font-inter"
       description={
         <div className="flex items-center justify-start text-lg">

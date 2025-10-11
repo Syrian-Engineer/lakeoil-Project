@@ -8,7 +8,7 @@ interface SpinnerProps {
   text?: string; // optional label
 }
 
-export default function PeriodicReportsSpinner({ size = 80, text = 'Loading...', textColor = 'text-gray-400' }: SpinnerProps & { textColor?: string }) {
+export default function PeriodicReportsSpinner({ size = 80,text, textColor = 'text-gray-400' }: SpinnerProps & { textColor?: string }) {
   const borderSize = size * 0.075; // 7.5% of size
 
   return (
