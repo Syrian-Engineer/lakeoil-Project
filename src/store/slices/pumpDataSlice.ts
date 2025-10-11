@@ -1,6 +1,6 @@
 // store/slices/pumpDataSlice.ts
 
-import { Pump } from '@/components/server/pump/PumpCardsServer';
+import { Pump } from "@/components/PumpCard";
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // export interface Pump {
