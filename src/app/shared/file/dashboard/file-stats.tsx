@@ -9,6 +9,7 @@ import CircleProgressBar from '@/components/charts/circle-progressbar';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import FuelSpinner from '@/components/FuelSpinner';
+import { getStationNameByLicense } from '@/hooks/getStationNameByLicense';
 
 type FileStatsType = {
   className?: string;
@@ -51,8 +52,8 @@ function FileStatGrid({
         return (
           <MetricCard
             key={tank.id}
-            title={tank.tank_name}
-            metric={`${tank.tank_capacity.toLocaleString()} L`}
+            title={`${getStationNameByLicense(tank.EWURALicenseNo)}`}
+            metric={`${tank.tank_name}`}
             metricClassName="3xl:text-[22px]"
             className={cn('w-full max-w-full justify-between', className)}
             chart={

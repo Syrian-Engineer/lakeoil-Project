@@ -32,7 +32,9 @@ interface Props {
 export default function FileDashboard({ stationSerial }: Props) {
   return (
     <div className="@container">
+
       <StationSelector />
+      
       <FileStats className="mb-5 2xl:mb-8" stationSerial={stationSerial} />
 
       {/* Make StorageReport full width */}

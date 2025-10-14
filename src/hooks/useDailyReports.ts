@@ -125,7 +125,20 @@ export function useDailyReports({ stationSerial }: Props) {
     }
 
     // For now using a static encoded date (you can change to dynamic later)
-    const encoded_start_date = "2025-09-20T20%3A06";
+    const now = new Date();
+    const dateAt10AM = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      10,
+      0,
+      0
+    );
+
+        // Format like "YYYY-MM-DDTHH:mm"
+    const formatted = dateAt10AM.toLocaleString("sv-SE").replace(" ", "T");
+    const encoded_start_date = encodeURIComponent(formatted);
+
     const EWURALicenseNo = stationSerial === "all" ? "" : stationSerial;
 
     try {
