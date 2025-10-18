@@ -252,9 +252,9 @@ const bluePalette = [
 
 // ✅ Explicit color mapping
 const productColors: Record<string, string> = {
-  '91': '#1FA22E',     // green
-  '95': '#C41E3A',     // red
-  'diesel': '#BFA300', // yellow
+  '91': '#4ADE80',     // green
+  '95': '#F87171',     // red
+  'diesel': '#FACC15', // yellow
   'jeta1': bluePalette[2], // blue
 };
 

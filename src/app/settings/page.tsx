@@ -1,7 +1,7 @@
 export default function Page(){
     return(
         <div>
-            Setting
+            Testing Settings In The Build
         </div>
     )
 }

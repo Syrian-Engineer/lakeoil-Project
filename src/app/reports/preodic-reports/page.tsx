@@ -180,7 +180,7 @@ import { useSelector } from 'react-redux';
 export default function Page() {
   const [stationOptions, setStationOptions] = useState<SelectOption[]>([]);
   const [selectedStation, setSelectedStation] = useState<SelectOption | null>(null);
-  const [shiftTime, setShiftTime] = useState('07:00');
+  const [shiftTime, setShiftTime] = useState('00:00');
   const [token, setToken] = useState<string | null>(null);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
