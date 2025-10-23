@@ -2,15 +2,16 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
+    const access_token = req.headers.get("Authorization")
     const body = await req.json();
 
-    const response = await fetch('http://central.oktin.ak4tek.com:3950/staff/add', {
-      method: 'PUT',
+    const response = await fetch('http://78.189.54.28:3800/auth/newuser', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        cookie: req.headers.get('cookie') || '',
+        Authorization : `${access_token}`,
       },
       
       body: JSON.stringify(body),
