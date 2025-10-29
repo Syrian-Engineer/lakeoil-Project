@@ -228,7 +228,7 @@ function CustomYAxisTick({ x, y, payload }: any) {
   return (
     <g transform={`translate(${x},${y})`}>
       <text
-        x={12}
+        x={16}
         y={0}
         dy={16}
         textAnchor="end"

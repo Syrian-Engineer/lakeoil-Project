@@ -129,8 +129,8 @@ export function useDailyReports({ stationSerial }: Props) {
     const dateAt10AM = new Date(
       now.getFullYear(),
       now.getMonth(),
-      now.getDate(),
-      10,
+      now.getDate() - 1,
+      0,
       0,
       0
     );
