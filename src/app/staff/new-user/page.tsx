@@ -215,7 +215,7 @@ export default function AddUserForm() {
 
   // ✅ Prepare stations for the Select
   const stationOptions = stations.map((station) => ({
-    label: station.RetailStationName, // visible name
+    label: `${station.RetailStationName} — ${station.EWURALicenseNo}`,  // show both
     value: station.EWURALicenseNo, // serial number to send
   }));
 
@@ -262,38 +262,37 @@ export default function AddUserForm() {
       />
 
       <Controller
-        control={control}
-        name="associated_stations"
-        render={({ field: { value, onChange } }) => (
-          <Select
-            label="Associated Stations"
-            placeholder={
-              loading
-                ? 'Loading stations...'
-                : error
-                ? 'Failed to load stations'
-                : 'Select one or more stations'
-            }
-            options={stationOptions}
-            value={value}
-            onChange={onChange}
-            multiple
-            getOptionValue={(option) => option.value}
-            displayValue={(selected) => {
-              if (Array.isArray(selected)) {
-                // Show station names instead of serials
-                return stationOptions
-                  .filter((opt) => selected.includes(opt.value))
-                  .map((opt) => opt.label)
-                  .join(', ');
-              }
-              return '';
-            }}
-            disabled={loading || !!error}
-            error={errors.associated_stations?.message}
-          />
-        )}
-      />
+  control={control}
+  name="associated_stations"
+  render={({ field: { value, onChange } }) => (
+    <Select
+      label="Associated Stations"
+      placeholder={
+        loading
+          ? 'Loading stations...'
+          : error
+          ? 'Failed to load stations'
+          : 'Select one or more stations'
+      }
+      options={stationOptions}
+      value={value}
+      onChange={onChange}
+      multiple
+      getOptionValue={(option) => option.value}
+      displayValue={(selected) => {
+        if (Array.isArray(selected)) {
+          return stationOptions
+            .filter((opt) => selected.includes(opt.value))
+            .map((opt) => opt.label) // show "Name — Serial"
+            .join(', ');
+        }
+        return '';
+      }}
+      disabled={loading || !!error}
+      error={errors.associated_stations?.message}
+    />
+  )}
+/>
 
       <Button type="submit" className="w-full" variant="solid">
         Add User
