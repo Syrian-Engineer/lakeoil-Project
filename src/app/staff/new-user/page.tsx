@@ -132,7 +132,7 @@ type AddUserFormValues = {
   email: string;
   password: string;
   role: string;
-  associated_stations: string[]; // ✅ array of EWURA license numbers
+  associated_station: string[]; // ✅ array of EWURA license numbers
 };
 
 const roles = [
@@ -155,7 +155,7 @@ export default function AddUserForm() {
       email: '',
       password: '',
       role: '',
-      associated_stations: [],
+      associated_station: [],
     },
   });
 
@@ -182,8 +182,8 @@ export default function AddUserForm() {
           name: selectedRole?.value || '',
         },
         // ✅ send serial numbers as array
-        associated_stations:
-          data.associated_stations.length > 0 ? data.associated_stations : null,
+        associated_station:
+          data.associated_station.length > 0 ? data.associated_station : null,
       };
 
       const response = await fetch(endpoint, {
@@ -263,7 +263,7 @@ export default function AddUserForm() {
 
       <Controller
   control={control}
-  name="associated_stations"
+  name="associated_station"
   render={({ field: { value, onChange } }) => (
     <Select
       label="Associated Stations"
@@ -289,7 +289,7 @@ export default function AddUserForm() {
         return '';
       }}
       disabled={loading || !!error}
-      error={errors.associated_stations?.message}
+      error={errors.associated_station?.message}
     />
   )}
 />
