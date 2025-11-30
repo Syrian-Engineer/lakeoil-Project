@@ -414,27 +414,23 @@ function StaffCard({ data }: { data: StaffType }) {
       });
 
       if (formValues) {
-        const isReportsLogin = localStorage.getItem("onlyReports") === "true";
         const access_token = sessionStorage.getItem("access_token");
 
-        const endpoint = isReportsLogin
-          ? "/api/reports/staff/edit-staff-data"
-          : "/api/staff/edit-staff-data";
+        const endpoint = "/api/staff/edit-staff-data";
 
         const headers: Record<string, string> = {
           'Content-Type': 'application/json'
         };
 
-        if (isReportsLogin && access_token) {
+        if ( access_token) {
           headers["Authorization"] = `${access_token}`;
         }
 
         const response = await fetch(endpoint, {
-          method: 'POST',
+          method: 'PUT',
           headers,
-          credentials: isReportsLogin ? "omit" : "include",
+          // credentials: isReportsLogin ? "omit" : "include",
           body: JSON.stringify({
-            id: data.id,
             username: formValues.username,
             role: formValues.role,
           }),
