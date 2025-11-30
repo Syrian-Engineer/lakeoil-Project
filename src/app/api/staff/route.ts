@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    const access_token = req.headers.get("Authorization")
     const res = await fetch("http://central.oktin.ak4tek.com:3950/auth/protected", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        cookie: req.headers.get("cookie") || "", // session forwarding
+        Authorization : `${access_token}`,
       },
-      credentials: "include",
     });
     
     const data = await res.json();
