@@ -26,18 +26,16 @@ export default function Page() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const isReportsLogin = localStorage.getItem("onlyReports") === "true";
+    // const isReportsLogin = localStorage.getItem("onlyReports") === "true";
     const access_token = sessionStorage.getItem("access_token");
 
-    const endpoint = isReportsLogin
-    ?"/api/reports/staff"
-    :"/api/staff";
+    const endpoint = "/api/staff";
 
     const headers :Record<string,string> = {
       'Content-Type': 'application/json',
     }
 
-    if(isReportsLogin && access_token){
+    if(access_token){
       headers["Authorization"] = `${access_token}`
     }
 
@@ -48,7 +46,6 @@ export default function Page() {
       try {
         const res = await fetch(endpoint,{
           headers,
-          credentials:isReportsLogin?"omit":"include"
         });
         
         const data = await res.json();

@@ -161,7 +161,6 @@ export default function AddUserForm() {
 
   const onSubmit: SubmitHandler<AddUserFormValues> = async (data) => {
     try {
-      // const isReportsLogin = localStorage.getItem('onlyReports') === 'true';
       const access_token = sessionStorage.getItem('access_token');
       const endpoint = '/api/staff/new-staff';
 
