@@ -15,11 +15,11 @@ export async function POST(req: NextRequest) {
     });
 
     // Try to ensure the response is actually JSON
-    const contentType = response.headers.get('content-type');
-    if (!contentType?.includes('application/json')) {
-      const text = await response.text(); // read raw HTML
-      throw new Error(`Expected JSON but got:\n\n${text}`);
-    }
+    // const contentType = response.headers.get('content-type');
+    // if (!contentType?.includes('application/json')) {
+    //   const text = await response.text(); // read raw HTML
+    //   throw new Error(`Expected JSON but got:\n\n${text}`);
+    // }
 
     const data = await response.json();
 
