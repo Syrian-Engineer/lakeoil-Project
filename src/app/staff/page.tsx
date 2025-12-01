@@ -379,7 +379,6 @@ export default function Page() {
     </div>
   );
 }
-
 function StaffCard({ data }: { data: StaffType }) {
   const handleEditClick = async () => {
     try {
@@ -388,9 +387,15 @@ function StaffCard({ data }: { data: StaffType }) {
         html: `
           <div class="flex flex-col gap-4 text-left w-full">
             <div class="flex flex-col gap-1 w-full">
+              <label class="text-sm font-medium text-gray-700">User ID</label>
+              <input disabled class="w-full border border-gray-300 bg-gray-100 rounded-md p-2 text-sm" value="${data.id}" />
+            </div>
+
+            <div class="flex flex-col gap-1 w-full">
               <label class="text-sm font-medium text-gray-700">Username</label>
               <input id="swal-input1" class="w-full border border-gray-300 rounded-md p-2 text-sm" placeholder="Username" value="${data.username}" />
             </div>
+
             <div class="flex flex-col gap-1 w-full">
               <label class="text-sm font-medium text-gray-700">Role</label>
               <select id="swal-input3" class="w-full border border-gray-300 rounded-md p-2 text-sm">
@@ -407,6 +412,7 @@ function StaffCard({ data }: { data: StaffType }) {
         icon: 'info',
         preConfirm: () => {
           return {
+            id: data.id, // send ID but not editable
             username: (document.getElementById('swal-input1') as HTMLInputElement).value,
             role: (document.getElementById('swal-input3') as HTMLSelectElement).value,
           };
@@ -421,16 +427,13 @@ function StaffCard({ data }: { data: StaffType }) {
         const headers: Record<string, string> = {
           'Content-Type': 'application/json'
         };
-
-        if ( access_token) {
-          headers["Authorization"] = `${access_token}`;
-        }
+        if (access_token) headers["Authorization"] = access_token;
 
         const response = await fetch(endpoint, {
           method: 'PUT',
           headers,
-          // credentials: isReportsLogin ? "omit" : "include",
           body: JSON.stringify({
+            id: formValues.id,
             username: formValues.username,
             role: formValues.role,
           }),
@@ -480,7 +483,7 @@ function StaffCard({ data }: { data: StaffType }) {
         };
 
         if (isReportsLogin && access_token) {
-          headers["Authorization"] = `${access_token}`;
+          headers["Authorization"] = access_token;
         }
 
         const res = await fetch(endpoint, {
@@ -520,10 +523,6 @@ function StaffCard({ data }: { data: StaffType }) {
           <p className="text-sm text-gray-600">{data.role}</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex gap-2 items-center">
-            <PiSealCheckFill size={20} className="text-primary" />
-            <PiMapPin size={20} className="text-gray-500" />
-          </div>
           <Button size="sm" variant="outline" onClick={handleEditClick}>
             Edit
           </Button>
@@ -535,4 +534,3 @@ function StaffCard({ data }: { data: StaffType }) {
     </div>
   );
 }
-
