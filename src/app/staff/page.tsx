@@ -422,7 +422,7 @@ function StaffCard({ data }: { data: StaffType }) {
       if (formValues) {
         const access_token = sessionStorage.getItem("access_token");
 
-        const endpoint = "/api/staff/edit-staff-data";
+        const endpoint = `/api/staff/edit-staff-data?user_id=${formValues.id}`;
 
         const headers: Record<string, string> = {
           'Content-Type': 'application/json'

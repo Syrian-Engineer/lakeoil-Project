@@ -3,9 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
   try {
     const access_token = req.headers.get("Authorization")
+
+    const { searchParams } = new URL(req.url);
+    const user_id = searchParams.get("user_id"); // <-- GET QUERY PARAM
+
     const body = await req.json();
 
-    const response = await fetch('http://central.oktin.ak4tek.com:3950/auth/protected', {
+    const response = await fetch(`http://central.oktin.ak4tek.com:3950/auth/protected?user_id=${user_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -13,13 +17,6 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify(body),
     });
-
-    // Try to ensure the response is actually JSON
-    // const contentType = response.headers.get('content-type');
-    // if (!contentType?.includes('application/json')) {
-    //   const text = await response.text(); // read raw HTML
-    //   throw new Error(`Expected JSON but got:\n\n${text}`);
-    // }
 
     const data = await response.json();
 
