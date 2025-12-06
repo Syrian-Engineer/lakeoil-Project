@@ -422,7 +422,7 @@ function StaffCard({ data }: { data: StaffType }) {
       if (formValues) {
         const access_token = sessionStorage.getItem("access_token");
 
-        const endpoint = `/api/staff/edit-staff-data?user_id=${formValues.id}`;
+        const endpoint = `/api/staff/edit-staff-data`;
 
         const headers: Record<string, string> = {
           'Content-Type': 'application/json'
@@ -433,7 +433,7 @@ function StaffCard({ data }: { data: StaffType }) {
           method: 'PUT',
           headers,
           body: JSON.stringify({
-            id: formValues.id,
+            user_id: formValues.id,
             username: formValues.username,
             role: formValues.role,
           }),
@@ -471,26 +471,21 @@ function StaffCard({ data }: { data: StaffType }) {
 
     if (confirm.isConfirmed) {
       try {
-        const isReportsLogin = localStorage.getItem("onlyReports") === "true";
         const access_token = sessionStorage.getItem("access_token");
 
-        const endpoint = isReportsLogin
-          ? "/api/reports/staff/delete-staff"
-          : "/api/staff/delete-staff";
+        const endpoint = `/api/staff/delete-staff?user_id=${data.id}`;
 
         const headers: Record<string, string> = {
           'Content-Type': 'application/json'
         };
 
-        if (isReportsLogin && access_token) {
+        if (access_token) {
           headers["Authorization"] = access_token;
         }
 
         const res = await fetch(endpoint, {
-          method: 'POST',
+          method: 'DELETE',
           headers,
-          credentials: isReportsLogin ? "omit" : "include",
-          body: JSON.stringify({ id: data.id }),
         });
 
         const result = await res.json();

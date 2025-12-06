@@ -4,12 +4,9 @@ export async function POST(req: NextRequest) {
   try {
     const access_token = req.headers.get("Authorization")
 
-    const { searchParams } = new URL(req.url);
-    const user_id = searchParams.get("user_id"); // <-- GET QUERY PARAM
-
     const body = await req.json();
 
-    const response = await fetch(`http://central.oktin.ak4tek.com:3950/auth/protected?user_id=${user_id}`, {
+    const response = await fetch(`http://central.oktin.ak4tek.com:3950/auth/protected`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
