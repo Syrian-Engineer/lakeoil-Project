@@ -79,7 +79,7 @@ export default function DailyReporstList({
 
   useEffect(() => {
     if (!per_page || !page) {
-      router.replace("?per_page=1&page=1");
+      router.replace("?per_page=5&page=1");
       return;
     }
 
