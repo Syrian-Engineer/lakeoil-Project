@@ -254,11 +254,380 @@
 //   );
 // }
 
+
+
+
+
+// "use client";
+
+// import React, { useEffect, useState } from "react";
+// import * as XLSX from "xlsx";
+// import { saveAs } from "file-saver";
+
+// /* ================= TYPES ================= */
+
+// interface Pump {
+//   id: number;
+//   pump: string;
+//   electronic_totalizer: number;
+//   last_electronic_totalizer: number;
+//   virtual_totalizer: number;
+//   product: string;
+//   Price: number;
+//   total_sales: number;
+//   total_volume: number;
+//   sales_count: number;
+// }
+
+// interface Tank {
+//   id: number;
+//   TankID: string;
+//   TankProdName: string;
+//   ATGDeliveryVolume: number;
+//   MeasuredEndVolume: number;
+//   SaleVolume: number;
+//   SaleNumber: number;
+//   StartVolume: number;
+//   CalculatedEndVolume: number;
+//   VolumeDifference: number;
+// }
+
+// export interface Product {
+//   id: number;
+//   product: string;
+//   Price: number;
+//   total_sales: number;
+//   total_volume: number;
+//   sales_count: number;
+// }
+
+// export interface Amount {
+//   id: number;
+//   report_id: number;
+//   amount: string;
+//   total_sales: number;
+//   total_volume: number;
+//   sales_count: number;
+// }
+
+// interface Report {
+//   id: number;
+//   date: string;
+//   printedate: string;
+//   trader_docno: number;
+//   ewura_license_no: string;
+//   dailyreport_printed: boolean;
+//   updated_at: string;
+//   ewura_summery: string;
+//   products_list: Product[];
+//   pumps_list: Pump[];
+//   tanks_list: Tank[];
+//   amount_list: Amount[];
+// }
+
+// interface ReportResponse {
+//   status: string;
+//   report: Report;
+// }
+
+// /* ================= COMPONENT ================= */
+
+// export default function ReportDetails({ id }: { id: number }) {
+//   const [report, setReport] = useState<Report | null>(null);
+
+//   /* ================= FETCH ================= */
+
+//   useEffect(() => {
+//     const fetchReport = async () => {
+//       const token = sessionStorage.getItem("access_token");
+
+//       const res = await fetch("/api/daily-reports/get-details", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `${token}`,
+//         },
+//         body: JSON.stringify({ id }),
+//       });
+
+//       if (res.ok) {
+//         const data: ReportResponse = await res.json();
+//         setReport(data.report);
+//       }
+//     };
+
+//     fetchReport();
+//   }, [id]);
+
+//   /* ================= EXPORT ================= */
+
+//   const exportToExcel = () => {
+//     if (!report) return;
+
+//     const rows: any[][] = [];
+
+//     // HEADER
+//     rows.push(["DAILY REPORT"]);
+//     rows.push([`Report ID: ${report.id}`]);
+//     rows.push([`Date: ${report.date}`]);
+//     rows.push([`Print Date: ${report.printedate}`]);
+//     rows.push([`License: ${report.ewura_license_no}`]);
+//     rows.push([]);
+
+//     // PRODUCTS
+//     rows.push(["PRODUCTS"]);
+//     rows.push(["Product", "Price", "Sales", "Volume", "Transactions"]);
+//     report.products_list.forEach(p =>
+//       rows.push([p.product, p.Price, p.total_sales, p.total_volume, p.sales_count])
+//     );
+//     rows.push([]);
+
+//     // PUMPS
+//     rows.push(["PUMPS"]);
+//     rows.push([
+//       "Pump",
+//       "Product",
+//       "Price",
+//       "Sales",
+//       "Volume",
+//       "Transactions",
+//       "Start Totalizer",
+//       "End Totalizer",
+//       "Difference",
+//     ]);
+//     report.pumps_list.forEach(p =>
+//       rows.push([
+//         p.pump,
+//         p.product,
+//         p.Price,
+//         p.total_sales,
+//         p.total_volume,
+//         p.sales_count,
+//         p.last_electronic_totalizer,
+//         p.electronic_totalizer,
+//         p.virtual_totalizer,
+//       ])
+//     );
+//     rows.push([]);
+
+//     // TANKS
+//     rows.push(["TANKS"]);
+//     rows.push([
+//       "Tank",
+//       "Product",
+//       "Sale Volume",
+//       "Transactions",
+//       "Start Volume",
+//       "Calculated End",
+//       "Measured End",
+//       "Difference",
+//     ]);
+//     report.tanks_list.forEach(t =>
+//       rows.push([
+//         t.TankID,
+//         t.TankProdName,
+//         t.SaleVolume,
+//         t.SaleNumber,
+//         t.StartVolume,
+//         t.CalculatedEndVolume,
+//         t.MeasuredEndVolume,
+//         t.VolumeDifference,
+//       ])
+//     );
+//     rows.push([]);
+
+//     // AMOUNTS
+//     rows.push(["AMOUNTS"]);
+//     rows.push(["ID", "Report ID", "Amount", "Total Sales", "Total Volume", "Sales Count"]);
+//     report.amount_list.forEach(a =>
+//       rows.push([
+//         a.id,
+//         a.report_id,
+//         a.amount,
+//         a.total_sales,
+//         a.total_volume,
+//         a.sales_count,
+//       ])
+//     );
+
+//     const ws = XLSX.utils.aoa_to_sheet(rows);
+//     const wb = XLSX.utils.book_new();
+//     XLSX.utils.book_append_sheet(wb, ws, "Daily Report");
+
+//     const buffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+
+//     saveAs(
+//       new Blob([buffer], {
+//         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+//       }),
+//       `daily_report_${report.date}.xlsx`
+//     );
+//   };
+
+//   /* ================= UI ================= */
+
+//   if (!report) return <p>Loading...</p>;
+
+//   return (
+//     <div className="space-y-8 p-4">
+
+//       {/* EXPORT BUTTON */}
+//       <div className="flex justify-end">
+//         <button
+//           onClick={exportToExcel}
+//           className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+//         >
+//           Export Excel
+//         </button>
+//       </div>
+
+//       {/* HEADER */}
+//       <div className="p-4 border rounded bg-white shadow">
+//         <h2 className="text-xl font-bold">Report #{report.id}</h2>
+//         <p>Date: {report.date}</p>
+//         <p>Print Date: {report.printedate}</p>
+//         <p>License: {report.ewura_license_no}</p>
+//       </div>
+
+//       {/* PRODUCTS */}
+//       <Section title="Products">
+//         <Table
+//           headers={["Product", "Price", "Sales", "Volume", "Transactions"]}
+//           rows={report.products_list.map(p => [
+//             p.product,
+//             p.Price,
+//             p.total_sales,
+//             p.total_volume,
+//             p.sales_count,
+//           ])}
+//         />
+//       </Section>
+
+//       {/* PUMPS */}
+//       <Section title="Pumps">
+//         <Table
+//           headers={[
+//             "Pump",
+//             "Product",
+//             "Price",
+//             "Sales",
+//             "Volume",
+//             "Transactions",
+//             "Start",
+//             "End",
+//             "Difference",
+//           ]}
+//           rows={report.pumps_list.map(p => [
+//             p.pump,
+//             p.product,
+//             p.Price,
+//             p.total_sales,
+//             p.total_volume,
+//             p.sales_count,
+//             p.last_electronic_totalizer,
+//             p.electronic_totalizer,
+//             p.virtual_totalizer,
+//           ])}
+//         />
+//       </Section>
+
+//       {/* TANKS */}
+//       <Section title="Tanks">
+//         <Table
+//           headers={[
+//             "Tank",
+//             "Product",
+//             "Sale Volume",
+//             "Transactions",
+//             "Start Volume",
+//             "Calculated End",
+//             "Measured End",
+//             "Difference",
+//           ]}
+//           rows={report.tanks_list.map(t => [
+//             t.TankID,
+//             t.TankProdName,
+//             t.SaleVolume,
+//             t.SaleNumber,
+//             t.StartVolume,
+//             t.CalculatedEndVolume,
+//             t.MeasuredEndVolume,
+//             t.VolumeDifference,
+//           ])}
+//         />
+//       </Section>
+
+//       {/* AMOUNTS */}
+//       <Section title="Amounts">
+//         <Table
+//           headers={[
+//             "ID",
+//             "Report ID",
+//             "Amount",
+//             "Total Sales",
+//             "Total Volume",
+//             "Sales Count",
+//           ]}
+//           rows={report.amount_list.map(a => [
+//             a.id,
+//             a.report_id,
+//             a.amount,
+//             a.total_sales,
+//             a.total_volume,
+//             a.sales_count,
+//           ])}
+//         />
+//       </Section>
+//     </div>
+//   );
+// }
+
+// /* ================= SMALL UI HELPERS ================= */
+
+// function Section({ title, children }: any) {
+//   return (
+//     <div className="p-4 border rounded bg-white shadow">
+//       <h3 className="font-semibold mb-3">{title}</h3>
+//       {children}
+//     </div>
+//   );
+// }
+
+// function Table({ headers, rows }: { headers: string[]; rows: any[][] }) {
+//   return (
+//     <table className="w-full text-sm border">
+//       <thead className="bg-gray-100">
+//         <tr>
+//           {headers.map(h => (
+//             <th key={h} className="border p-2">{h}</th>
+//           ))}
+//         </tr>
+//       </thead>
+//       <tbody>
+//         {rows.map((r, i) => (
+//           <tr key={i} className="text-center">
+//             {r.map((c, j) => (
+//               <td key={j} className="border p-2">{c}</td>
+//             ))}
+//           </tr>
+//         ))}
+//       </tbody>
+//     </table>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
 "use client";
 
 import React, { useEffect, useState } from "react";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
 
 /* ================= TYPES ================= */
 
@@ -330,8 +699,9 @@ interface ReportResponse {
 
 export default function ReportDetails({ id }: { id: number }) {
   const [report, setReport] = useState<Report | null>(null);
+  const [downloading, setDownloading] = useState(false);
 
-  /* ================= FETCH ================= */
+  /* ================= FETCH DETAILS ================= */
 
   useEffect(() => {
     const fetchReport = async () => {
@@ -355,109 +725,42 @@ export default function ReportDetails({ id }: { id: number }) {
     fetchReport();
   }, [id]);
 
-  /* ================= EXPORT ================= */
+  /* ================= DOWNLOAD EXCEL ================= */
 
-  const exportToExcel = () => {
+  const downloadExcel = async () => {
     if (!report) return;
 
-    const rows: any[][] = [];
+    try {
+      setDownloading(true);
 
-    // HEADER
-    rows.push(["DAILY REPORT"]);
-    rows.push([`Report ID: ${report.id}`]);
-    rows.push([`Date: ${report.date}`]);
-    rows.push([`Print Date: ${report.printedate}`]);
-    rows.push([`License: ${report.ewura_license_no}`]);
-    rows.push([]);
+      const token = sessionStorage.getItem("access_token");
+      const url = `http://central.oktin.ak4tek.com:3950/daily_report/${report.id}/download/excel`;
 
-    // PRODUCTS
-    rows.push(["PRODUCTS"]);
-    rows.push(["Product", "Price", "Sales", "Volume", "Transactions"]);
-    report.products_list.forEach(p =>
-      rows.push([p.product, p.Price, p.total_sales, p.total_volume, p.sales_count])
-    );
-    rows.push([]);
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
 
-    // PUMPS
-    rows.push(["PUMPS"]);
-    rows.push([
-      "Pump",
-      "Product",
-      "Price",
-      "Sales",
-      "Volume",
-      "Transactions",
-      "Start Totalizer",
-      "End Totalizer",
-      "Difference",
-    ]);
-    report.pumps_list.forEach(p =>
-      rows.push([
-        p.pump,
-        p.product,
-        p.Price,
-        p.total_sales,
-        p.total_volume,
-        p.sales_count,
-        p.last_electronic_totalizer,
-        p.electronic_totalizer,
-        p.virtual_totalizer,
-      ])
-    );
-    rows.push([]);
+      if (!res.ok) throw new Error("Download failed");
 
-    // TANKS
-    rows.push(["TANKS"]);
-    rows.push([
-      "Tank",
-      "Product",
-      "Sale Volume",
-      "Transactions",
-      "Start Volume",
-      "Calculated End",
-      "Measured End",
-      "Difference",
-    ]);
-    report.tanks_list.forEach(t =>
-      rows.push([
-        t.TankID,
-        t.TankProdName,
-        t.SaleVolume,
-        t.SaleNumber,
-        t.StartVolume,
-        t.CalculatedEndVolume,
-        t.MeasuredEndVolume,
-        t.VolumeDifference,
-      ])
-    );
-    rows.push([]);
+      const blob = await res.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
 
-    // AMOUNTS
-    rows.push(["AMOUNTS"]);
-    rows.push(["ID", "Report ID", "Amount", "Total Sales", "Total Volume", "Sales Count"]);
-    report.amount_list.forEach(a =>
-      rows.push([
-        a.id,
-        a.report_id,
-        a.amount,
-        a.total_sales,
-        a.total_volume,
-        a.sales_count,
-      ])
-    );
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = `daily_report_${report.date}.xlsx`;
+      document.body.appendChild(a);
+      a.click();
 
-    const ws = XLSX.utils.aoa_to_sheet(rows);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Daily Report");
-
-    const buffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-
-    saveAs(
-      new Blob([buffer], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      }),
-      `daily_report_${report.date}.xlsx`
-    );
+      a.remove();
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (err) {
+      alert("Failed to download Excel file");
+    } finally {
+      setDownloading(false);
+    }
   };
 
   /* ================= UI ================= */
@@ -470,10 +773,11 @@ export default function ReportDetails({ id }: { id: number }) {
       {/* EXPORT BUTTON */}
       <div className="flex justify-end">
         <button
-          onClick={exportToExcel}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+          onClick={downloadExcel}
+          disabled={downloading}
+          className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded"
         >
-          Export Excel
+          {downloading ? "Downloading..." : "Export Excel"}
         </button>
       </div>
 
@@ -578,9 +882,9 @@ export default function ReportDetails({ id }: { id: number }) {
   );
 }
 
-/* ================= SMALL UI HELPERS ================= */
+/* ================= UI HELPERS ================= */
 
-function Section({ title, children }: any) {
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="p-4 border rounded bg-white shadow">
       <h3 className="font-semibold mb-3">{title}</h3>
