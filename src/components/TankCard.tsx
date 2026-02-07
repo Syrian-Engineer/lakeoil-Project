@@ -74,7 +74,7 @@ export default function TankCard({ tanks1, stations,lastUpdate,onRefresh }: Prop
           >
             <h2 className="text-lg font-semibold mb-2">{station.RetailStationName}</h2>
             {/* For Tanks */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xlPlus:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 xlPlus:grid-cols-3 gap-3 items-start auto-rows-min">
               {groupedTanks[station.LicenseeTraSerialNo]?.map((tank) => (
                 <Tank key={tank.id} tanks={tank} LicenseeTraSerialNo={station.LicenseeTraSerialNo} />
               ))}

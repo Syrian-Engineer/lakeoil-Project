@@ -196,6 +196,7 @@ export default function Tank({ tanks, LicenseeTraSerialNo }: Props) {
     water_volume,
     product_name,
     probe_id,
+    updated_at,
   } = tanks;
 
   // Safe values to prevent NaN
@@ -227,7 +228,7 @@ export default function Tank({ tanks, LicenseeTraSerialNo }: Props) {
   };
 
   return (
-    <div className="mb-6 rounded-2xl shadow-lg bg-white border border-gray-200 p-4">
+    <div className="mb-6 rounded-2xl shadow-lg bg-white  border border-gray-200 p-4">
       <div id="LiquidGauge" className="">
         {/* Header with Tank Name + Toggle */}
         <div className="flex items-center justify-between mb-3">
@@ -308,6 +309,9 @@ export default function Tank({ tanks, LicenseeTraSerialNo }: Props) {
               </Badge>
               <div className="mt-1 text-sm text-gray-600">
                 {safeFuelVolume} / {safeCapacity} L
+              </div>
+              <div className="mt-1  text-gray-600 font-semibold">
+                Updated at: {updated_at}
               </div>
             </div>
           </div>

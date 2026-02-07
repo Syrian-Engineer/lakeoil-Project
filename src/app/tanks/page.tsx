@@ -13,6 +13,7 @@ export interface TankProp {
   fuel_volume_15:number
   water_volume:number
   product_name:string;
+  updated_at:string;
   probe_id:string
   probes: Probe[];
 }
