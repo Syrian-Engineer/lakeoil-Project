@@ -74,129 +74,58 @@ export default function ReportCard({ title, endpoint, shiftTime, token,station_s
   }, [endpoint, shiftTime, token, title]);
 
   const handlePrint = () => {
-    const printWindow = window.open('', '_blank');
-    if (!printWindow || !reportTotals || !reportDates) return;
+  if (!reportTotals || !reportDates) return;
 
-    const totalAmount = reportTotals.total_amount.toLocaleString();
-    const netAmount = reportTotals.net_amount.toLocaleString();
-    const totalDiscount = reportTotals.total_discount.toLocaleString();
-    const totalVolume = reportTotals.total_volume.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-
-    const { start, end } = reportDates;
-
-    const htmlContent = `
-            <html>
-              <head>
-                <title>${title} - Report</title>
-                <style>
-                  body {
-                    font-family: Arial, sans-serif;
-                    padding: 20px;
-                    font-size: 14px;
-                  }
-                  .center {
-                    text-align: center;
-                  }
-                  .header-box {
-                    border: 1px solid #000;
-                    padding: 20px;
-                    margin-bottom: 20px;
-                  }
-                  .summary {
-                    margin: 20px 0;
-                  }
-                  .summary div {
-                    margin-bottom: 5px;
-                  }
-                  .bold {
-                    font-weight: bold;
-                  }
-                  .table-container {
-                    width: 100%;
-                  }
-                  table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-top: 20px;
-                  }
-                  th, td {
-                    padding: 8px 12px;
-                    border: 1px solid #000;
-                  }
-                  th {
-                    background-color: #f2f2f2;
-                  }
-                  .start-end {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-top: 10px;
-                    font-weight: bold;
-                  }
-                </style>
-              </head>
-              <body>
-                <div class="header-box center">
-                  <div>*****START OF PERIODIC REPORT*****</div>
-                  <h2>LAKE OIL LIMITED</h2>
-                  <div>P.O BOX 5055, DAR ES SALAAM - TANZANIA</div>
-                  <div>LAKE OIL</div>
-                  <div>MOBILE: 0685729391</div>
-                  <div>TIN: 104911757</div>
-                  <div>VRN: 10019095T</div>
-                  <div>SERIAL NUMBER: 10TZ101907</div>
-                  <div>UIN: 342SVZ5433455-...TZ23423</div>
-                  <div>TAX OFFICE: <strong>Large Taxpayer</strong></div>
-                </div>
-
-                <div class="start-end">
-                  <div>START: ${start}</div>
-                  <div>END: ${end}</div>
-                </div>
-
-                <div class="summary">
-                  <div><strong>TOTAL LITRE:</strong> ${totalVolume} Ltr</div>
-                  <div><strong>TOTAL AMOUNT:</strong> ${totalAmount}</div>
-                  <div><strong>DISCOUNT AMOUNT:</strong> ${totalDiscount}</div>
-                  <div><strong>NET AMOUNT:</strong> ${netAmount}</div>
-                </div>
-
-                <h3 class="center">Product-Wise Details</h3>
-
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Amount</th>
-                      <th>Volume (L)</th>
-                      <th>Receipts</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${reportData
-                      .map(
-                        (item) => `
-                      <tr>
-                        <td>${item.product}</td>
-                        <td>${item.total_amount.toLocaleString()}</td>
-                        <td>${item.total_volume.toFixed(2)}</td>
-                        <td>${item.total_receipts}</td>
-                      </tr>`
-                      )
-                      .join('')}
-                  </tbody>
-                </table>
-              </body>
-            </html>
-          `;
-
-
-    printWindow.document.open();
-    // printWindow.document.write(htmlContent);
-    printWindow.document.close();
+  const printData = {
+    title,
+    reportData,
+    reportTotals,
+    reportDates,
   };
+
+  sessionStorage.setItem('print-report-data', JSON.stringify(printData));
+
+  window.open('/print-report', '_blank');
+};
+
+
+    const handleSaveExcel = async () => {
+      if (!token) return;
+
+      try {
+        const res = await fetch(
+          `/api/sales-reports/periodic-reports/${endpoint}/excel`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token,
+            },
+            body: JSON.stringify({
+              shift_period: shiftTime,
+              ...(station_serial ? { station_serial } : {}),
+            }),
+          }
+        );
+
+        if (!res.ok) throw new Error('Download failed');
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${endpoint}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error('Excel download failed:', error);
+      }
+    };
+
 
 // for Translations
   const lang = useSelector((state:RootState)=>state.language.language)
@@ -234,9 +163,12 @@ export default function ReportCard({ title, endpoint, shiftTime, token,station_s
             </tbody>
           </table>
   
-          <div className="mt-4 text-right">
+          <div className="mt-4 text-right flex gap-2">
             <Button className="hover:scale-95 transition-all duration-300" size="sm" onClick={handlePrint}>
               Print
+            </Button>
+            <Button className="hover:scale-95 transition-all bg-green-600 duration-300" size="sm" onClick={handleSaveExcel}>
+              Save
             </Button>
           </div>
         </>

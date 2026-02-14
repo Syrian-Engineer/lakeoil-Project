@@ -244,10 +244,10 @@ export default function Page() {
 
   
  const reportConfigs = [
-    { title: `${dailyCurrent.text}`, endpoint: 'Daily-current' },
-    { title: `${dailyPrevious.text}`, endpoint: 'Daily-previous' },
-    { title: `${monthlyCurrent.text}`, endpoint: 'Monthly-current' },
-    { title: `${monthlyPrevious.text}`, endpoint: 'Monthly-previous' },
+    { title: `${dailyCurrent.text}`, endpoint: 'daily-current' },
+    { title: `${dailyPrevious.text}`, endpoint: 'daily-previous' },
+    { title: `${monthlyCurrent.text}`, endpoint: 'monthly-current' },
+    { title: `${monthlyPrevious.text}`, endpoint: 'monthly-previous' },
   ];
 
   return (
