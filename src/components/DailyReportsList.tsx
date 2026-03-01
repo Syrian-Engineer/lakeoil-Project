@@ -76,7 +76,8 @@ export default function DailyReporstList({
   const [totalReports, setTotalReports] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const backend = localStorage.getItem("backend_url");
+  
   useEffect(() => {
     if (!per_page || !page) {
       router.replace("?per_page=5&page=1");
@@ -104,6 +105,7 @@ export default function DailyReporstList({
             headers: {
               "Content-Type": "application/json",
               Authorization: access_token,
+              "x-backend-url": backend || "",
             },
           }
         );

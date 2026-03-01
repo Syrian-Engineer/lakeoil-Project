@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   try {
     const access_token = request.headers.get("Authorization");
+    const backendUrl = request.headers.get("x-backend-url");
     const { searchParams } = new URL(request.url);
 
     const EWURALicenseNo = searchParams.get("EWURALicenseNo") || "";
@@ -15,7 +16,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const apiUrl = `http://central.oktin.ak4tek.com:3950/daily_report?start_date=${start_date}&EWURALicenseNo=${EWURALicenseNo}`;
+    const apiUrl = `${backendUrl}/daily_report?start_date=${start_date}&EWURALicenseNo=${EWURALicenseNo}`;
 
     const res = await fetch(apiUrl, {
       headers: {

@@ -1,33 +1,102 @@
-export async function GET(req: Request) {
-    try {
-      const accessToken = req.headers.get('Authorization');
+// export async function GET(req: Request) {
+//     try {
+//       const accessToken = req.headers.get('Authorization');
+//       const backendUrl = req.headers.get("x-backend-url");
+
+//       if (!accessToken) {
+//         return new Response(JSON.stringify({ error: 'Access token missing' }), {
+//           status: 401,
+//         });
+//       }
+//       if (!backendUrl) {
+//       return NextResponse.json(
+//         { error: "Backend not selected" },
+//         { status: 400 }
+//       );
+//     }
   
-      if (!accessToken) {
-        return new Response(JSON.stringify({ error: 'Access token missing' }), {
-          status: 401,
-        });
-      }
+//       const response = await fetch(`${backendUrl}/stationinfo/all`, {
+//         method: 'GET',
+//         headers: {
+//           Authorization: `${accessToken}`,
+//         },
+//       });
   
-      const response = await fetch('http://central.oktin.ak4tek.com:3950/stationinfo/all', {
-        method: 'GET',
-        headers: {
-          Authorization: `${accessToken}`,
-        },
-      });
+//       if (!response.ok) {
+//         return new Response(JSON.stringify({ error: 'Failed to fetch data' }), {
+//           status: response.status,
+//         });
+//       }
   
-      if (!response.ok) {
-        return new Response(JSON.stringify({ error: 'Failed to fetch data' }), {
-          status: response.status,
-        });
-      }
+//       const data = await response.json();
+//       return new Response(JSON.stringify(data), { status: 200 });
   
-      const data = await response.json();
-      return new Response(JSON.stringify(data), { status: 200 });
+//     } catch (err) {
+//       return new Response(JSON.stringify({ error: 'Server error' }), {
+//         status: 500,
+//       });
+//     }
+//   }
   
-    } catch (err) {
-      return new Response(JSON.stringify({ error: 'Server error' }), {
-        status: 500,
-      });
+
+import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(req: NextRequest) {
+  try {
+    const accessToken = req.headers.get("authorization");
+    const backendUrl = req.headers.get("x-backend-url");
+
+    if (!accessToken) {
+      return NextResponse.json(
+        { error: "Access token missing" },
+        { status: 401 }
+      );
     }
+
+    if (!backendUrl) {
+      return NextResponse.json(
+        { error: "Backend not selected" },
+        { status: 400 }
+      );
+    }
+
+    // ✅ HTTP-only allowed backends
+    const allowedBackends = [
+      "http://192.168.8.224:3000",
+      "http://central.oktin.ak4tek.com:3950",
+    ];
+
+    if (!allowedBackends.includes(backendUrl)) {
+      return NextResponse.json(
+        { error: "Invalid backend URL" },
+        { status: 400 }
+      );
+    }
+
+    const response = await fetch(`${backendUrl}/stationinfo/all`, {
+      method: "GET",
+      headers: {
+        Authorization: accessToken,
+      },
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: "Failed to fetch data" },
+        { status: response.status }
+      );
+    }
+
+    const data = await response.json();
+
+    return NextResponse.json(data, { status: 200 });
+  } catch (err: any) {
+    console.error("Error in stationinfo route:", err?.message || err);
+
+    return NextResponse.json(
+      { error: "Server error" },
+      { status: 500 }
+    );
   }
-  
+}

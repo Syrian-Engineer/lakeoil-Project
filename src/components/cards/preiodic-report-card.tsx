@@ -33,6 +33,7 @@ export default function ReportCard({ title, endpoint, shiftTime, token,station_s
   const [reportTotals, setReportTotals] = useState<ReportTotals | null>(null);
   const [reportDates, setReportDates] = useState<ReportDates | null>(null);
   const [isLoading,setIsLoading] = useState(true);
+  const backend = localStorage.getItem("backend_url");
 
   useEffect(() => {
     const fetchReport = async () => {
@@ -46,6 +47,8 @@ export default function ReportCard({ title, endpoint, shiftTime, token,station_s
           headers: {
             'Content-Type': 'application/json',
             Authorization: token,
+            "x-backend-url": backend || "",
+
           },
           body: JSON.stringify(
             {

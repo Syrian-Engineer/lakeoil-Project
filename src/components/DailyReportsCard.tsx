@@ -38,6 +38,7 @@ export default function DailyReporstCard({
   const [stations,setStations] = useState<stationProps[]>([])
   const [access_token,setAccesss_token] = useState<string | null>("")
   const router = useRouter();
+  const backend = localStorage.getItem("backend_url");
 
   useEffect(()=>{
     if(typeof window === "undefined"){
@@ -52,7 +53,8 @@ export default function DailyReporstCard({
      try{
        const response = await fetch("/api/stations/get-stations",{
         headers:{
-          Authorization:`${access_token}`
+          Authorization:`${access_token}`,
+          "x-backend-url": backend || "",
         }
       })
       if(!response.ok){

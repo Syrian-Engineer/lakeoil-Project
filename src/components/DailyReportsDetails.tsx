@@ -655,6 +655,7 @@ export default function ReportDetails({ id }: { id: number }) {
   /* ================= FETCH DETAILS ================= */
 
   useEffect(() => {
+    const backend = localStorage.getItem("backend_url");
     const fetchReport = async () => {
       const token = sessionStorage.getItem("access_token");
 
@@ -663,6 +664,7 @@ export default function ReportDetails({ id }: { id: number }) {
         headers: {
           "Content-Type": "application/json",
           Authorization: `${token}`,
+          "x-backend-url": backend || "",
         },
         body: JSON.stringify({ id }),
       });

@@ -5,6 +5,14 @@ export async function POST(
   req: NextRequest,
   context: { params: Promise<{ type: string }> }
 ) {
+
+  const backendUrl = req.headers.get("x-backend-url");
+  if (!backendUrl) {
+    return NextResponse.json(
+      { error: "Backend not selected" },
+      { status: 400 }
+    );
+  }
   try {
     const { type } = await context.params;
     const body = await req.json();
@@ -33,7 +41,7 @@ export async function POST(
 
     // ✅ Call backend
     const backendResponse = await fetch(
-      `http://central.oktin.ak4tek.com:3950/sales_reports/periodic/${backendType}/download`,
+      `${backendUrl}/sales_reports/periodic/${backendType}/download`,
       {
         method: 'POST',
         headers: {

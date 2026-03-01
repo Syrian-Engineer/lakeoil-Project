@@ -183,6 +183,7 @@ export default function Page() {
   const [shiftTime, setShiftTime] = useState('00:00');
   const [token, setToken] = useState<string | null>(null);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const backend = localStorage.getItem("backend_url");
 
   // For forcing ReportCard refresh
   const [refreshKey, setRefreshKey] = useState(0);
@@ -206,7 +207,7 @@ export default function Page() {
       if (!token || !isSuperAdmin) return;
       try {
         const res = await fetch('/api/filters/stations', {
-          headers: { Authorization: token },
+          headers: { Authorization: token,"x-backend-url": backend || "", }
         });
         const data = await res.json();
         const formatted = (data?.data || []).map((station: any) => ({

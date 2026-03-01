@@ -40,8 +40,9 @@ export default function FilterCard() {
 
   useEffect(() => {
     const fetchFilters = async () => {
+      const backend = localStorage.getItem("backend_url");
       const token = sessionStorage.getItem('access_token');
-      const headers = { Authorization: token ?? '' };
+      const headers = { Authorization: token ?? '',"x-backend-url": backend || "", };
 
       try {
         const [pumpsRes, tanksRes, nozzlesRes, productsRes] = await Promise.all([

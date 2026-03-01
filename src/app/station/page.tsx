@@ -133,6 +133,7 @@ export default function Page() {
   const router = useRouter();
   const [refetchStations,setRefetchStations] = useState(false)
   const [showFilterCard,setShowFilterCard] = useState(false);
+  const backend = localStorage.getItem("backend_url");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -150,6 +151,7 @@ export default function Page() {
         const response = await fetch("/api/stations/get-stations", {
           headers: {
             Authorization: `${accessToken}`,
+            "x-backend-url": backend || "",
           },
         });
 

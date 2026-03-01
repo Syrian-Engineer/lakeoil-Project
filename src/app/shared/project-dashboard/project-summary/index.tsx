@@ -122,6 +122,8 @@ export default function ProjectSummary({ className }: { className?: string }) {
   useEffect(() => {
     if (!accessToken) return;
 
+    const backend = localStorage.getItem("backend_url");
+
     const fetchData = async () => {
       setLoading(true);
       const queryParams = buildQueryParams();
@@ -135,6 +137,7 @@ export default function ProjectSummary({ className }: { className?: string }) {
           method: 'GET',
           headers: {
             Authorization: `${accessToken}`,
+            "x-backend-url": backend || "",
           },
         });
 
