@@ -69,9 +69,10 @@ export default function PumpCard({ station_url }: Props) {
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
+    console.log("Station Url : " , station_url)
     const ws = new WebSocket(station_url);
     wsRef.current = ws;
-    station_url = "ws://10.8.0.12:8080/"
+    // station_url = "ws://10.8.0.12:8080/"
     
     ws.onopen = () => {
       console.log("✅ Connected to:", station_url);

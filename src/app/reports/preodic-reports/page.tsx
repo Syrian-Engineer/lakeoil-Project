@@ -183,7 +183,6 @@ export default function Page() {
   const [shiftTime, setShiftTime] = useState('00:00');
   const [token, setToken] = useState<string | null>(null);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
-  const backend = localStorage.getItem("backend_url");
 
   // For forcing ReportCard refresh
   const [refreshKey, setRefreshKey] = useState(0);
@@ -193,7 +192,6 @@ export default function Page() {
     if(typeof window === "undefined"){
       return ;
     }
-
     const accessToken = sessionStorage.getItem('access_token');
     const adminFlag = localStorage.getItem('isSuperAdmin') === 'true';
 
@@ -203,6 +201,8 @@ export default function Page() {
 
   // Fetch station list for super admins
   useEffect(() => {
+    const backend = localStorage.getItem("backend_url");
+
     const fetchStations = async () => {
       if (!token || !isSuperAdmin) return;
       try {

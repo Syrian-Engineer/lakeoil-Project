@@ -133,10 +133,10 @@ export default function Page() {
   const router = useRouter();
   const [refetchStations,setRefetchStations] = useState(false)
   const [showFilterCard,setShowFilterCard] = useState(false);
-  const backend = localStorage.getItem("backend_url");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const backend = localStorage.getItem("backend_url");
 
     const fetchStations = async () => {
       try {

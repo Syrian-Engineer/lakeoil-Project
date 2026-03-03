@@ -229,7 +229,7 @@ export default function SignInForm() {
     if (serverType === "local" && customLocalServer) {
       return customLocalServer.startsWith("http")
         ? customLocalServer
-        : `http://${customLocalServer}`;
+        : `${customLocalServer}`;
     }
 
     return null;

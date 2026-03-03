@@ -4,8 +4,16 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    const backendUrl = req.headers.get("x-backend-url");
 
-    const response = await fetch("http://central.oktin.ak4tek.com:3950/auth/login", {
+    if (!backendUrl) {
+      return NextResponse.json(
+        { error: "Backend not selected" },
+        { status: 400 }
+      );
+    }
+
+    const response = await fetch(`${backendUrl}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),

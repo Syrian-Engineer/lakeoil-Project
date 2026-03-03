@@ -100,8 +100,12 @@ export default function TankCardListClient({ page }: Props) {
       ? sessionStorage.getItem("access_token")
       : null;
 
+  const backend =
+    typeof window !== "undefined"
+      ? localStorage.getItem("backend_url")
+      : null;
 
-  const backend = localStorage.getItem("backend_url");
+  // const backend = localStorage.getItem("backend_url");
   // redirect if no token
   useEffect(() => {
     if (!access_token) {

@@ -85,7 +85,7 @@ export default function TankCard({ tanks1, stations,lastUpdate,onRefresh }: Prop
 
             {/* For Pumps Socket */}
             <div>
-                <PumpCard station_url="ws://10.8.0.12:8080/" />
+                <PumpCard station_url={station.station_url_or_IP} />
             </div>
           </div>
         ))}
