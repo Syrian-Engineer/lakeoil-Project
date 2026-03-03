@@ -1,6 +1,6 @@
 // "use client";
 
-// import { useState } from "react";
+// import { useState, useEffect } from "react";
 // import { translate } from "@/translations/translate";
 // import { signInFormTranslations } from "@/translations/signinPage/signinFrom";
 // import { useRouter } from "next/navigation";
@@ -13,33 +13,51 @@
 //   const passwordText = translate(signInFormTranslations, lang, "password");
 
 //   const router = useRouter();
+
 //   const [email, setEmail] = useState("");
 //   const [password, setPassword] = useState("");
 //   const [loading, setLoading] = useState(false);
 //   const [error, setError] = useState<string | null>(null);
+//   const [selectedServer, setSelectedServer] = useState<string | null>(null);
+
+//   const LOCAL_SERVER = "http://192.168.8.224:3000";
+//   const CENTRAL_SERVER = "http://central.oktin.ak4tek.com:3950";
+
+//   useEffect(() => {
+//     const saved = localStorage.getItem("backend_url");
+//     if (saved) setSelectedServer(saved);
+//   }, []);
+
+//   function chooseServer(url: string) {
+//     localStorage.setItem("backend_url", url);
+//     setSelectedServer(url);
+//   }
 
 //   const SuperAdminDetails = {
-//     email: 'ak4tek@admin.com',
-//     password: '!Ak4tek12*',
+//     email: "ak4tek@admin.com",
+//     password: "!Ak4tek12*",
 //   };
-
 
 //   async function handleLogin(e: React.FormEvent) {
 //     e.preventDefault();
+
+//     if (!selectedServer) {
+//       setError("Please select a server first");
+//       return;
+//     }
+
 //     setLoading(true);
 //     setError(null);
 
 //     try {
-//       const response = await fetch(
-//         "/api/auth/login",
-//         {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({ email, password }),
-//         }
-//       );
+//       const response = await fetch("/api/auth/login", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           "x-backend-url": selectedServer, // 🔥 send selected server
+//         },
+//         body: JSON.stringify({ email, password }),
+//       });
 
 //       if (!response.ok) {
 //         throw new Error("Login failed");
@@ -53,17 +71,18 @@
 //       if (!accessToken) {
 //         throw new Error("Login failed: no token received");
 //       }
-//       if(
-//         email === SuperAdminDetails.email
-//         && password === SuperAdminDetails.password
-//       ){
-//         localStorage.setItem("isSuperAdmin","true")
+
+//       if (
+//         email === SuperAdminDetails.email &&
+//         password === SuperAdminDetails.password
+//       ) {
+//         localStorage.setItem("isSuperAdmin", "true");
 //       }
-//       // Save token and user info in sessionStorage
+
 //       sessionStorage.setItem("access_token", accessToken);
 //       sessionStorage.setItem("user_record", JSON.stringify(userRecord));
-//       localStorage.setItem("email",email)
-//       // Optionally store isSuperAdmin flag
+//       localStorage.setItem("email", email);
+
 //       const isSuperAdmin = userRecord?.roles?.name === "SuperAdmin";
 //       sessionStorage.setItem("isSuperAdmin", isSuperAdmin ? "true" : "false");
 
@@ -78,8 +97,33 @@
 
 //   return (
 //     <>
+//       {/* 🔵 SERVER SELECTION */}
+//       <div className="mb-6 space-y-3">
+//         <Title as="h6">Select Server</Title>
+
+//         <div className="flex gap-3">
+//           <Button
+//             type="button"
+//             variant={selectedServer === LOCAL_SERVER ? "solid" : "outline"}
+//             onClick={() => chooseServer(LOCAL_SERVER)}
+//             className="w-full"
+//           >
+//             🏠 Local Server
+//           </Button>
+
+//           <Button
+//             type="button"
+//             variant={selectedServer === CENTRAL_SERVER ? "solid" : "outline"}
+//             onClick={() => chooseServer(CENTRAL_SERVER)}
+//             className="w-full"
+//           >
+//             🌍 Central Server
+//           </Button>
+//         </div>
+//       </div>
+
+//       {/* 🔐 LOGIN FORM */}
 //       <form onSubmit={handleLogin} className="space-y-5">
-//         {/* Email Field */}
 //         <Input
 //           type="email"
 //           size="lg"
@@ -93,21 +137,23 @@
 //           onChange={(e) => setEmail(e.target.value)}
 //         />
 
-//         {/* Password Field */}
 //         <Password
-//           label={"password"}
+//           label={"Password"}
 //           placeholder="Enter your password"
 //           size="lg"
 //           name="password"
 //           required
-//           className={`[&>label>span]:font-medium`}
+//           className="[&>label>span]:font-medium"
 //           inputClassName="text-sm"
 //           value={password}
 //           onChange={(e) => setPassword(e.target.value)}
 //         />
 
-//         {/* Submit Button */}
-//         <Button className={`w-full`} type="submit" size="lg" disabled={loading}>
+//         {error && (
+//           <Text className="text-red-500 text-sm">{error}</Text>
+//         )}
+
+//         <Button className="w-full" type="submit" size="lg" disabled={loading}>
 //           {loading ? (
 //             <div className="flex items-center justify-center gap-2">
 //               <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
@@ -115,21 +161,17 @@
 //             </div>
 //           ) : (
 //             <>
-//               <span>{"login"}</span>
+//               <span>Login</span>
 //               <PiArrowRightBold className="ms-2 mt-0.5 h-5 w-5" />
 //             </>
 //           )}
 //         </Button>
 //       </form>
 
-//       <Text className={`mt-6 text-center leading-loose text-gray-500 lg:mt-8 lg:text-start`} />
+//       <Text className="mt-6 text-center leading-loose text-gray-500 lg:mt-8 lg:text-start" />
 //     </>
 //   );
 // }
-
-
-
-
 
 
 
@@ -145,7 +187,6 @@ import { PiArrowRightBold } from "react-icons/pi";
 export default function SignInForm() {
   const lang = "en";
   const loginText = translate(signInFormTranslations, lang, "login");
-  const passwordText = translate(signInFormTranslations, lang, "password");
 
   const router = useRouter();
 
@@ -153,31 +194,54 @@ export default function SignInForm() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedServer, setSelectedServer] = useState<string | null>(null);
 
-  const LOCAL_SERVER = "http://192.168.8.224:3000";
+  const [serverType, setServerType] = useState<"central" | "local" | null>(null);
+  const [customLocalServer, setCustomLocalServer] = useState("");
+
   const CENTRAL_SERVER = "http://central.oktin.ak4tek.com:3950";
 
   useEffect(() => {
     const saved = localStorage.getItem("backend_url");
-    if (saved) setSelectedServer(saved);
+    if (saved) {
+      if (saved === CENTRAL_SERVER) {
+        setServerType("central");
+      } else {
+        setServerType("local");
+        setCustomLocalServer(saved);
+      }
+    }
   }, []);
 
-  function chooseServer(url: string) {
-    localStorage.setItem("backend_url", url);
-    setSelectedServer(url);
+  function selectCentral() {
+    setServerType("central");
+    localStorage.setItem("backend_url", CENTRAL_SERVER);
   }
 
-  const SuperAdminDetails = {
-    email: "ak4tek@admin.com",
-    password: "!Ak4tek12*",
-  };
+  function selectLocal() {
+    setServerType("local");
+  }
+
+  function getBackendUrl() {
+    if (serverType === "central") {
+      return CENTRAL_SERVER;
+    }
+
+    if (serverType === "local" && customLocalServer) {
+      return customLocalServer.startsWith("http")
+        ? customLocalServer
+        : `http://${customLocalServer}`;
+    }
+
+    return null;
+  }
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!selectedServer) {
-      setError("Please select a server first");
+    const backendUrl = getBackendUrl();
+
+    if (!backendUrl) {
+      setError("Please select or enter a server first");
       return;
     }
 
@@ -189,14 +253,12 @@ export default function SignInForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-backend-url": selectedServer, // 🔥 send selected server
+          "x-backend-url": backendUrl,
         },
         body: JSON.stringify({ email, password }),
       });
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
+      if (!response.ok) throw new Error("Login failed");
 
       const result = await response.json();
 
@@ -207,16 +269,10 @@ export default function SignInForm() {
         throw new Error("Login failed: no token received");
       }
 
-      if (
-        email === SuperAdminDetails.email &&
-        password === SuperAdminDetails.password
-      ) {
-        localStorage.setItem("isSuperAdmin", "true");
-      }
-
       sessionStorage.setItem("access_token", accessToken);
       sessionStorage.setItem("user_record", JSON.stringify(userRecord));
       localStorage.setItem("email", email);
+      localStorage.setItem("backend_url", backendUrl);
 
       const isSuperAdmin = userRecord?.roles?.name === "SuperAdmin";
       sessionStorage.setItem("isSuperAdmin", isSuperAdmin ? "true" : "false");
@@ -233,28 +289,38 @@ export default function SignInForm() {
   return (
     <>
       {/* 🔵 SERVER SELECTION */}
-      <div className="mb-6 space-y-3">
+      <div className="mb-6 space-y-4">
         <Title as="h6">Select Server</Title>
 
         <div className="flex gap-3">
           <Button
             type="button"
-            variant={selectedServer === LOCAL_SERVER ? "solid" : "outline"}
-            onClick={() => chooseServer(LOCAL_SERVER)}
-            className="w-full"
-          >
-            🏠 Local Server
-          </Button>
-
-          <Button
-            type="button"
-            variant={selectedServer === CENTRAL_SERVER ? "solid" : "outline"}
-            onClick={() => chooseServer(CENTRAL_SERVER)}
+            variant={serverType === "central" ? "solid" : "outline"}
+            onClick={selectCentral}
             className="w-full"
           >
             🌍 Central Server
           </Button>
+
+          <Button
+            type="button"
+            variant={serverType === "local" ? "solid" : "outline"}
+            onClick={selectLocal}
+            className="w-full"
+          >
+            🏠 Local Server
+          </Button>
         </div>
+
+        {/* Show input only when local selected */}
+        {serverType === "local" && (
+          <Input
+            type="text"
+            placeholder="Enter local server (e.g. 192.168.8.224:3000)"
+            value={customLocalServer}
+            onChange={(e) => setCustomLocalServer(e.target.value)}
+          />
+        )}
       </div>
 
       {/* 🔐 LOGIN FORM */}
@@ -262,24 +328,18 @@ export default function SignInForm() {
         <Input
           type="email"
           size="lg"
-          name="email"
           label="Email"
           required
           placeholder="Enter your email"
-          className="[&>label>span]:font-medium"
-          inputClassName="text-sm"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <Password
-          label={"Password"}
+          label="Password"
           placeholder="Enter your password"
           size="lg"
-          name="password"
           required
-          className="[&>label>span]:font-medium"
-          inputClassName="text-sm"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -302,8 +362,6 @@ export default function SignInForm() {
           )}
         </Button>
       </form>
-
-      <Text className="mt-6 text-center leading-loose text-gray-500 lg:mt-8 lg:text-start" />
     </>
   );
 }

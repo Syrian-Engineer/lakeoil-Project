@@ -29,7 +29,7 @@ export default function StationSelector() {
 
   return (
     <select
-      className="bg-gray-900 text-gray-200 border border-gray-700 rounded-lg px-3 py-2 text-sm"
+      className="bg-gray-900 text-gray-200 border border-gray-700 rounded-lg px-3 py-2 text-sm mb-4"
       onChange={handleChange}
       value={selectedStation || ""}
     >

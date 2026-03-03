@@ -15,6 +15,8 @@ export function useStations() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+ const backendUrl = localStorage.getItem("backend_url") || ""
+
   useEffect(() => {
     async function fetchStations() {
       try {
@@ -31,6 +33,7 @@ export function useStations() {
         const res = await fetch('/api/stations/get-stations', {
           headers: {
             Authorization: `${accessToken}`,
+            "x-backend-url": backendUrl,
           },
         });
 

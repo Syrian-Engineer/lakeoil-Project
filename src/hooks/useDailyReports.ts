@@ -108,6 +108,7 @@ export function useDailyReports({ stationSerial }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [reports, setReports] = useState<SimplifiedReport[] | null>(null);
+ const backendUrl = localStorage.getItem("backend_url")||""
 
   const access_token =
     typeof window !== "undefined"
@@ -147,6 +148,7 @@ export function useDailyReports({ stationSerial }: Props) {
       const res = await fetch(url, {
         headers: {
           Authorization: `${access_token}`,
+          "x-backend-url": backendUrl,
         },
       });
 

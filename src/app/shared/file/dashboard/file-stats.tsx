@@ -104,6 +104,7 @@ export default function FileStats({ className,stationSerial }: FileStatsType) {
   const [tanks, setTanks] = useState<TankData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+ const backend_url = localStorage.getItem("backend_url") || ""
 
   const access_token =
     typeof window !== 'undefined'
@@ -128,6 +129,7 @@ export default function FileStats({ className,stationSerial }: FileStatsType) {
       const res = await fetch('/api/tanks/get-tanks', {
         headers: {
           Authorization: access_token,
+          "x-backend-url": backend_url,
         },
       });
 

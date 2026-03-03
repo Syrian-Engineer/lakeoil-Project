@@ -32,13 +32,13 @@ export default function Sidebar({ className }: { className?: string }) {
         <Link
           href="/"
           aria-label="Site Logo"
-          className="text-gray-800 hover:text-gray-900"
+          className=" relative block h-32 w-full text-gray-800 hover:text-gray-900"
         >
           <Image
-          src="/Logo.jpeg"
+          src="/NewLogo.jpeg"
           alt='Website Logo'
           fill
-          className='object-contain'
+          className='object-contain size-full'
            />
         </Link>
       </div>

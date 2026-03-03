@@ -64,10 +64,10 @@ export default function Header() {
             <Link
               href={"/"}
               aria-label="Site Logo"
-              className=" me-4 shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 xl:hidden"
+              className="relative block h-12 w-full me-4 shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 xl:hidden"
             >
               <Image
-              src="/Logo.jpeg"
+              src="/NewLogo.jpeg"
               fill
               className="object-contain"
               alt="Websit Logo"
