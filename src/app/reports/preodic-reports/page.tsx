@@ -343,6 +343,7 @@ import { translate } from '@/translations/translate';
 import { periodicReprotsHomeTranslations } from '@/translations/periodicReportsPage/home';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
+import CustomReport from '@/components/CustomReport';
 
 export default function Page() {
   const [stationOptions, setStationOptions] = useState<SelectOption[]>([]);
@@ -351,6 +352,9 @@ export default function Page() {
   const [token, setToken] = useState<string | null>(null);
   const [backendUrl, setBackendUrl] = useState<string | null>(null);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [showCustomReport, setShowCustomReport] = useState(false);
 
   // For forcing ReportCard refresh
   const [refreshKey, setRefreshKey] = useState(0);
@@ -461,6 +465,8 @@ export default function Page() {
           <input
             type="datetime-local"
             id="start-date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -471,11 +477,26 @@ export default function Page() {
           <input
             type="datetime-local"
             id="end-date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
 
+      <div className="flex justify-end">
+        <button
+          disabled={!selectedStation || !startDate || !endDate}
+          onClick={() => setShowCustomReport(true)}
+          className={`px-4 py-2 rounded text-white ${
+            !selectedStation || !startDate || !endDate
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700'
+          }`}
+        >
+          Generate Custom Report
+        </button>
+      </div>
       {/* Report Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {reportConfigs.map((report) => (
@@ -489,6 +510,14 @@ export default function Page() {
           />
         ))}
       </div>
+      {showCustomReport && (
+        <CustomReport
+          startDate={startDate}
+          endDate={endDate}
+          station_serial={selectedStation?.value}
+          token={token}
+        />
+      )}
     </div>
   );
 }
