@@ -103,6 +103,7 @@ export default function ReportCard({ title, endpoint, shiftTime, token,station_s
             headers: {
               'Content-Type': 'application/json',
               Authorization: token,
+              "x-backend-url": backend || "",
             },
             body: JSON.stringify({
               shift_period: shiftTime,
@@ -170,7 +171,7 @@ export default function ReportCard({ title, endpoint, shiftTime, token,station_s
             <Button className="hover:scale-95 transition-all duration-300" size="sm" onClick={handlePrint}>
               Print
             </Button>
-            <Button className="hover:scale-95 transition-all bg-green-600 duration-300" size="sm" onClick={handleSaveExcel}>
+            <Button className="hover:scale-95 transition-all bg-green-600 duration-300 hover:bg-green-800" size="sm" onClick={handleSaveExcel}>
               Save
             </Button>
           </div>

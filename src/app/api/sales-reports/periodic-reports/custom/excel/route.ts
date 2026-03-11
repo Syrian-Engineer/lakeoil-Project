@@ -21,9 +21,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const { start_date, end_date, station_serial } = body;
+    const { since_date, to_date, station_serial } = body;
 
-    if (!start_date || !end_date) {
+    if (!since_date || !to_date) {
       return NextResponse.json(
         { error: "Missing since_date or to_date" },
         { status: 400 }
@@ -41,8 +41,8 @@ export async function POST(req: NextRequest) {
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         },
         body: JSON.stringify({
-          start_date,
-          end_date,
+          since_date,
+          to_date,
           station_serial,
         }),
       }

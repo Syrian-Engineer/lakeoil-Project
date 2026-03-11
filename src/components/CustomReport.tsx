@@ -116,8 +116,8 @@ export default function CustomReport({
             'x-backend-url': backend || '',
           },
           body: JSON.stringify({
-            start_date: formatDateTime(startDate),
-            end_date: formatDateTime(endDate),
+            since_date: formatDateTime(startDate),
+            to_date: formatDateTime(endDate),
             ...(station_serial ? { station_serial } : {}),
           }),
         }
@@ -194,7 +194,7 @@ export default function CustomReport({
             </Button>
 
             <Button
-              className="hover:scale-95 transition-all bg-green-600 duration-300"
+              className="hover:scale-95 transition-all bg-green-600 duration-300 hover:bg-green-800"
               size="sm"
               onClick={handleSaveExcel}
             >
