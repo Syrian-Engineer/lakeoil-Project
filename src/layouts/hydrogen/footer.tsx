@@ -42,9 +42,21 @@ export default function Footer() {
     return () => clearInterval(interval);
   }, [lang]); // 👈 Rerun if language changes
 
-  const handleLogout = () => {
-    console.log('Logout clicked');
-    router.push('/signin');
+    const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+
+      // Clear any local/session storage too
+      sessionStorage.clear();
+      localStorage.removeItem("email");
+      localStorage.removeItem("backend_url");
+      localStorage.removeItem("isSuperAdmin");
+
+      // Redirect to signin
+      router.push("/signin");
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   return (

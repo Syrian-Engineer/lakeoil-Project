@@ -13,7 +13,6 @@ import { translate } from "@/translations/translate";
 import { stationHomePageTranslations } from "@/translations/stationPage/homePage";
 
 
-
 export interface stationProps {
   Distributor_Id: number,
   RetailStationName: string,
