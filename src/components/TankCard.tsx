@@ -12,6 +12,7 @@ import { MdLocalGasStation } from "react-icons/md";
 import { FaDatabase } from "react-icons/fa";
 import TankSummary from "./TankSummary";
 import PumpCard from "./PumpCard";
+import { PiMapPin } from "react-icons/pi";
 
 interface Props {
   tanks1: TankProp[];
@@ -86,7 +87,7 @@ export default function TankCard({ tanks1, stations,lastUpdate,onRefresh }: Prop
             {/* For Pumps Socket */}
             <div>
                 {/* <PumpCard station_url={station.station_url_or_IP} /> */}
-                <PumpCard station_url="" />
+                <PumpCard station_url="ws://fursan.oktin.ak4tek.com:8080" />
 
             </div>
           </div>
