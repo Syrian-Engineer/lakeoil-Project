@@ -449,7 +449,7 @@ export default function Page() {
             placeholder="Select Station"
             value={selectedStation}
             onChange={(option: any) => handleStationChange(option as SelectOption)}
-            displayValue={(selected) =>
+            displayValue={(selected:any) =>
               (selected as SelectOption)?.label || 'None selected'
             }
           />

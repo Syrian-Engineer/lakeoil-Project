@@ -14,8 +14,15 @@ export function useStations() {
   const [stationMap, setStationMap] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const[backendUrl,setBackendUrl] = useState("")
 
- const backendUrl = localStorage.getItem("backend_url") || ""
+  // for Building 
+useEffect(()=>{
+  if (typeof window === "undefined")
+    return;
+   const backendUrl = localStorage.getItem("backend_url") || ""
+  setBackendUrl(backendUrl)
+},[])
 
   useEffect(() => {
     async function fetchStations() {

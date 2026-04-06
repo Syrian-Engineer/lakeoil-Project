@@ -251,8 +251,8 @@ export default function AddUserForm() {
             options={roles}
             value={value}
             onChange={onChange}
-            getOptionValue={(option) => option.value}
-            displayValue={(selected) =>
+            getOptionValue={(option:any) => option.value}
+            displayValue={(selected:any) =>
               roles.find((r) => r.value === selected)?.label ?? ''
             }
             error={errors.role?.message}
@@ -277,8 +277,8 @@ export default function AddUserForm() {
       value={value}
       onChange={onChange}
       multiple
-      getOptionValue={(option) => option.value}
-      displayValue={(selected) => {
+      getOptionValue={(option:any) => option.value}
+      displayValue={(selected:any) => {
         if (Array.isArray(selected)) {
           return stationOptions
             .filter((opt) => selected.includes(opt.value))
