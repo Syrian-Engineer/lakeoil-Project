@@ -167,7 +167,7 @@ export default function PumpCard({ station_url }: Props) {
               </span>
             </div>
           ) : (
-            <span className="text-gray-400">● Offline</span>
+            <span className="text-gray-400">🔴 Offline</span>
           )}
         </span>
       </div>

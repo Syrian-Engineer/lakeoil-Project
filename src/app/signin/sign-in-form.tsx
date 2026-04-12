@@ -20,7 +20,6 @@ export default function SignInForm() {
 
   const [serverType, setServerType] = useState<"central" | "local" | null>(null);
   const [customLocalServer, setCustomLocalServer] = useState("");
-
   const CENTRAL_SERVER = "http://central.oktin.ak4tek.com:3950";
 
   useEffect(() => {
@@ -87,7 +86,6 @@ export default function SignInForm() {
 
       const accessToken = result?.data?.access_token;
       const userRecord = result?.data?.user_record;
-
       if (!accessToken) {
         throw new Error("Login failed: no token received");
       }
@@ -101,7 +99,7 @@ export default function SignInForm() {
         localStorage.setItem("backend_url", backendUrl);
 
       const isSuperAdmin = userRecord?.roles?.name === "SuperAdmin";
-      sessionStorage.setItem("isSuperAdmin", isSuperAdmin ? "true" : "false");
+      localStorage.setItem("isSuperAdmin", isSuperAdmin ? "true" : "false");
 
       router.push("/reports");
     } catch (err: any) {
