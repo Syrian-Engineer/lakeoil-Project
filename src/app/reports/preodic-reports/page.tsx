@@ -346,6 +346,7 @@ import { useSelector } from 'react-redux';
 import CustomReport from '@/components/CustomReport';
 
 export default function Page() {
+  const [mounted, setMounted] = useState(false);
   const [stationOptions, setStationOptions] = useState<SelectOption[]>([]);
   const [selectedStation, setSelectedStation] = useState<SelectOption | null>(null);
   const [shiftTime, setShiftTime] = useState('00:00');
@@ -359,13 +360,31 @@ export default function Page() {
   // For forcing ReportCard refresh
   const [refreshKey, setRefreshKey] = useState(0);
 
+   /* ---------- SAFE STORAGE HELPERS ---------- */
+
+  const getLocalStorage = (key: string) => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(key);
+    }
+    return null;
+  };
+
+  const getSessionStorage = (key: string) => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem(key);
+    }
+    return null;
+  };
+
   // Read token, backend url, and admin info on mount
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const accessToken = sessionStorage.getItem('access_token');
-    const adminFlag = localStorage.getItem('isSuperAdmin') === 'true';
-    const backend = localStorage.getItem('backend_url') || "";
+    setMounted(true);
+
+    const accessToken = getSessionStorage('access_token');
+    const adminFlag = getLocalStorage('isSuperAdmin') === 'true';
+    const backend = getLocalStorage('backend_url') || '';
 
     setToken(accessToken);
     setIsSuperAdmin(adminFlag);
@@ -373,7 +392,7 @@ export default function Page() {
   }, []);
 
   // Fetch station list for super admins
-  useEffect(() => {
+  useEffect(() => { 
     const fetchStations = async () => {
       if (!token || !isSuperAdmin || !backendUrl) return;
 
