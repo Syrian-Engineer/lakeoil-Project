@@ -22,14 +22,14 @@ export async function POST(req: Request) {
     const result = await response.json();
     const accessToken = result?.data?.access_token;
 
-    if (accessToken) {
-      (await cookies()).set("access_token", accessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        path: "/",
-        sameSite: "lax",
-      });
-    }
+    // if (accessToken) {
+    //   (await cookies()).set("access_token", accessToken, {
+    //     httpOnly: true,
+    //     secure: process.env.NODE_ENV === "production",
+    //     path: "/",
+    //     sameSite: "lax",
+    //   });
+    // }
 
     return NextResponse.json(result, { status: response.status });
   } catch (err: any) {
