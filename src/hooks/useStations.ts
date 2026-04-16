@@ -1,3 +1,80 @@
+// 'use client';
+
+// import { useEffect, useState } from 'react';
+
+// type Station = {
+//   id: number;
+//   RetailStationName: string;
+//   EWURALicenseNo: string;
+//   TotalNoTanks: number;
+// };
+
+// export function useStations() {
+//   const [stations, setStations] = useState<Station[]>([]);
+//   const [stationMap, setStationMap] = useState<Record<string, string>>({});
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState<string | null>(null);
+//   const[backendUrl,setBackendUrl] = useState("")
+
+//   // for Building 
+// useEffect(()=>{
+//   if (typeof window === "undefined")
+//     return;
+//    const backendUrl = localStorage.getItem("backend_url") || ""
+//   setBackendUrl(backendUrl)
+// },[])
+
+//   useEffect(() => {
+//     async function fetchStations() {
+//       try {
+//         setLoading(true);
+//         setError(null);
+
+//         const accessToken = sessionStorage.getItem('access_token');
+//         if (!accessToken) {
+//           setError('Access token not found');
+//           setLoading(false);
+//           return;
+//         }
+
+//         const res = await fetch('/api/stations/get-stations', {
+//           headers: {
+//             Authorization: `${accessToken}`,
+//             "x-backend-url": backendUrl,
+//           },
+//         });
+
+//         if (!res.ok) {
+//           throw new Error('Failed to fetch stations');
+//         }
+
+//         const json = await res.json();
+//         const data = json.data || [];
+
+//         // Create a Record { [RetailStationName]: EWURALicenseNo }
+//         const mapped: Record<string, string> = {};
+//         data.forEach((station: Station) => {
+//           mapped[station.RetailStationName] = station.EWURALicenseNo;
+//         });
+
+//         setStations(data);
+//         setStationMap(mapped);
+//       } catch (err: any) {
+//         setError(err.message || 'Something went wrong');
+//       } finally {
+//         setLoading(false);
+//       }
+//     }
+
+//     fetchStations();
+//   }, []);
+
+//   return { stations, stationMap, loading, error };
+// }
+
+
+
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -14,33 +91,36 @@ export function useStations() {
   const [stationMap, setStationMap] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const[backendUrl,setBackendUrl] = useState("")
+  const [backendUrl, setBackendUrl] = useState<string | null>(null);
 
-  // for Building 
-useEffect(()=>{
-  if (typeof window === "undefined")
-    return;
-   const backendUrl = localStorage.getItem("backend_url") || ""
-  setBackendUrl(backendUrl)
-},[])
-
+  // ✅ Load backend URL safely (client only)
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const url = localStorage.getItem("backend_url");
+    setBackendUrl(url);
+  }, []);
+
+  // ✅ Fetch ONLY when backendUrl is ready
+  useEffect(() => {
+    if (!backendUrl) return; // 🚫 prevent early fetch
+
     async function fetchStations() {
       try {
         setLoading(true);
         setError(null);
 
         const accessToken = sessionStorage.getItem('access_token');
+
         if (!accessToken) {
           setError('Access token not found');
-          setLoading(false);
           return;
         }
 
         const res = await fetch('/api/stations/get-stations', {
           headers: {
-            Authorization: `${accessToken}`,
-            "x-backend-url": backendUrl,
+            Authorization: accessToken||"",
+            "x-backend-url": backendUrl||"",
           },
         });
 
@@ -51,10 +131,10 @@ useEffect(()=>{
         const json = await res.json();
         const data = json.data || [];
 
-        // Create a Record { [RetailStationName]: EWURALicenseNo }
         const mapped: Record<string, string> = {};
         data.forEach((station: Station) => {
-          mapped[station.RetailStationName] = station.EWURALicenseNo;
+          mapped[station.RetailStationName] =
+            station.EWURALicenseNo;
         });
 
         setStations(data);
@@ -67,7 +147,7 @@ useEffect(()=>{
     }
 
     fetchStations();
-  }, []);
+  }, [backendUrl]); // 🔥 only runs when ready
 
   return { stations, stationMap, loading, error };
 }
