@@ -54,7 +54,7 @@ export const config = {
   matcher: [
     "/reports/:path*",
     "/reports/preodic-reports/:path*",
-    "/:path*",
+    "/",
     "/daily-reports/:path*",
     "/station/:path*",
     "/customers/:path*",
