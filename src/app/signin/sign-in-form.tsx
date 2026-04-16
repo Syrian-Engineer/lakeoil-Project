@@ -90,7 +90,7 @@ export default function SignInForm() {
         throw new Error("Login failed: no token received");
       }
       // ✅ Save for middleware (SERVER SIDE)
-        document.cookie = `access_token=${accessToken}; path=/; samesite=lax; httpOnly: true`;
+        // document.cookie = `access_token=${accessToken}; path=/; samesite=lax; httpOnly: true`;
         document.cookie = `backend_url=${backendUrl}; path=/; max-age=86400; samesite=lax`;
       // ✅ Save for client usage
         sessionStorage.setItem("access_token", accessToken);
