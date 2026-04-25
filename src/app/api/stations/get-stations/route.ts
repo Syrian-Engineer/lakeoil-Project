@@ -64,6 +64,8 @@ export async function GET(req: NextRequest) {
     const allowedBackends = [
       "http://192.168.8.224:3000",
       "http://central.oktin.ak4tek.com:3950",
+      "http://server.taiba.ak4tek.com"
+
     ];
 
     if (!allowedBackends.includes(backendUrl)) {

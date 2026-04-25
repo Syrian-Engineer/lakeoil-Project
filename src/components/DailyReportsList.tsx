@@ -76,14 +76,22 @@ export default function DailyReporstList({
   const [totalReports, setTotalReports] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const backend = localStorage.getItem("backend_url");
+  const [backend,setBackEnd] = useState<string | null>("")
+
+
+  useEffect(()=>{
+    if(typeof window === "undefined")
+      return;
+      const backend = localStorage.getItem("backend_url");
+      setBackEnd(backend)
+  },[])
   
   useEffect(() => {
     if (!per_page || !page) {
       router.replace("?per_page=5&page=1");
       return;
     }
-
+    console.log(backend)
     const fetchReports = async () => {
       try {
         setLoading(true);

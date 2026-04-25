@@ -9,17 +9,23 @@ export async function GET(req: Request) {
     const page = searchParams.get("page");
     const station = searchParams.get("station");
 
+
     const access_token = req.headers.get("authorization");
+    const backendUrl = req.headers.get("x-backend-url")
 
     if (!access_token) {
       return NextResponse.json({ error: "Missing access token" }, { status: 401 });
+    }
+
+    if (!backendUrl) {
+      return NextResponse.json({ error: "BackEnd Is Not Selected" }, { status: 401 });
     }
 
     const encodedStart = encodeURIComponent(start_date || "");
     const encodedEnd = encodeURIComponent(end_date || "");
 
     const externalResponse = await fetch(
-      `http://central.oktin.ak4tek.com:3950/daily_report?start_date=${encodedStart}&end_date=${encodedEnd}&per_page=${per_page}&page=${page}&EWURALicenseNo=${station}`,
+      `${backendUrl}/daily_report?start_date=${encodedStart}&end_date=${encodedEnd}&per_page=${per_page}&page=${page}&EWURALicenseNo=${station}`,
       {
         headers: {
           "Content-Type": "application/json",
