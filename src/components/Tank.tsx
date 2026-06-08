@@ -169,6 +169,10 @@
 
 import { TankProp } from "@/app/tanks/page";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { translate } from "@/translations/translate";
+import { tankHomeTranslations } from "@/translations/TankPage/home";
 import { Badge } from "rizzui/badge";
 import LiquidFillGauge from "react-liquid-gauge";
 import { interpolateRgb } from "d3-interpolate";
@@ -186,6 +190,10 @@ interface Props {
 export default function Tank({ tanks, LicenseeTraSerialNo }: Props) {
   const [showDetails, setShowDetails] = useState(false);
   const router = useRouter(); // ✅ initialize router
+  const lang = useSelector((state: RootState) => state.language.language);
+  const showDetailsText = translate(tankHomeTranslations, lang, "showDetails").text;
+  const hideDetailsText = translate(tankHomeTranslations, lang, "hideDetails").text;
+  const updatedAtText = translate(tankHomeTranslations, lang, "updatedAt").text;
 
   const {
     fuel_volume,
@@ -245,7 +253,7 @@ export default function Tank({ tanks, LicenseeTraSerialNo }: Props) {
 
           <button
             onClick={toggleDetails}
-            title={showDetails ? "Hide details" : "Show details"}
+            title={showDetails ? hideDetailsText : showDetailsText}
             className="rounded-full shadow-sm hover:scale-95 transition duration-300 text-4xl"
           >
             <CiCircleChevDown
@@ -311,7 +319,7 @@ export default function Tank({ tanks, LicenseeTraSerialNo }: Props) {
                 {safeFuelVolume} / {safeCapacity} L
               </div>
               <div className="mt-1  text-gray-600 font-semibold">
-                Updated at: {updated_at}
+                {updatedAtText}: {updated_at}
               </div>
             </div>
           </div>

@@ -62,7 +62,7 @@ import GlobalModal from "./shared/modal-views/container";
 import { Provider } from "react-redux";
 import { store } from "@/store";
 import LanguageEffect from "@/components/language-effect"; // 👇 You'll create this
-import "@/app/globals.css";
+// import "@/app/globals.css";
 
 // export const metadata: Metadata = {
 //   title: "App Name",

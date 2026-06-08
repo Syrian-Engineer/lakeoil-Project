@@ -1,6 +1,10 @@
 "use client";
 import { TankProp, ProductProp } from "@/app/tanks/page";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { translate } from "@/translations/translate";
+import { tankHomeTranslations } from "@/translations/TankPage/home";
 import { FaPencilAlt } from "react-icons/fa";
 import { SlPlus } from "react-icons/sl";
 import Swal from "sweetalert2";
@@ -28,6 +32,8 @@ export default function TankCard({ tanks1, stations,lastUpdate,onRefresh }: Prop
     setTanks(tanks1);
   }, [tanks1]);
 
+  const lang = useSelector((state: RootState) => state.language.language);
+  const noTanksForStationText = translate(tankHomeTranslations, lang, "noTanksForStation").text;
   const MySwal = withReactContent(Swal);
 
   // Group tanks by LicenseeTraSerialNo
@@ -80,7 +86,7 @@ export default function TankCard({ tanks1, stations,lastUpdate,onRefresh }: Prop
                 <Tank key={tank.id} tanks={tank} LicenseeTraSerialNo={station.LicenseeTraSerialNo} />
               ))}
               {groupedTanks[station.LicenseeTraSerialNo]?.length === 0 && (
-                <p className="text-gray-500 col-span-full">No tanks for this station</p>
+                <p className="text-gray-500 col-span-full">{noTanksForStationText}</p>
               )}
             </div>
 

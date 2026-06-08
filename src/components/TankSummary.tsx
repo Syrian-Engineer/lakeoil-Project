@@ -39,6 +39,12 @@
 
 
 
+"use client";
+
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { translate } from "@/translations/translate";
+import { tankHomeTranslations } from "@/translations/TankPage/home";
 import { MdLocalGasStation } from "react-icons/md";
 import { FaDatabase, FaSyncAlt } from "react-icons/fa";
 
@@ -55,13 +61,21 @@ export default function TankSummary({
   lastUpdate,
   onRefresh,
 }: TankSummaryProps) {
+  const lang = useSelector((state: RootState) => state.language.language);
+  const summaryText = translate(tankHomeTranslations, lang, "summary").text;
+  const refreshDataText = translate(tankHomeTranslations, lang, "refreshData").text;
+  const stationsText = translate(tankHomeTranslations, lang, "stations").text;
+  const tanksText = translate(tankHomeTranslations, lang, "tanks").text;
+  const lastUpdateText = translate(tankHomeTranslations, lang, "lastUpdate").text;
+  const notFetchedYetText = translate(tankHomeTranslations, lang, "notFetchedYet").text;
+
   return (
     <div className="mb-6 p-4 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-xl shadow-sm">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">Summary</h2>
+        <h2 className="text-xl font-semibold">{summaryText}</h2>
         <button
           onClick={onRefresh}
-          title="Refresh data"
+          title={refreshDataText}
           className="p-2 rounded-full bg-white shadow hover:rotate-90 transition-transform duration-500"
         >
           <FaSyncAlt className="text-blue-600 h-5 w-5" />
@@ -75,7 +89,7 @@ export default function TankSummary({
             <MdLocalGasStation className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-sm text-gray-500">Stations</p>
+            <p className="text-sm text-gray-500">{stationsText}</p>
             <p className="text-2xl font-bold">{stations_length ?? 0}</p>
           </div>
         </div>
@@ -86,7 +100,7 @@ export default function TankSummary({
             <FaDatabase className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-sm text-gray-500">Tanks</p>
+            <p className="text-sm text-gray-500">{tanksText}</p>
             <p className="text-2xl font-bold">{tanks_length}</p>
           </div>
         </div>
@@ -94,8 +108,7 @@ export default function TankSummary({
 
       {/* Last update */}
       <p className="text-xs text-gray-500">
-        Last update:{" "}
-        {lastUpdate ? lastUpdate.toLocaleTimeString() : "Not fetched yet"}
+        {lastUpdateText}: {lastUpdate ? lastUpdate.toLocaleTimeString() : notFetchedYetText}
       </p>
     </div>
   );

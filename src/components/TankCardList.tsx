@@ -80,6 +80,10 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { translate } from "@/translations/translate";
+import { tankHomeTranslations } from "@/translations/TankPage/home";
 import TankCard from "./TankCard";
 import { redirect } from "next/navigation";
 import PeriodicReportsSpinner from "./PeriodicReportsSpinner";
@@ -94,6 +98,8 @@ export default function TankCardListClient({ page }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+
+  const lang = useSelector((state: RootState) => state.language.language);
 
   const access_token =
     typeof window !== "undefined"
@@ -158,7 +164,7 @@ export default function TankCardListClient({ page }: Props) {
   if (loading)
     return (
       <div className="flex justify-center items-center p-10">
-        <PeriodicReportsSpinner text="Fueling Tanks ..." />
+        <PeriodicReportsSpinner text={translate(tankHomeTranslations, lang, "fuelingTanks").text} />
       </div>
     );
 

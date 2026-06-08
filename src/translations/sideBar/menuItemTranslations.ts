@@ -9,6 +9,7 @@ export const menuItemTranslations ={
         alarms:"Alarms",
         settings:"Settings",
         stations:"Stations",
+        products:"Products"
     },
     ar:{
         pumps:"المضخات",
@@ -20,5 +21,6 @@ export const menuItemTranslations ={
         alarms:"الإنذارات",
         settings:"الإعدادات",
         stations:"المحطات",
+        products:"المنتجات"
     }
 }

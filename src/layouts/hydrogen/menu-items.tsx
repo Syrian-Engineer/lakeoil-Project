@@ -254,6 +254,9 @@ export default function useMenuItems(): MenuItem[] {
     const alarms = translate(menuItemTranslations, lang, "alarms");
     const settings = translate(menuItemTranslations, lang, "settings");
     const stations = translate(menuItemTranslations,lang,"stations")
+    const products = translate(menuItemTranslations,lang,"products");
+
+
 
     const onlyReports = localStorage.getItem("onlyReports");
 
@@ -283,6 +286,11 @@ export default function useMenuItems(): MenuItem[] {
               name: stations.text,
               href: "/station",
               icon: <FaCity />,
+            },
+            {
+              name: products.text,
+              href: "/Products",
+              icon: <MdPerson />,
             },
             {
               name: customers.text,
