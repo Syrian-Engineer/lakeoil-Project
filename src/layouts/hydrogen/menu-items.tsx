@@ -289,7 +289,7 @@ export default function useMenuItems(): MenuItem[] {
             },
             {
               name: products.text,
-              href: "/Products",
+              href: "/products",
               icon: <MdPerson />,
             },
             {
