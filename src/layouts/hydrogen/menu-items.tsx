@@ -229,6 +229,8 @@ import { translate } from '@/translations/translate';
 import { menuItemTranslations } from '@/translations/sideBar/menuItemTranslations';
 import { FaCity } from "react-icons/fa";
 import { TbReportAnalytics } from "react-icons/tb";
+import { MdOutlinePriceCheck } from "react-icons/md";
+
 
 
 
@@ -290,7 +292,7 @@ export default function useMenuItems(): MenuItem[] {
             {
               name: products.text,
               href: "/products",
-              icon: <MdPerson />,
+              icon: <MdOutlinePriceCheck />,
             },
             {
               name: customers.text,
