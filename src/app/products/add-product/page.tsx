@@ -10,7 +10,7 @@ interface NewProductPayload {
   color: string;
 }
 
-export default function AddProductPage() {
+export default function page() {
   const router = useRouter();
   const [form, setForm] = useState<NewProductPayload>({
     name: "",
@@ -20,6 +20,7 @@ export default function AddProductPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const backendUrl = localStorage.getItem("backend_url");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -31,6 +32,8 @@ export default function AddProductPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+            Authorization: sessionStorage.getItem("access_token") || "",
+            "x-backend-url": backendUrl || "",
         },
         body: JSON.stringify(form),
       });
