@@ -59,16 +59,7 @@ export default function ProjectSummary({ className }: { className?: string }) {
 
   const [showFilterCard] = useAtom(showFilterCardAtom);
   const [filters] = useAtom(filterAtom);
-  const [isSuperAdmin,setIsSuperAdmin] = useState<string|null>("")
  
-  useEffect(()=>{
-    if(typeof window !== "undefined"){
-      // isSuperAdmin = localStorage.getItem('isSuperAdmin');
-      setIsSuperAdmin(localStorage.getItem('isSuperAdmin'))
-   }else{
-    return;
-   }
-  },[])
   
 
   const {
@@ -179,12 +170,7 @@ export default function ProjectSummary({ className }: { className?: string }) {
     filtered_tanks.forEach((tank) => query.append('tank_names', tank.label));
     filtered_nozzles.forEach((nozzle) => query.append('nozzle_names', nozzle.label));
     filtered_products.forEach((product) => query.append('product_names', product.label));
-
-    if (isSuperAdmin) {
-      filtered_stations.forEach((station) =>
-        query.append('station_serials', String(station.value))
-      );
-    }
+    filtered_stations.forEach((station) => query.append('station_names', station.label));
 
     if (start_date) query.append('since_date', formatDateTime(start_date));
     if (end_date) query.append('to_date', formatDateTime(end_date));
