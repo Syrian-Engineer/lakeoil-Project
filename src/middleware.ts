@@ -29,7 +29,7 @@ export const config = {
     "/daily-reports/:path*",
     "/station/:path*",
     "/customers/:path*",
-    // "/settings/:path*",
+    "/settings/:path*",
     "/staff/:path*",
     "/tanks/:path*",
   ],

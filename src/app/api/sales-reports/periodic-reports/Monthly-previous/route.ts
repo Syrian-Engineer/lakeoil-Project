@@ -71,19 +71,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // ✅ HTTP-only allowed backends
-  const allowedBackends = [
-    "http://192.168.8.224:3000",
-    "http://central.oktin.ak4tek.com:3950",
-    "http://server.taiba.ak4tek.com"
-  ];
-
-  if (!allowedBackends.includes(backendUrl)) {
-    return NextResponse.json(
-      { error: "Invalid backend URL" },
-      { status: 400 }
-    );
-  }
 
   try {
     const body = await req.json();
