@@ -51,7 +51,6 @@ export default function Page() {
     setMounted(true);
 
     const accessToken = getSessionStorage('access_token');
-    const adminFlag = getLocalStorage('isSuperAdmin') === 'true';
     const backend = getLocalStorage('backend_url') || '';
 
     setToken(accessToken);
@@ -65,7 +64,7 @@ export default function Page() {
       if (!token || !backendUrl) return;
 
       try {
-        const res = await fetch('/api/filters/stations', {
+        const res = await fetch('/api/stations/get-stations', {
           headers: {
             Authorization: token,
             'x-backend-url': backendUrl,
