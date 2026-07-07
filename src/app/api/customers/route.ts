@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     }
 
   try {
-    const res = await fetch('${backendUrl}/customers/getall', {
+    const res = await fetch(`${backendUrl}/ak4tek/customers/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
