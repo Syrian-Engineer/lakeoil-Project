@@ -1,6 +1,10 @@
 // "use client";
 
 // import { useEffect, useState, useCallback } from "react";
+// import { useSelector } from "react-redux";
+// import { RootState } from "@/store";
+// import { translate } from "@/translations/translate";
+// import { tankHomeTranslations } from "@/translations/TankPage/home";
 // import TankCard from "./TankCard";
 // import { redirect } from "next/navigation";
 // import PeriodicReportsSpinner from "./PeriodicReportsSpinner";
@@ -16,10 +20,20 @@
 //   const [error, setError] = useState<string | null>(null);
 //   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
 
-//   const access_token = typeof window !== "undefined" 
-//     ? sessionStorage.getItem("access_token") 
-//     : null;
+//   const lang = useSelector((state: RootState) => state.language.language);
 
+//   const access_token =
+//     typeof window !== "undefined"
+//       ? sessionStorage.getItem("access_token")
+//       : null;
+
+//   const backend =
+//     typeof window !== "undefined"
+//       ? localStorage.getItem("backend_url")
+//       : null;
+
+//   // const backend = localStorage.getItem("backend_url");
+//   // redirect if no token
 //   useEffect(() => {
 //     if (!access_token) {
 //       redirect("/signin");
@@ -27,22 +41,25 @@
 //   }, [access_token]);
 
 //   const fetchData = useCallback(async () => {
-//     setLoading(true);
+//     if (!access_token) return;
+
 //     setError(null);
 
 //     try {
 //       const res = await fetch("/api/tanks/get-tanks", {
 //         headers: {
 //           Authorization: `${access_token}`,
+//           "x-backend-url": backend || "",
 //         },
 //       });
 
 //       if (!res.ok) throw new Error("Failed to fetch tanks");
 
 //       const data = await res.json();
+//       console.log("Fetched tanks data:", data.tanks);
 //       setTanks(data.tanks || []);
 //       setStations(data.stations || []);
-//       setLastUpdate(new Date()); // ✅ set last fetch time
+//       setLastUpdate(new Date());
 //     } catch (err: any) {
 //       setError(err.message);
 //     } finally {
@@ -50,14 +67,26 @@
 //     }
 //   }, [access_token]);
 
+//   // initial fetch + page change
 //   useEffect(() => {
 //     fetchData();
 //   }, [fetchData, page]);
 
+//   // auto refresh every 60s
+//   useEffect(() => {
+//     if (!access_token) return;
+
+//     const interval = setInterval(() => {
+//       fetchData();
+//     }, 60000);
+
+//     return () => clearInterval(interval);
+//   }, [fetchData, access_token]);
+
 //   if (loading)
 //     return (
 //       <div className="flex justify-center items-center p-10">
-//         <PeriodicReportsSpinner text="Fueling Tanks ..." />
+//         <PeriodicReportsSpinner text={translate(tankHomeTranslations, lang, "fuelingTanks").text} />
 //       </div>
 //     );
 
@@ -75,8 +104,7 @@
 
 
 
-
-
+// For 3D version, you can use the following code:
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
@@ -111,8 +139,7 @@ export default function TankCardListClient({ page }: Props) {
       ? localStorage.getItem("backend_url")
       : null;
 
-  // const backend = localStorage.getItem("backend_url");
-  // redirect if no token
+   // redirect if no token
   useEffect(() => {
     if (!access_token) {
       redirect("/signin");
@@ -179,3 +206,7 @@ export default function TankCardListClient({ page }: Props) {
     />
   );
 }
+
+
+
+

@@ -1,5 +1,6 @@
 "use client";
-import { TankProp, ProductProp } from "@/app/tanks/page";
+
+import { TankProp } from "@/app/tanks/page";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
@@ -9,96 +10,112 @@ import { FaPencilAlt } from "react-icons/fa";
 import { SlPlus } from "react-icons/sl";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import Tank from "./Tank";
 import { Button } from "rizzui/button";
 import { stationProps } from "@/app/station/page";
-import { MdLocalGasStation } from "react-icons/md";
-import { FaDatabase } from "react-icons/fa";
 import TankSummary from "./TankSummary";
-import PumpCard from "./PumpCard";
-import { PiMapPin } from "react-icons/pi";
+import StationSection from "./StationSection";
+
+// NEW
+import TankViewerModal from "./Tank/TankViewerModal";
 
 interface Props {
   tanks1: TankProp[];
   stations?: stationProps[];
-  lastUpdate: Date | null;
+  lastUpdate: Date |null;
   onRefresh: () => void;
 }
 
-export default function TankCard({ tanks1, stations,lastUpdate,onRefresh }: Props) {
+export default function TankCard({
+  tanks1,
+  stations,
+  lastUpdate,
+  onRefresh,
+}: Props) {
   const [tanks, setTanks] = useState<TankProp[]>(tanks1);
+
+  // NEW
+  const [selectedTank, setSelectedTank] =
+    useState<TankProp | null>(null);
 
   useEffect(() => {
     setTanks(tanks1);
   }, [tanks1]);
 
-  const lang = useSelector((state: RootState) => state.language.language);
-  const noTanksForStationText = translate(tankHomeTranslations, lang, "noTanksForStation").text;
+  const lang = useSelector(
+    (state: RootState) => state.language.language
+  );
+
+  const noTanksForStationText = translate(
+    tankHomeTranslations,
+    lang,
+    "noTanksForStation"
+  ).text;
+
   const MySwal = withReactContent(Swal);
 
-  // Group tanks by LicenseeTraSerialNo
   const groupedTanks: Record<string, TankProp[]> = {};
+
   stations?.forEach((station) => {
     groupedTanks[station.LicenseeTraSerialNo] =
       tanks.filter(
-        (tank) => tank.LicenseeTraSerialNo === station.LicenseeTraSerialNo
+        (tank) =>
+          tank.LicenseeTraSerialNo ===
+          station.LicenseeTraSerialNo
       ) || [];
   });
 
-  const handleAddTank = async () => {
-    // Your existing add tank code...
-  };
+  const handleAddTank = async () => {};
 
-  const handleEditTank = async () => {
-    // Your existing edit tank code...
-  };
+  const handleEditTank = async () => {};
 
   return (
     <>
       <div className="flex items-center justify-start gap-3 mb-4">
-        <Button variant="outline" className="p-2" onClick={handleAddTank}>
+        <Button
+          variant="outline"
+          className="p-2"
+          onClick={handleAddTank}
+        >
           <SlPlus className="h-6 w-6 text-primary" />
         </Button>
-        <Button variant="outline" className="p-2" onClick={handleEditTank}>
+
+        <Button
+          variant="outline"
+          className="p-2"
+          onClick={handleEditTank}
+        >
           <FaPencilAlt className="h-6 w-6 text-primary" />
         </Button>
       </div>
 
-      {/* Summary */}
-
-      <TankSummary 
-        stations_length={stations?.length} 
+      <TankSummary
+        stations_length={stations?.length}
         tanks_length={tanks.length}
         lastUpdate={lastUpdate}
         onRefresh={onRefresh}
-         />
+      />
 
       <div className="space-y-4">
         {stations?.map((station) => (
-          <div
+          <StationSection
             key={station.LicenseeTraSerialNo}
-            className="bg-white rounded-lg shadow-md p-4 mb-4"
-          >
-            <h2 className="text-lg font-semibold mb-2">{station.RetailStationName}</h2>
-            {/* For Tanks */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xlPlus:grid-cols-3 gap-3 items-start auto-rows-min">
-              {groupedTanks[station.LicenseeTraSerialNo]?.map((tank) => (
-                <Tank key={tank.id} tanks={tank} LicenseeTraSerialNo={station.LicenseeTraSerialNo} />
-              ))}
-              {groupedTanks[station.LicenseeTraSerialNo]?.length === 0 && (
-                <p className="text-gray-500 col-span-full">{noTanksForStationText}</p>
-              )}
-            </div>
+            station={station}
+            tanks={
+              groupedTanks[station.LicenseeTraSerialNo] || []
+            }
+            noTanksText={noTanksForStationText}
 
-            {/* For Pumps Socket */}
-            <div>
-                <PumpCard station_url={station.station_url_or_IP} />
-                {/* <PumpCard station_url="ws://fursan.oktin.ak4tek.com:8080" /> */}
-
-            </div>
-          </div>
+            // NEW
+            onOpenTank={setSelectedTank}
+          />
         ))}
       </div>
+
+      {/* ONE 3D Viewer for the whole application */}
+      <TankViewerModal
+        tank={selectedTank}
+        onClose={() => setSelectedTank(null)}
+      />
     </>
   );
 }

@@ -1,14 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
+
+    const accessToken = req.headers.get("authorization");
+    const backendUrl = req.headers.get("x-backend-url");
+
+    if (!accessToken) {
+      return NextResponse.json(
+        { error: "Access token missing" },
+        { status: 401 }
+      );
+    }
+
+    if (!backendUrl) {
+      return NextResponse.json(
+        { error: "Backend not selected" },
+        { status: 400 }
+      );
+    }
+
   try {
-    const res = await fetch("http://central.oktin.ak4tek.com:3950/customers/getall", {
+    const res = await fetch('${backendUrl}/customers/getall', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        cookie: req.headers.get("cookie") || "", // session forwarding
+        "Authorization": `${accessToken}`
       },
-      credentials: "include",
     });
     
     const data = await res.json();

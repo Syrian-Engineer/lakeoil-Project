@@ -230,26 +230,23 @@ export default function PostSummary({ className }: { className?: string }) {
     if(typeof window === "undefined"){
       return;
     }
-    const isReportsLogin = localStorage.getItem("onlyReports") === 'true';
     const access_token = sessionStorage.getItem("access_token")
-
-     const endpoint = isReportsLogin
-     ?"/api/customers"
-     :"/api/customers"
+    const backend = localStorage.getItem("backend_url") || "";
 
      const headers: Record<string, string> = {
         'Content-Type': 'application/json',
      };
 
-     if (isReportsLogin && access_token) {
+     if (access_token) {
         headers['Authorization'] = ` ${access_token}`;
+        headers['x-backend-url'] = ` ${backend}`;
       }
 
     const fetchCustomers = async () => {
       try {
-        const res = await fetch(endpoint,{
+        const res = await fetch("/api/customers",{
+          method: "GET",
           headers,
-          credentials:isReportsLogin?"omit":"include"
         });
         const data = await res.json();
 

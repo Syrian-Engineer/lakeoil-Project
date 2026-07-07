@@ -7,7 +7,7 @@ import { RootState } from "@/store";
 import { translate } from "@/translations/translate";
 import { tankHomeTranslations } from "@/translations/TankPage/home";
 import { TankProp } from "@/app/tanks/page";
-import TankDetails from "./TankDetails";
+import TankDetails from "./Tank/TankDetails";
 import { FaFillDrip } from "react-icons/fa";
 import { CiCircleChevDown } from "react-icons/ci";
 import * as THREE from "three";
