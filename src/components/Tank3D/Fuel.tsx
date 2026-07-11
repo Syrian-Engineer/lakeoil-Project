@@ -1,78 +1,62 @@
 "use client";
 
 import { useMemo } from "react";
+import * as THREE from "three";
 
 interface Props {
-  level: number;
-  product: string;
+  tankGroup: THREE.Group | null;
+  fill: number; // 0 -> 1
 }
 
-const RADIUS = 0.8;
-const LENGTH = 5.4;
-
-export default function Fuel({
-  level,
-  product,
+export default function TankFuel({
+  tankGroup,
+  fill,
 }: Props) {
-  const fill = Math.max(0, Math.min(level, 1));
+  const fuel = useMemo(() => {
+    if (!tankGroup) return null;
 
-  const color = useMemo(() => {
-    const p = product.toLowerCase();
+    const clone = tankGroup.clone(true);
 
-    if (p.includes("diesel")) return "#f4d64e";
-    if (p.includes("95")) return "#3b82f6";
-    if (p.includes("98")) return "#22c55e";
+    clone.traverse((child: any) => {
+      if (!child.isMesh) return;
 
-    return "#60a5fa";
-  }, [product]);
+      // Hide everything except the tank body
+      if (child.name !== "Cylinder.006") {
+        child.visible = false;
+        return;
+      }
 
-  // Height of liquid inside the cylinder
-  const liquidHeight = RADIUS * 2 * fill;
+      child.geometry.computeBoundingBox();
 
-  if (liquidHeight <= 0.002) return null;
+      const box = child.geometry.boundingBox!;
 
-  return (
-    <group position={[0, -RADIUS + liquidHeight / 2, 0]}>
-      {/* Main liquid */}
-      <mesh rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry
-          args={[
-            RADIUS * 0.93,
-            RADIUS * 0.93,
-            LENGTH - 0.12,
-            96,
-          ]}
-        />
+      const minY = box.min.y;
+      const maxY = box.max.y;
 
-        <meshPhysicalMaterial
-          color={color}
-          transparent
-          opacity={0.78}
-          roughness={0}
-          metalness={0}
-          transmission={0.25}
-          clearcoat={1}
-        />
-      </mesh>
+      const level = THREE.MathUtils.lerp(minY, maxY, fill);
 
-      {/* Flat liquid surface */}
-      <mesh
-        position={[0, liquidHeight / 2, 0]}
-      >
-        <boxGeometry
-          args={[
-            LENGTH - 0.15,
-            0.02,
-            RADIUS * 1.84,
-          ]}
-        />
+      const clipPlane = new THREE.Plane(
+        new THREE.Vector3(0, -1, 0),
+        level
+      );
 
-        <meshStandardMaterial
-          color="white"
-          transparent
-          opacity={0.22}
-        />
-      </mesh>
-    </group>
-  );
+      child.material = new THREE.MeshPhysicalMaterial({
+        color: "#25bdf5",
+        transparent: true,
+        opacity: 0.75,
+        transmission: 0.7,
+        roughness: 0.08,
+        metalness: 0,
+        side: THREE.DoubleSide,
+        clippingPlanes: [clipPlane],
+        clipShadows: true,
+      });
+    });
+
+    return clone;
+  }, [tankGroup, fill]);
+
+  if (!fuel) return null;
+
+  return <primitive object={fuel} />;
 }

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
 
-    const accessToken = req.headers.get("authorization");
+    const accessToken = req.headers.get("Authorization");
     const backendUrl = req.headers.get("x-backend-url");
 
     if (!accessToken) {
@@ -31,8 +31,7 @@ export async function GET(req: NextRequest) {
     const data = await res.json();
     
     if (!data?.data?.page_records) {
-        console.error('Missing page_records:', data);
-        return new NextResponse("Invalid response format", { status: 500 });
+        return new NextResponse("No Customers Founded", { status: 200 });
       }
     // ✅ Return proper JSON response using NextResponse.json
     return NextResponse.json(data);

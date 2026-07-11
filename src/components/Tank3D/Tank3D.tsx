@@ -7,7 +7,11 @@ import {
 } from "@react-three/drei";
 
 import TankGLB from "./TankGLB";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import TankFuel from "./Fuel";
+import * as THREE from "three";
+import TankSurface from "./TankSurface";
+
 
 interface Props {
   fuelVolume: number;
@@ -21,13 +25,8 @@ export default function Tank3D({
   product,
 }: Props) {
 
-  useEffect(() => {
-    console.log("Canvas Mounted");
+const [tankGroup, setTankGroup] = useState<THREE.Group | null>(null);
 
-    return () => {
-      console.log("Canvas Unmounted");
-    };
-  }, []);
   
   return (
     <Canvas
@@ -42,21 +41,44 @@ export default function Tank3D({
         near: 0.01,
         far: 100,
       }}
+      gl={{
+        localClippingEnabled: true,
+      }}
     >
-      <ambientLight intensity={2} />
+        <ambientLight intensity={0.4} />
 
-      <directionalLight
-        position={[5, 5, 5]}
-        intensity={2}
-      />
+        <directionalLight
+            position={[8,8,6]}
+            intensity={2.5}
+            castShadow
+        />
 
-      <Center>
+        <directionalLight
+            position={[-5,2,-5]}
+            intensity={0.7}
+        />
+
+        <hemisphereLight
+            intensity={0.8}
+            groundColor="#444"
+        />
+
+    <Center>
+      <group>
+
+        <TankFuel
+            tankGroup={tankGroup}
+            fill={fuelVolume / capacity}
+        />
+      <TankSurface
+        fill={fuelVolume / capacity}
+    />
         <TankGLB
-            // fuelVolume={fuelVolume}
-            // capacity={capacity}
-            // product={product}
-          />      
-      </Center>
+            onTankReady={setTankGroup}
+        />
+
+      </group>
+    </Center>
 
       <OrbitControls
           enablePan

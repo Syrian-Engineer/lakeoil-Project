@@ -234,7 +234,7 @@ export default function PostSummary({ className }: { className?: string }) {
     const backend = localStorage.getItem("backend_url") || "";
 
      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
      };
 
      if (access_token) {
