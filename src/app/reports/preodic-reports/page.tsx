@@ -78,12 +78,18 @@ export default function Page() {
 
         const data = await res.json();
 
-        const formatted = (data?.data || []).map((station: any) => ({
-          label: station.name,
-          value: station.serial_number,
-        }));
+      const formatted = (data?.data || []).map((station: any) => ({
+        label: station.RetailStationName,
+        value: station.LicenseeTraSerialNo,
+      }));
 
-        setStationOptions(formatted);
+      setStationOptions(formatted);
+
+      if (formatted.length > 0) {
+        setSelectedStation(formatted[0]);
+        setRefreshKey((prev) => prev + 1);
+      }
+
       } catch (err) {
         console.error('Failed to fetch stations:', err);
       }

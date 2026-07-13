@@ -12,6 +12,9 @@ import { FaFillDrip } from "react-icons/fa";
 import { FaCube } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import TankDetails from "./TankDetails";
+import LiquidFillGauge from "react-liquid-gauge";
+import { interpolateRgb } from "d3-interpolate";
+import { color } from "d3-color";
 
 interface Props {
   tanks: TankProp;
@@ -64,8 +67,27 @@ export default function Tank({
     updated_at,
   } = tanks;
 
+    // Safe values to prevent NaN
   const safeFuelVolume = fuel_volume ?? 0;
-  const safeCapacity = tank_capacity ?? 1;
+  const safeCapacity = tank_capacity ?? 1; // avoid division by zero
+  const fillRatio = Math.min(safeFuelVolume / safeCapacity, 1);
+  const percentage = fillRatio * 100;
+
+  let startColor = "#dc143c"; // crimson
+  let endColor = "#6495ed"; // cornflowerblue
+  const radius = 60;
+
+  const interpolate = interpolateRgb(startColor, endColor);
+  const fillColor = interpolate(fillRatio);
+
+  const gradientStops = [
+    { key: "0%", stopOpacity: 1, offset: "0%" },
+    { key: "50%", stopColor: fillColor, stopOpacity: 0.75, offset: "50%" },
+    { key: "100%", stopOpacity: 0.5, offset: "100%" },
+  ];
+
+  // const safeFuelVolume = fuel_volume ?? 0;
+  // const safeCapacity = tank_capacity ?? 1;
 
   const toggleDetails = () => {
     setShowDetails(!showDetails);
@@ -125,7 +147,48 @@ export default function Tank({
         <div className="text-center">
 
           <div className="text-7xl">
-            ⛽
+          <LiquidFillGauge
+              style={{ margin: "0 auto" }}
+              width={radius * 2}
+              height={radius * 2}
+              value={percentage}
+              percent="%"
+              textSize={1}
+              textOffsetX={0}
+              textOffsetY={0}
+              textRenderer={(props: any) => {
+                const value = Math.round(props.value);
+                const radius = Math.min(props.height / 2, props.width / 2);
+                const textPixels = (props.textSize * radius) / 2;
+                const valueStyle = { fontSize: textPixels };
+                const percentStyle = { fontSize: textPixels * 0.6 };
+
+                return (
+                  <tspan>
+                    <tspan className="value" style={valueStyle}>
+                      {value}
+                    </tspan>
+                    <tspan style={percentStyle}>{props.percent}</tspan>
+                  </tspan>
+                );
+              }}
+              riseAnimation
+              waveAnimation
+              waveFrequency={2}
+              waveAmplitude={1}
+              gradient
+              gradientStops={gradientStops}
+              circleStyle={{ fill: fillColor }}
+              waveStyle={{ fill: fillColor }}
+              textStyle={{
+                fill: color("#444")?.toString() ?? "#444",
+                fontFamily: "Arial",
+              }}
+              waveTextStyle={{
+                fill: color("#fff")?.toString() ?? "#fff",
+                fontFamily: "Arial",
+              }}
+            />
           </div>
 
           <button
