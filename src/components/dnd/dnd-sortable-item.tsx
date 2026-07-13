@@ -70,13 +70,13 @@ export function SortableItem({
 
   return (
     <SortableItemContext.Provider value={context}>
-      <Component
+      {/* <Component
         className={cn("SortableItem", className)}
         ref={setNodeRef}
         style={style}
       >
         {children}
-      </Component>
+      </Component> */}
     </SortableItemContext.Provider>
   );
 }

@@ -55,7 +55,7 @@ export default function TankViewerModal({
 
           <Tank3D
             fuelVolume={tank.fuel_volume ?? 0}
-            capacity={tank.tank_capacity ?? 1}
+            capacity={tank.tank_capacity}
             product={tank.product_name}
           />
 

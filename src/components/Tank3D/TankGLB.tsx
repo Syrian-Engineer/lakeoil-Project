@@ -41,7 +41,7 @@ export default function TankGLB({ onTankReady }: Props) {
         const material = child.material.clone();
 
         material.transparent = true;
-        material.opacity = 0.45;
+        material.opacity = 0.60;
 
         if ("roughness" in material) {
           (material as THREE.MeshStandardMaterial).roughness = 0.2;

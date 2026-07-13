@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import TankFuel from "./Fuel";
 import * as THREE from "three";
 import TankSurface from "./TankSurface";
-
+// import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 interface Props {
   fuelVolume: number;
@@ -45,23 +45,29 @@ const [tankGroup, setTankGroup] = useState<THREE.Group | null>(null);
         localClippingEnabled: true,
       }}
     >
-        <ambientLight intensity={0.4} />
+      <ambientLight intensity={0.8} />
 
-        <directionalLight
-            position={[8,8,6]}
-            intensity={2.5}
-            castShadow
-        />
+      <hemisphereLight
+          // skyColor="#ffffff"
+          // groundColor="#888888"
+          intensity={1.2}
+      />
 
-        <directionalLight
-            position={[-5,2,-5]}
-            intensity={0.7}
-        />
+      <directionalLight
+          position={[6,8,4]}
+          intensity={2.5}
+          castShadow
+      />
 
-        <hemisphereLight
-            intensity={0.8}
-            groundColor="#444"
-        />
+      <pointLight
+          position={[-4,2,4]}
+          intensity={2}
+      />
+
+      <pointLight
+          position={[4,2,-4]}
+          intensity={1.5}
+      />
 
     <Center>
       <group>

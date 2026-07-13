@@ -682,13 +682,14 @@ export default function ReportDetails({ id }: { id: number }) {
 
   const downloadExcel = async () => {
     if (!report) return;
+    const backend = localStorage.getItem("backend_url");
 
     try {
       setDownloading(true);
       const token = sessionStorage.getItem("access_token");
 
       const res = await fetch(
-        `http://central.oktin.ak4tek.com:3950/daily_report/${report.id}/download/excel`,
+        `${backend}/daily_report/${report.id}/download/excel`,
         {
           method: "GET",
           headers: { Authorization: `${token}` },

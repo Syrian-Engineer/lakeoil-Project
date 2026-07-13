@@ -29,33 +29,33 @@ export default function Page() {
 
   /* ---------- SAFE STORAGE HELPERS ---------- */
 
-  // const getLocalStorage = (key: string) => {
-  //   if (typeof window !== 'undefined') {
-  //     return localStorage.getItem(key);
-  //   }
-  //   return null;
-  // };
+  const getLocalStorage = (key: string) => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(key);
+    }
+    return null;
+  };
 
-  // const getSessionStorage = (key: string) => {
-  //   if (typeof window !== 'undefined') {
-  //     return sessionStorage.getItem(key);
-  //   }
-  //   return null;
-  // };
+  const getSessionStorage = (key: string) => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem(key);
+    }
+    return null;
+  };
 
   /* ---------- READ TOKEN / ADMIN INFO ---------- */
 
-  // useEffect(() => {
-  //   if (typeof window === 'undefined') return;
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
 
-  //   setMounted(true);
+    setMounted(true);
 
-  //   const accessToken = getSessionStorage('access_token');
-  //   const backend = getLocalStorage('backend_url') || '';
+    const accessToken = getSessionStorage('access_token');
+    const backend = getLocalStorage('backend_url') || '';
 
-  //   setToken(accessToken);
-  //   setBackendUrl(backend);
-  // }, []);
+    setToken(accessToken);
+    setBackendUrl(backend);
+  }, []);
 
   /* ---------- FETCH STATIONS ---------- */
 
