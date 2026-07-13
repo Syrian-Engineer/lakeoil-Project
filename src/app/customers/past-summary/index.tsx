@@ -16,76 +16,111 @@ interface CustomerDataType {
   id: number;
   name: string;
   email: string;
-  phone: number;
+  phone: string;
   address: string;
-  id_type: number;
-  id_value: number;
+  tin_number: string;
+  credit_type: string;
   credit: number;
   max_credit: number;
-  type: string;
+  discount: number;
+  erp: string;
+  is_active: boolean;
+  station_serial: string[];
+  card_count: number;
+  created_at: string;
+  updated_at: string;
 }
 
 // 1. Define new columns matching the fetched data
 const columnHelper = createColumnHelper<CustomerDataType>();
 
 const defaultCustomerColumns = [
-  columnHelper.accessor('name', {
-    header: 'Name',
-    size:80,
-    cell: (info) => info.getValue(),
+  columnHelper.accessor("name", {
+    header: "Name",
+    size: 120,
+    cell: info => info.getValue(),
   }),
-  columnHelper.accessor('email', {
-    header: 'Email',
-    size:100,
-    cell: (info) => info.getValue(),
+
+  columnHelper.accessor("email", {
+    header: "Email",
+    size: 160,
+    cell: info => info.getValue() || "-",
   }),
-  columnHelper.accessor('phone', {
-    header: 'Phone Number',
-    size:100,
-    cell: (info) => info.getValue(),
+
+  columnHelper.accessor("phone", {
+    header: "Phone",
+    size: 120,
+    cell: info => info.getValue() || "-",
   }),
-  columnHelper.accessor('address', {
-    header: 'Address',
-    size:70,
-    cell: (info) => info.getValue(),
-  }),columnHelper.accessor('id_value', {
-    header: 'id_value',
-    size:60,
-    cell: (info) => info.getValue(),
+
+  columnHelper.accessor("address", {
+    header: "Address",
+    size: 150,
+    cell: info => info.getValue() || "-",
   }),
-    columnHelper.accessor('id_type', {
-    header: 'id_type',
-    size:20,
-    cell: (info) => info.getValue(),
+
+  columnHelper.accessor("tin_number", {
+    header: "TIN",
+    size: 120,
+    cell: info => info.getValue() || "-",
   }),
-  columnHelper.accessor('credit', {
-    header: 'Credit',
-    size:100,
-    cell: (info) => info.getValue().toLocaleString(),
+
+  columnHelper.accessor("credit_type", {
+    header: "Credit Type",
+    size: 120,
+    cell: info => info.getValue(),
   }),
-  columnHelper.accessor('max_credit', {
-    header: 'Max Credit',
-    size:100,
-    cell: (info) => info.getValue().toLocaleString(),
+
+  columnHelper.accessor("credit", {
+    header: "Credit",
+    size: 100,
+    cell: info => Number(info.getValue()).toLocaleString(),
   }),
-  columnHelper.accessor('type', {
-    header: 'Type',
-    size:70,
-    cell: (info) => info.getValue(),
+
+  columnHelper.accessor("max_credit", {
+    header: "Max Credit",
+    size: 120,
+    cell: info => Number(info.getValue()).toLocaleString(),
   }),
+
+  columnHelper.accessor("discount", {
+    header: "Discount",
+    size: 100,
+    cell: info => `${info.getValue()} %`,
+  }),
+
+  columnHelper.accessor("card_count", {
+    header: "Cards",
+    size: 80,
+    cell: info => info.getValue(),
+  }),
+
+  columnHelper.accessor("is_active", {
+    header: "Status",
+    size: 80,
+    cell: info => (
+      <span
+        className={`px-2 py-1 rounded text-white text-xs ${
+          info.getValue() ? "bg-green-600" : "bg-red-600"
+        }`}
+      >
+        {info.getValue() ? "Active" : "Inactive"}
+      </span>
+    ),
+  }),
+
   columnHelper.display({
-    id: 'actions',
-    header: 'Actions',
+    id: "actions",
+    header: "Actions",
+    size: 60,
     cell: ({ row }) => (
       <button
         onClick={() => handleEditClick(row.original.id)}
         className="text-primary hover:text-blue-600"
-        title="Edit"
       >
         <Pencil className="h-4 w-4" />
       </button>
     ),
-    size: 40,
   }),
 ];
 
@@ -243,22 +278,27 @@ export default function PostSummary({ className }: { className?: string }) {
       }
 
     const fetchCustomers = async () => {
-      try {
-        const res = await fetch("/api/customers",{
-          method: "GET",
-          headers,
-        });
-        const data = await res.json();
+  try {
+    const res = await fetch("/api/customers", {
+      method: "GET",
+      headers,
+    });
 
-        if (data.status_code === 200) {
-          setCustomers(data.data.page_records);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    const data = await res.json();
+
+    console.log(data);
+
+    if (Array.isArray(data.data)) {
+      setCustomers(data.data);
+    } else {
+      setCustomers([]);
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
     fetchCustomers();
   }, []);
