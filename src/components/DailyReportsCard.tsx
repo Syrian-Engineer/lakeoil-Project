@@ -78,7 +78,7 @@ export default function DailyReporstCard({
     setOpenDetails((prev) => (prev === id ? null : id));
   };
 
-  return (
+    return (
     <div>
       <div className="mb-4">
         {showFilters && (
@@ -96,12 +96,23 @@ export default function DailyReporstCard({
         </Button>
       </div>
 
-      <div className="flex flex-col gap-6">
-        {reports.map((report) => {
-          const isOpen = openDetails === report.id;
+      {reports.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 border rounded-2xl bg-gray-50 shadow">
+          <h2 className="text-3xl font-bold text-gray-700">
+            No Daily Reports Found
+          </h2>
 
-          return (
-          <div
+          <p className="mt-3 text-gray-500 text-lg">
+            There are no daily reports available for the selected filters.
+          </p>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-6">
+          {reports.map((report) => {
+            const isOpen = openDetails === report.id;
+
+            return (
+              <div
                 key={report.id}
                 className="border rounded-2xl p-4 shadow-md hover:shadow-lg transition dark:bg-gray-100"
               >
@@ -115,27 +126,41 @@ export default function DailyReporstCard({
                     {report.ewura_license_no}
                   </p>
 
-                {/* PRODUCTS SUMMARY */}
+                  {/* PRODUCTS SUMMARY */}
                   <div className="p-4 border rounded-xl bg-white shadow">
-                    <h3 className="text-lg font-semibold mb-3">Products List</h3>
+                    <h3 className="text-lg font-semibold mb-3">
+                      Products List
+                    </h3>
+
                     <table className="w-full text-sm border">
                       <thead className="bg-gray-100">
                         <tr>
                           <th className="p-2 border">Product</th>
                           <th className="p-2 border">Price</th>
-                          <th className="p-2 border">total_sales</th>
-                          <th className="p-2 border">total_volume</th>
+                          <th className="p-2 border">Total Sales</th>
+                          <th className="p-2 border">Total Volume</th>
                           <th className="p-2 border">Transactions</th>
                         </tr>
                       </thead>
+
                       <tbody>
                         {report.products_list.map((product) => (
                           <tr key={product.id} className="text-center">
-                            <td className="p-2 border">{product.product}</td>
-                            <td className="p-2 border">{product.Price.toFixed(2)}</td>
-                            <td className="p-2 border">{product.total_sales.toFixed(2)}</td>
-                            <td className="p-2 border">{product.total_volume.toFixed(2)}</td>
-                            <td className="p-2 border">{product.sales_count}</td>
+                            <td className="p-2 border">
+                              {product.product}
+                            </td>
+                            <td className="p-2 border">
+                              {product.Price.toFixed(2)}
+                            </td>
+                            <td className="p-2 border">
+                              {product.total_sales.toFixed(2)}
+                            </td>
+                            <td className="p-2 border">
+                              {product.total_volume.toFixed(2)}
+                            </td>
+                            <td className="p-2 border">
+                              {product.sales_count}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -143,53 +168,70 @@ export default function DailyReporstCard({
                   </div>
 
                   {/* Amounts SUMMARY */}
-                <div className="p-4 border rounded-xl bg-white shadow">
-                  <h3 className="text-lg font-semibold mb-3">Amounts</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm border">
-                      <thead className="bg-gray-100">
-                        <tr>
-                          <th className="p-2 border">report_id</th>
-                          <th className="p-2 border">amount</th>
-                          <th className="p-2 border">total_sales</th>
-                          <th className="p-2 border">total_volume</th>
-                          <th className="p-2 border">sales_count</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {report.amount_list.map((amount) => (
-                          <tr key={amount.id} className="text-center">
-                            <td className="p-2 border">{amount.report_id}</td>
-                            <td className="p-2 border">{amount.amount}</td>
-                            <td className="p-2 border">{amount.total_sales}</td>
-                            <td className="p-2 border">{amount.total_volume.toFixed(2)}</td>
-                            <td className="p-2 border">{amount.sales_count.toFixed(2)}</td>
+                  <div className="p-4 border rounded-xl bg-white shadow">
+                    <h3 className="text-lg font-semibold mb-3">
+                      Amounts
+                    </h3>
+
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm border">
+                        <thead className="bg-gray-100">
+                          <tr>
+                            <th className="p-2 border">Report ID</th>
+                            <th className="p-2 border">Amount</th>
+                            <th className="p-2 border">Total Sales</th>
+                            <th className="p-2 border">Total Volume</th>
+                            <th className="p-2 border">Sales Count</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+
+                        <tbody>
+                          {report.amount_list.map((amount) => (
+                            <tr key={amount.id} className="text-center">
+                              <td className="p-2 border">
+                                {amount.report_id}
+                              </td>
+                              <td className="p-2 border">
+                                {amount.amount}
+                              </td>
+                              <td className="p-2 border">
+                                {amount.total_sales}
+                              </td>
+                              <td className="p-2 border">
+                                {amount.total_volume.toFixed(2)}
+                              </td>
+                              <td className="p-2 border">
+                                {amount.sales_count.toFixed(2)}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
-            </div>
 
-              <div className="flex justify-end gap-2 mt-4">
-                <Button
-                  className="bg-gray-500 hover:bg-gray-600 text-white"
-                  onClick={() => handleToggleDetails(report.id)}
-                >
-                  {isOpen ? "Hide Details" : "Show Details"}
-                </Button>
+                <div className="flex justify-end gap-2 mt-4">
+                  <Button
+                    className="bg-gray-500 hover:bg-gray-600 text-white"
+                    onClick={() => handleToggleDetails(report.id)}
+                  >
+                    {isOpen ? "Hide Details" : "Show Details"}
+                  </Button>
+                </div>
+
+                {isOpen && (
+                  <Suspense
+                    fallback={<p className="text-center">Loading details...</p>}
+                  >
+                    <ReportDetails id={report.id} />
+                  </Suspense>
+                )}
               </div>
-
-              {isOpen && (
-                <Suspense fallback={<p>Loading details...</p>}>
-                  <ReportDetails id={report.id} />
-                </Suspense>
-              )}
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import DailyReporstList from "@/components/DailyReportsList";
 import { Suspense } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 // Make the signature compatible with the generated type
 export default async function Page({
@@ -36,8 +37,16 @@ export default async function Page({
 
 function LoadingSpinner() {
   return (
-    <div className="flex justify-center items-center p-10">
-      <div className="h-10 w-10 border-4 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+    <div className="flex flex-col items-center justify-center py-12">
+      <div className="rounded-full bg-blue-100 p-4 shadow-lg">
+        <AiOutlineLoading3Quarters
+          className="h-9 w-9 animate-spin text-blue-600"
+        />
+      </div>
+
+      <span className="mt-4 text-sm font-medium tracking-wide text-gray-600">
+        Loading data...
+      </span>
     </div>
   );
 }
